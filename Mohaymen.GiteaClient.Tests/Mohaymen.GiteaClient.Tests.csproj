@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <RootNamespace>Mohaymen.GitClient.Tests</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Mohaymen.GiteaClient\Mohaymen.GiteaClient.csproj" />
+    </ItemGroup>
+</Project>

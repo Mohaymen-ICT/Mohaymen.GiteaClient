@@ -1,11 +1,11 @@
 <Project>
-    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GitClient'">
+    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GiteaClient'">
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GitClient.Tests'">
+    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GiteaClient.Tests'">
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -14,12 +14,12 @@
     </PropertyGroup>
 
     
-    <ItemGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GitClient'">
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GiteaClient'">
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
     </ItemGroup>
     
     
-    <ItemGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GitClient.Tests'">
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GiteaClient.Tests'">
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
         <PackageReference Include="xunit" Version="2.5.3"/>

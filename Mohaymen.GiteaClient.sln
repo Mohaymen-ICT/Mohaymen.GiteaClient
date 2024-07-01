@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mohaymen.GitClient", "Mohaymen.GitClient\Mohaymen.GitClient.csproj", "{09A19529-AD90-4304-A17C-909021A609FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mohaymen.GiteaClient", "Mohaymen.GiteaClient\Mohaymen.GiteaClient.csproj", "{09A19529-AD90-4304-A17C-909021A609FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AFC7EA0B-B70D-420E-BCBC-91787115C752}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mohaymen.GitClient.Tests", "Mohaymen.GitClient.Tests\Mohaymen.GitClient.Tests.csproj", "{70E107E2-9048-46B7-A7BB-335852285AD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mohaymen.GiteaClient.Tests", "Mohaymen.GiteaClient.Tests\Mohaymen.GiteaClient.Tests.csproj", "{70E107E2-9048-46B7-A7BB-335852285AD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C8D7D91-CBC2-4868-AF72-64AE84F7C517}"
 	ProjectSection(SolutionItems) = preProject
