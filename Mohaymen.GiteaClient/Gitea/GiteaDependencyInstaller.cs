@@ -3,7 +3,7 @@ using Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
 using Mohaymen.GitClient.Gitea.Facades;
 using Mohaymen.GitClient.Gitea.Facades.Abstractions;
 
-namespace Mohaymen.GitClient.Gitea.DependencyInstallers;
+namespace Mohaymen.GitClient.Gitea;
 
 internal class GiteaDependencyInstaller : IDependencyInstaller
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Mohaymen.GitClient.APICall.Domain;
 using Mohaymen.GitClient.Common.Abstractions;
 using Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
 
@@ -9,7 +10,7 @@ namespace Mohaymen.GitClient.Common.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddGitClientCommonDependencies(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddGitClientServices(this IServiceCollection serviceCollection, GiteaApiConfiguration giteaApiConfiguration)
     {
         var dependencyInstallers = GetDependencyInstallers();
 
@@ -18,6 +19,12 @@ public static class DependencyInjection
             dependencyInstaller.Install(serviceCollection);
         }
 
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddCommonDependencies(IServiceCollection serviceCollection, GiteaApiConfiguration giteaApiConfiguration)
+    {
+        serviceCollection.AddSingleton<GiteaApiConfiguration>();
         return serviceCollection;
     }
 
