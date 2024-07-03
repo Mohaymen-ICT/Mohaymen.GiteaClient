@@ -5,7 +5,7 @@ using Mohaymen.GitClient.APICall.Business.Wrappers.Abstractions;
 
 namespace Mohaymen.GitClient.APICall.Business.Wrappers;
 
-internal class HttpClientWrapper : IHttpClientWrapper
+internal sealed class HttpClientWrapper : IHttpClientWrapper
 {
     public async Task<HttpResponseMessage> SendAsync(HttpClient httpClient,
         HttpRequestMessage httpRequestMessage,

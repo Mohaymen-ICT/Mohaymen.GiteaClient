@@ -1,6 +1,6 @@
 ﻿namespace Mohaymen.GitClient.APICall.Domain;
 
-internal class HttpResponseDto<TResponseBody>
+public sealed class GiteaResponseDto<TResponseBody>
 {
     public bool IsSuccessfull { get; set; }
     public string? ErrorMessage { get; set; }

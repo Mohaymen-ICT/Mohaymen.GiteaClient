@@ -13,7 +13,7 @@ using Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
 
 namespace Mohaymen.GitClient.APICall;
 
-internal class ApiCallDependencyInstaller : IDependencyInstaller
+internal sealed class ApiCallDependencyInstaller : IDependencyInstaller
 {
     public void Install(IServiceCollection serviceCollection)
     {

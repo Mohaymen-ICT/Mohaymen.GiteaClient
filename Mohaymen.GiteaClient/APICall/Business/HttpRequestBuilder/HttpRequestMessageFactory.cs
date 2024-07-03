@@ -5,7 +5,7 @@ using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
 
 namespace Mohaymen.GitClient.APICall.Business.HttpRequestBuilder;
 
-internal class HttpRequestMessageFactory : IHttpRequestMessageFactory
+internal sealed class HttpRequestMessageFactory : IHttpRequestMessageFactory
 {
     public HttpRequestMessage CreateHttpRequestMessage(string url,
         HttpMethod httpMethod,

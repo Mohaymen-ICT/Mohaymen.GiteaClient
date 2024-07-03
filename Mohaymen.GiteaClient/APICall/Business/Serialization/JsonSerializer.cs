@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GitClient.APICall.Business.Serialization;
 
-internal class JsonSerializer : IJsonSerializer
+internal sealed class JsonSerializer : IJsonSerializer
 {
     public string SerializeObject(object inputObject)
     {

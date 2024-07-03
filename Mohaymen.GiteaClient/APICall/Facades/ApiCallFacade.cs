@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
 using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
 using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
@@ -12,7 +12,7 @@ using Mohaymen.GitClient.APICall.Facades.Abstractions;
 
 namespace Mohaymen.GitClient.APICall.Facades;
 
-internal class ApiCallFacade : IApiCallFacade
+internal sealed class ApiCallFacade : IApiCallFacade
 {
     private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
     private readonly IHttpClientFactory _httpClientFactory;
@@ -33,7 +33,8 @@ internal class ApiCallFacade : IApiCallFacade
         _httpClientWrapper = httpClientWrapper ?? throw new ArgumentNullException(nameof(httpClientWrapper));
     }
     
-    public async Task<HttpResponseDto<TResponseDto>> SendAsync<TRequestDto, TResponseDto>(HttpRestApiDto<TRequestDto> httpRestApiDto, CancellationToken cancellationToken = default)
+    public async Task<GiteaResponseDto<TResponseDto>> SendAsync<TRequestDto, TResponseDto>(HttpRestApiDto<TRequestDto> httpRestApiDto, CancellationToken cancellationToken = default)
+        where TRequestDto: IRequest<GiteaResponseDto<TResponseDto>>
     {
         var jsonBody = _jsonSerializer.SerializeObject(httpRestApiDto.BodyDto!);
         using var httpClient = _httpClientFactory.CreateHttpClient(_giteaApiConfiguration.ApiConnectionTimeout);
@@ -48,13 +49,13 @@ internal class ApiCallFacade : IApiCallFacade
         var statusCode = (int) httpResponseMessage.StatusCode;
         var responseString = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
         if (statusCode is < 200 or >= 300)
-            return new HttpResponseDto<TResponseDto>()
+            return new GiteaResponseDto<TResponseDto>()
             {
                 IsSuccessfull = false,
                 ErrorMessage = responseString
             };
         var responseDto = _jsonSerializer.DeserializeJson<TResponseDto>(responseString);
-        return new HttpResponseDto<TResponseDto>()
+        return new GiteaResponseDto<TResponseDto>()
         {
             IsSuccessfull = true,
             ResponseBody = responseDto

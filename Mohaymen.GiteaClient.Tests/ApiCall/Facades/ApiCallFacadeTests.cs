@@ -30,7 +30,7 @@ public class ApiCallFacadeTests
         _httpRequestMessageFactory = Substitute.For<IHttpRequestMessageFactory>();
         _httpClientFactory = Substitute.For<IHttpClientFactory>();
         _jsonSerializer = Substitute.For<IJsonSerializer>();
-        _giteaApiConfiguration = new GiteaApiConfiguration(BaseUrl, Token);
+        _giteaApiConfiguration = new GiteaApiConfiguration(BaseUrl, Token, "fakeOwner");
         _httpClientWrapper = Substitute.For<IHttpClientWrapper>();
         _sut = new ApiCallFacade(_httpRequestMessageFactory, _httpClientFactory, _giteaApiConfiguration,
             _jsonSerializer, _httpClientWrapper);
@@ -73,7 +73,7 @@ public class ApiCallFacadeTests
                 StatusCode = HttpStatusCode.Forbidden,
                 Content = new StringContent(errorMessage)
             });
-        var expected = new HttpResponseDto<FakeResponseBody>
+        var expected = new GiteaResponseDto<FakeResponseBody>
         {
             IsSuccessfull = false,
             ErrorMessage = errorMessage
@@ -129,7 +129,7 @@ public class ApiCallFacadeTests
                 StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(responseString)
             });
-        var expected = new HttpResponseDto<FakeResponseBody>
+        var expected = new GiteaResponseDto<FakeResponseBody>
         {
             IsSuccessfull = true,
             ResponseBody = new FakeResponseBody()

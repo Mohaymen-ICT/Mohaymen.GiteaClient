@@ -4,7 +4,7 @@ using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
 
 namespace Mohaymen.GitClient.APICall.Business.HttpClientFactory;
 
-internal class HttpClientFactory : IHttpClientFactory
+internal sealed class HttpClientFactory : IHttpClientFactory
 {
     public HttpClient CreateHttpClient(TimeSpan connectionTimeout)
     {

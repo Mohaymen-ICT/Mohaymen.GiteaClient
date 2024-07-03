@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GitClient.APICall.Domain;
 using Mohaymen.GitClient.Common.Abstractions;
@@ -25,6 +27,8 @@ public static class DependencyInjection
     private static IServiceCollection AddCommonDependencies(IServiceCollection serviceCollection, GiteaApiConfiguration giteaApiConfiguration)
     {
         serviceCollection.AddSingleton<GiteaApiConfiguration>();
+        serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         return serviceCollection;
     }
 
