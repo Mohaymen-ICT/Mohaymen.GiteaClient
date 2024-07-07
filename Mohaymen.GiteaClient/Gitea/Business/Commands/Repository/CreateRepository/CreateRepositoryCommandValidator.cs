@@ -9,11 +9,11 @@ internal sealed class CreateRepositoryCommandValidator : AbstractValidator<Creat
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .WithErrorCode(ValidationErrorCodes.EmptyRepositoryName)
+            .WithErrorCode(ValidationErrorCodes.EmptyRepositoryNameErrorCode)
             .WithMessage("repository name should not be empty");
         RuleFor(x => x.DefaultBranch)
             .NotEmpty()
-            .WithErrorCode(ValidationErrorCodes.EmptyBranchName)
+            .WithErrorCode(ValidationErrorCodes.EmptyBranchNameErrorCode)
             .WithMessage("branch name should not be empty");
     }
 }

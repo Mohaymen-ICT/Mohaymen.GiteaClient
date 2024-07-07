@@ -18,7 +18,7 @@ public class CreateRepositoryCommandValidatorTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void Validate_ShouldReturnEmptyRepositoryName_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
+    public void Validate_ShouldReturnEmptyRepositoryNameErrorCode_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
     {
         // Arrange
         var command = new CreateRepositoryCommand()
@@ -32,13 +32,13 @@ public class CreateRepositoryCommandValidatorTests
         var actual = _sut.Validate(command);
 
         // Assert
-        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyRepositoryName);
+        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyRepositoryNameErrorCode);
     }
 
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void Validate_ShouldReturnEmptyBranchName_WhenDefaultBranchNameIsNullOrEmpty(string branchName)
+    public void Validate_ShouldReturnEmptyBranchNameErrorCode_WhenDefaultBranchNameIsNullOrEmpty(string branchName)
     {
         // Arrange
         var command = new CreateRepositoryCommand()
@@ -52,7 +52,7 @@ public class CreateRepositoryCommandValidatorTests
         var actual = _sut.Validate(command);
 
         // Assert
-        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyBranchName);
+        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyBranchNameErrorCode);
     }
 
     [Fact]

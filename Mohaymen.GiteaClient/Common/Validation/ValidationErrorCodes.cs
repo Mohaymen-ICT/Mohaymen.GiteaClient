@@ -2,6 +2,6 @@
 
 internal static class ValidationErrorCodes
 {
-    internal static string EmptyRepositoryName => "EmptyRepositoryNameErrorCode";
-    internal static string EmptyBranchName => "EmptyBranchNameErrorCode";
+    internal static string EmptyRepositoryNameErrorCode => "EmptyRepositoryNameErrorCode";
+    internal static string EmptyBranchNameErrorCode => "EmptyBranchNameErrorCode";
 }
