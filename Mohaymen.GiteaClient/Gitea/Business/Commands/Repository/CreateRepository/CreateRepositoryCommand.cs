@@ -11,11 +11,11 @@ namespace Mohaymen.GitClient.Gitea.Business.Commands.Repository.CreateRepository
 
 public sealed class CreateRepositoryCommand : IRequest<GiteaResponseDto<CreateRepositoryResponseDto>>
 {
-    [JsonProperty("default_branch")] public string DefaultBranch { get; set; }
+    [JsonProperty("default_branch")] public string DefaultBranch { get; init; }
 
-    [JsonProperty("name")] public string Name { get; set; }
+    [JsonProperty("name")] public string Name { get; init; }
 
-    [JsonProperty("private")] public bool IsPrivateBranch { get; set; }
+    [JsonProperty("private")] public bool IsPrivateBranch { get; init; }
 }
 
 internal sealed class CreateRepositoryCommandHandler : IRequestHandler<CreateRepositoryCommand, GiteaResponseDto<CreateRepositoryResponseDto>>

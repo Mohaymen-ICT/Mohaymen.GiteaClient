@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Mohaymen.GiteaClient'">
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
