@@ -27,7 +27,7 @@ internal sealed class CreateRepositoryCommandHandler : IRequestHandler<CreateRep
         _apiCallFacade = apiCallFacade ?? throw new ArgumentNullException(nameof(apiCallFacade));
     }
 
-    public Task<GiteaResponseDto<CreateRepositoryResponseDto>> Handle(CreateRepositoryCommand request,
+    public async Task<GiteaResponseDto<CreateRepositoryResponseDto>> Handle(CreateRepositoryCommand request,
         CancellationToken cancellationToken)
     {
         var httpRestApiDto = new HttpRestApiDto<CreateRepositoryCommand>
@@ -35,7 +35,6 @@ internal sealed class CreateRepositoryCommandHandler : IRequestHandler<CreateRep
             HttpMethod = HttpMethod.Post,
             BodyDto = request
         };
-        return _apiCallFacade.SendAsync<CreateRepositoryCommand, CreateRepositoryResponseDto>(httpRestApiDto,
-            cancellationToken);
+        return await _apiCallFacade.SendAsync<CreateRepositoryCommand, CreateRepositoryResponseDto>(httpRestApiDto, cancellationToken).ConfigureAwait(false);
     }
 }

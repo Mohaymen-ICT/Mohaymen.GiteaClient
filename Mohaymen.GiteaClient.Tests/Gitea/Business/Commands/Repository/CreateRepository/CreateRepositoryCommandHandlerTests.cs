@@ -31,7 +31,7 @@ public class CreateRepositoryCommandHandlerTests
         };
         
         // Act
-        var actual = await _sut.Handle(command, default).ConfigureAwait(false);
+        await _sut.Handle(command, default).ConfigureAwait(false);
 
         // Assert
         _apiCallFacade
