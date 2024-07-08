@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Options;
 using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
 using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
 using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
@@ -18,17 +19,17 @@ internal sealed class ApiCallFacade : IApiCallFacade
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IJsonSerializer _jsonSerializer;
     private readonly IHttpClientWrapper _httpClientWrapper;
-    private readonly GiteaApiConfiguration _giteaApiConfiguration;
+    private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
 
     public ApiCallFacade(IHttpRequestMessageFactory httpRequestMessageFactory,
         IHttpClientFactory httpClientFactory, 
-        GiteaApiConfiguration giteaApiConfiguration,
+        IOptions<GiteaApiConfiguration> giteaOptions,
         IJsonSerializer jsonSerializer,
         IHttpClientWrapper httpClientWrapper)
     {
         _httpRequestMessageFactory = httpRequestMessageFactory ?? throw new ArgumentNullException(nameof(httpRequestMessageFactory));
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-        _giteaApiConfiguration = giteaApiConfiguration ?? throw new ArgumentNullException(nameof(giteaApiConfiguration));
+        _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
         _jsonSerializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
         _httpClientWrapper = httpClientWrapper ?? throw new ArgumentNullException(nameof(httpClientWrapper));
     }
@@ -37,10 +38,10 @@ internal sealed class ApiCallFacade : IApiCallFacade
         where TRequestDto: IRequest<GiteaResponseDto<TResponseDto>>
     {
         var jsonBody = _jsonSerializer.SerializeObject(httpRestApiDto.BodyDto!);
-        using var httpClient = _httpClientFactory.CreateHttpClient(_giteaApiConfiguration.ApiConnectionTimeout);
-        var httpRequestHeaders = CreateHttpRequestHeaders(_giteaApiConfiguration.PersonalAccessToken);
+        using var httpClient = _httpClientFactory.CreateHttpClient(_giteaOptions.Value.ApiConnectionTimeout);
+        var httpRequestHeaders = CreateHttpRequestHeaders(_giteaOptions.Value.PersonalAccessToken);
         var httpContentHeaders = CreateContentHeaders();
-        using var httpRequestMessage = _httpRequestMessageFactory.CreateHttpRequestMessage(_giteaApiConfiguration.BaseUrl,
+        using var httpRequestMessage = _httpRequestMessageFactory.CreateHttpRequestMessage(_giteaOptions.Value.BaseUrl,
             httpRestApiDto.HttpMethod,
             jsonBody,
             httpRequestHeaders,

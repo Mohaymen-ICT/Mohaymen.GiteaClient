@@ -12,7 +12,7 @@ namespace Mohaymen.GitClient.Common.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddGitClientServices(this IServiceCollection serviceCollection, GiteaApiConfiguration giteaApiConfiguration)
+    public static IServiceCollection AddGitClientServices(this IServiceCollection serviceCollection, Action<GiteaApiConfiguration> giteaOptions)
     {
         var dependencyInstallers = GetDependencyInstallers();
 
@@ -24,8 +24,9 @@ public static class DependencyInjection
         return serviceCollection;
     }
 
-    private static IServiceCollection AddCommonDependencies(IServiceCollection serviceCollection, GiteaApiConfiguration giteaApiConfiguration)
+    private static IServiceCollection AddCommonDependencies(IServiceCollection serviceCollection, Action<GiteaApiConfiguration> giteaOptions)
     {
+        serviceCollection.Configure(giteaOptions);
         serviceCollection.AddSingleton<GiteaApiConfiguration>();
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Net;
 using FluentAssertions;
+using Microsoft.Extensions.Options;
 using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
 using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
 using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
@@ -19,7 +20,7 @@ public class ApiCallFacadeTests
     private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IJsonSerializer _jsonSerializer;
-    private readonly GiteaApiConfiguration _giteaApiConfiguration;
+    private readonly IOptions<GiteaApiConfiguration> _giteaApiConfigurationOptions;
     private readonly IHttpClientWrapper _httpClientWrapper;
     private readonly IApiCallFacade _sut;
     private const string BaseUrl = "http://www.google.com";
@@ -30,9 +31,9 @@ public class ApiCallFacadeTests
         _httpRequestMessageFactory = Substitute.For<IHttpRequestMessageFactory>();
         _httpClientFactory = Substitute.For<IHttpClientFactory>();
         _jsonSerializer = Substitute.For<IJsonSerializer>();
-        _giteaApiConfiguration = new GiteaApiConfiguration(BaseUrl, Token, "fakeOwner");
+        _giteaApiConfigurationOptions = Substitute.For<IOptions<GiteaApiConfiguration>>();
         _httpClientWrapper = Substitute.For<IHttpClientWrapper>();
-        _sut = new ApiCallFacade(_httpRequestMessageFactory, _httpClientFactory, _giteaApiConfiguration,
+        _sut = new ApiCallFacade(_httpRequestMessageFactory, _httpClientFactory, _giteaApiConfigurationOptions,
             _jsonSerializer, _httpClientWrapper);
     }
 
@@ -73,6 +74,13 @@ public class ApiCallFacadeTests
                 StatusCode = HttpStatusCode.Forbidden,
                 Content = new StringContent(errorMessage)
             });
+        var giteaConfiguration = new GiteaApiConfiguration
+        {
+            BaseUrl = BaseUrl,
+            PersonalAccessToken = Token,
+            RepositoriesOwner = "fakeOwner"
+        };
+        _giteaApiConfigurationOptions.Value.Returns(giteaConfiguration);
         var expected = new GiteaResponseDto<FakeResponseBody>
         {
             IsSuccessfull = false,
@@ -129,6 +137,13 @@ public class ApiCallFacadeTests
                 StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(responseString)
             });
+        var giteaConfiguration = new GiteaApiConfiguration
+        {
+            BaseUrl = BaseUrl,
+            PersonalAccessToken = Token,
+            RepositoriesOwner = "fakeOwner"
+        };
+        _giteaApiConfigurationOptions.Value.Returns(giteaConfiguration);
         var expected = new GiteaResponseDto<FakeResponseBody>
         {
             IsSuccessfull = true,
