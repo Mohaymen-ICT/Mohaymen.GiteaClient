@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
+namespace Mohaymen.GiteaClient.Common.DependencyInjection.Abstractions;
 
 internal interface IDependencyInstaller
 {

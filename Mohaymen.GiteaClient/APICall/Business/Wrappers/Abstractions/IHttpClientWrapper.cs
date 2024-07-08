@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Mohaymen.GitClient.APICall.Business.Wrappers.Abstractions;
+namespace Mohaymen.GiteaClient.APICall.Business.Wrappers.Abstractions;
 
 internal interface IHttpClientWrapper
 {

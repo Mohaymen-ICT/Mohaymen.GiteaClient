@@ -1,4 +1,4 @@
-﻿namespace Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
+﻿namespace Mohaymen.GiteaClient.APICall.Business.Serialization.Abstractions;
 
 internal interface IJsonSerializer
 {

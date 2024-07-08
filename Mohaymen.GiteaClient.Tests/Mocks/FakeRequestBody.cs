@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Mohaymen.GitClient.APICall.Domain;
+using Mohaymen.GiteaClient.APICall.Domain;
 
 namespace Mohaymen.GitClient.Tests.Mocks;
 

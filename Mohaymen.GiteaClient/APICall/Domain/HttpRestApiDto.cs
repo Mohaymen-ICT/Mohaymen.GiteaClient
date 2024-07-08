@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Mohaymen.GitClient.APICall.Domain;
+namespace Mohaymen.GiteaClient.APICall.Domain;
 
 internal sealed class HttpRestApiDto<TRequestBody>
 {

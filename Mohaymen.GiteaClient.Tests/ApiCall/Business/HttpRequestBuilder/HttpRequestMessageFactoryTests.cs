@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using FluentAssertions;
-using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder;
-using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder;
+using Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder.Abstractions;
 using Xunit;
 
 namespace Mohaymen.GitClient.Tests.ApiCall.Business.HttpRequestBuilder;

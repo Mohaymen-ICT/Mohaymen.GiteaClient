@@ -2,14 +2,14 @@
 using System.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
-using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
-using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
-using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
-using Mohaymen.GitClient.APICall.Business.Wrappers.Abstractions;
-using Mohaymen.GitClient.APICall.Domain;
-using Mohaymen.GitClient.APICall.Facades;
-using Mohaymen.GitClient.APICall.Facades.Abstractions;
 using Mohaymen.GitClient.Tests.Mocks;
+using Mohaymen.GiteaClient.APICall.Business.HttpClientFactory.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.Serialization.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.Wrappers.Abstractions;
+using Mohaymen.GiteaClient.APICall.Domain;
+using Mohaymen.GiteaClient.APICall.Facades;
+using Mohaymen.GiteaClient.APICall.Facades.Abstractions;
 using NSubstitute;
 using Xunit;
 

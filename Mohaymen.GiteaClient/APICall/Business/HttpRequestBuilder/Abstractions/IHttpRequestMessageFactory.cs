@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Net.Http;
 
-namespace Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
+namespace Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder.Abstractions;
 
 internal interface IHttpRequestMessageFactory
 {

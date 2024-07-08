@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Mohaymen.GitClient.APICall.Business.HttpClientFactory;
-using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpClientFactory;
+using Mohaymen.GiteaClient.APICall.Business.HttpClientFactory.Abstractions;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.ApiCall.Business.HttpClientBuidler;
+namespace Mohaymen.GitClient.Tests.ApiCall.Business.HttpClientBuilder;
 
 public class HttpClientFactoryTests
 {

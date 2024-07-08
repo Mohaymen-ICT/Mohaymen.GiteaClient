@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpClientFactory.Abstractions;
 
-namespace Mohaymen.GitClient.APICall.Business.HttpClientFactory;
+namespace Mohaymen.GiteaClient.APICall.Business.HttpClientFactory;
 
 internal sealed class HttpClientFactory : IHttpClientFactory
 {

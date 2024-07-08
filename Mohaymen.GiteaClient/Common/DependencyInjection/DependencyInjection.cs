@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Mohaymen.GitClient.APICall.Domain;
-using Mohaymen.GitClient.Common.Abstractions;
-using Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
+using Mohaymen.GiteaClient.APICall.Domain;
+using Mohaymen.GiteaClient.Common.Abstractions;
+using Mohaymen.GiteaClient.Common.DependencyInjection.Abstractions;
 
-namespace Mohaymen.GitClient.Common.DependencyInjection;
+namespace Mohaymen.GiteaClient.Common.DependencyInjection;
 
 public static class DependencyInjection
 {

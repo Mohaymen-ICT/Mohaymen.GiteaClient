@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Mohaymen.GitClient.APICall.Domain;
+using Mohaymen.GiteaClient.APICall.Domain;
 
-namespace Mohaymen.GitClient.APICall.Facades.Abstractions;
+namespace Mohaymen.GiteaClient.APICall.Facades.Abstractions;
 
 internal interface IApiCallFacade
 {

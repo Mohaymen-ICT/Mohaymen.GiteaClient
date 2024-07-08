@@ -1,7 +1,7 @@
-﻿using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
+﻿using Mohaymen.GiteaClient.APICall.Business.Serialization.Abstractions;
 using Newtonsoft.Json;
 
-namespace Mohaymen.GitClient.APICall.Business.Serialization;
+namespace Mohaymen.GiteaClient.APICall.Business.Serialization;
 
 internal sealed class JsonSerializer : IJsonSerializer
 {

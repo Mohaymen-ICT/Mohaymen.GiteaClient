@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Net.Http;
-using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder.Abstractions;
 
-namespace Mohaymen.GitClient.APICall.Business.HttpRequestBuilder;
+namespace Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder;
 
 internal sealed class HttpRequestMessageFactory : IHttpRequestMessageFactory
 {

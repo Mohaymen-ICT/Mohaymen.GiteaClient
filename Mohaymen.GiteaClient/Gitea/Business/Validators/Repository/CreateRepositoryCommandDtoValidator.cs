@@ -1,11 +1,12 @@
-﻿using FluentValidation;
-using Mohaymen.GitClient.Common.Validation;
+using FluentValidation;
+using Mohaymen.GiteaClient.Common.Validation;
+using Mohaymen.GiteaClient.Gitea.Domain.Dtos.Repository.CreateRepository;
 
-namespace Mohaymen.GitClient.Gitea.Business.Commands.Repository.CreateRepository;
+namespace Mohaymen.GiteaClient.Gitea.Business.Validators.Repository;
 
-internal sealed class CreateRepositoryCommandValidator : AbstractValidator<CreateRepositoryCommand>
+internal sealed class CreateRepositoryCommandDtoValidator : AbstractValidator<CreateRepositoryCommandDto>
 {
-    public CreateRepositoryCommandValidator()
+    public CreateRepositoryCommandDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

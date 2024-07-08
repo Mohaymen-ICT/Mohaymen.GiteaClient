@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Mohaymen.GitClient.APICall.Domain;
-using Mohaymen.GitClient.Gitea.Business.Commands.Repository.CreateRepository;
+using Mohaymen.GiteaClient.APICall.Domain;
+using Mohaymen.GiteaClient.Gitea.Domain.Dtos.Repository.CreateRepository;
 
-namespace Mohaymen.GitClient.Gitea.Facades.Abstractions;
+namespace Mohaymen.GiteaClient.Gitea.Facades.Abstractions;
 
 public interface IGiteaFacade
 {
-    Task<GiteaResponseDto<CreateRepositoryResponseDto>> CreateRepository(CreateRepositoryCommand createRepositoryCommand, CancellationToken cancellationToken);
+    Task<GiteaResponseDto<CreateRepositoryResponseDto>> CreateRepository(CreateRepositoryCommandDto createRepositoryCommandDto, CancellationToken cancellationToken);
 }

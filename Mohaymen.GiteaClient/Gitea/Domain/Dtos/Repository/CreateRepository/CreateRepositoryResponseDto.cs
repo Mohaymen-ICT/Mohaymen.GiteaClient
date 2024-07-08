@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Mohaymen.GitClient.Gitea.Business.Commands.Repository.CreateRepository;
+namespace Mohaymen.GiteaClient.Gitea.Domain.Dtos.Repository.CreateRepository;
 
 public sealed class CreateRepositoryResponseDto
 {

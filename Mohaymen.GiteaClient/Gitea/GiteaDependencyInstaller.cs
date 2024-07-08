@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Mohaymen.GitClient.Common.DependencyInjection.Abstractions;
-using Mohaymen.GitClient.Gitea.Facades;
-using Mohaymen.GitClient.Gitea.Facades.Abstractions;
+using Mohaymen.GiteaClient.Common.DependencyInjection.Abstractions;
+using Mohaymen.GiteaClient.Gitea.Facades;
+using Mohaymen.GiteaClient.Gitea.Facades.Abstractions;
 
-namespace Mohaymen.GitClient.Gitea;
+namespace Mohaymen.GiteaClient.Gitea;
 
 internal class GiteaDependencyInstaller : IDependencyInstaller
 {

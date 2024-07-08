@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mohaymen.GitClient.APICall.Domain;
+namespace Mohaymen.GiteaClient.APICall.Domain;
 
 public sealed class GiteaApiConfiguration
 {

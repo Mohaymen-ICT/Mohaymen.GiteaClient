@@ -1,18 +1,19 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FluentValidation;
-using Mohaymen.GitClient.Common.Validation;
-using Mohaymen.GitClient.Gitea.Business.Commands.Repository.CreateRepository;
+using Mohaymen.GiteaClient.Common.Validation;
+using Mohaymen.GiteaClient.Gitea.Business.Validators.Repository;
+using Mohaymen.GiteaClient.Gitea.Domain.Dtos.Repository.CreateRepository;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Business.Commands.Repository.CreateRepository;
+namespace Mohaymen.GitClient.Tests.Gitea.Business.Validators.Repository;
 
-public class CreateRepositoryCommandValidatorTests
+public class CreateRepositoryCommandDtoValidatorTests
 {
-    private readonly IValidator<CreateRepositoryCommand> _sut;
+    private readonly IValidator<CreateRepositoryCommandDto> _sut;
 
-    public CreateRepositoryCommandValidatorTests()
+    public CreateRepositoryCommandDtoValidatorTests()
     {
-        _sut = new CreateRepositoryCommandValidator();
+        _sut = new CreateRepositoryCommandDtoValidator();
     }
 
     [Theory]
@@ -21,7 +22,7 @@ public class CreateRepositoryCommandValidatorTests
     public void Validate_ShouldReturnEmptyRepositoryNameErrorCode_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
     {
         // Arrange
-        var command = new CreateRepositoryCommand()
+        var commandDto = new CreateRepositoryCommandDto
         {
             Name = repositoryName,
             DefaultBranch = "main",
@@ -29,7 +30,7 @@ public class CreateRepositoryCommandValidatorTests
         };
 
         // Act
-        var actual = _sut.Validate(command);
+        var actual = _sut.Validate(commandDto);
 
         // Assert
         actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyRepositoryNameErrorCode);
@@ -41,7 +42,7 @@ public class CreateRepositoryCommandValidatorTests
     public void Validate_ShouldReturnEmptyBranchNameErrorCode_WhenDefaultBranchNameIsNullOrEmpty(string branchName)
     {
         // Arrange
-        var command = new CreateRepositoryCommand()
+        var commandDto = new CreateRepositoryCommandDto
         {
             Name = "testRepo",
             DefaultBranch = branchName,
@@ -49,7 +50,7 @@ public class CreateRepositoryCommandValidatorTests
         };
 
         // Act
-        var actual = _sut.Validate(command);
+        var actual = _sut.Validate(commandDto);
 
         // Assert
         actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyBranchNameErrorCode);
@@ -59,7 +60,7 @@ public class CreateRepositoryCommandValidatorTests
     public void Validate_ShouldReturnValidResult_WhenEveryThingIsProvidedProperly()
     {
         // Arrange
-        var command = new CreateRepositoryCommand()
+        var commandDto = new CreateRepositoryCommandDto
         {
             Name = "testRepo",
             DefaultBranch = "main",
@@ -67,7 +68,7 @@ public class CreateRepositoryCommandValidatorTests
         };
 
         // Act
-        var actual = _sut.Validate(command);
+        var actual = _sut.Validate(commandDto);
         
         // Assert
         actual.IsValid.Should().BeTrue();

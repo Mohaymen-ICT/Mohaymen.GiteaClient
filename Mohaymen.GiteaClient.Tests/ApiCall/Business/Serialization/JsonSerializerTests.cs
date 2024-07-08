@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Mohaymen.GitClient.APICall.Business.Serialization;
-using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
 using Mohaymen.GitClient.Tests.Mocks;
+using Mohaymen.GiteaClient.APICall.Business.Serialization;
+using Mohaymen.GiteaClient.APICall.Business.Serialization.Abstractions;
 using Xunit;
 
 namespace Mohaymen.GitClient.Tests.ApiCall.Business.Serialization;

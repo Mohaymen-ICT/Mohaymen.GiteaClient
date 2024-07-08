@@ -1,4 +1,4 @@
-﻿namespace Mohaymen.GitClient.APICall.Domain;
+﻿namespace Mohaymen.GiteaClient.APICall.Domain;
 
 public sealed class GiteaResponseDto<TResponseBody>
 {

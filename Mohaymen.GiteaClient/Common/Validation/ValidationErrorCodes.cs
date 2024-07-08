@@ -1,7 +1,7 @@
-﻿namespace Mohaymen.GitClient.Common.Validation;
+﻿namespace Mohaymen.GiteaClient.Common.Validation;
 
 internal static class ValidationErrorCodes
 {
-    internal static string EmptyRepositoryNameErrorCode => "EmptyRepositoryNameErrorCode";
-    internal static string EmptyBranchNameErrorCode => "EmptyBranchNameErrorCode";
+    internal const string EmptyRepositoryNameErrorCode = "EmptyRepositoryNameErrorCode";
+    internal const string EmptyBranchNameErrorCode = "EmptyBranchNameErrorCode";
 }

@@ -4,14 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Options;
-using Mohaymen.GitClient.APICall.Business.HttpClientFactory.Abstractions;
-using Mohaymen.GitClient.APICall.Business.HttpRequestBuilder.Abstractions;
-using Mohaymen.GitClient.APICall.Business.Serialization.Abstractions;
-using Mohaymen.GitClient.APICall.Business.Wrappers.Abstractions;
-using Mohaymen.GitClient.APICall.Domain;
-using Mohaymen.GitClient.APICall.Facades.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpClientFactory.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.HttpRequestBuilder.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.Serialization.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.Wrappers.Abstractions;
+using Mohaymen.GiteaClient.APICall.Domain;
+using Mohaymen.GiteaClient.APICall.Facades.Abstractions;
 
-namespace Mohaymen.GitClient.APICall.Facades;
+namespace Mohaymen.GiteaClient.APICall.Facades;
 
 internal sealed class ApiCallFacade : IApiCallFacade
 {

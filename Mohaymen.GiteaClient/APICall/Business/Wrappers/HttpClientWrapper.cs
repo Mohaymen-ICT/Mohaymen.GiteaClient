@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Mohaymen.GitClient.APICall.Business.Wrappers.Abstractions;
+using Mohaymen.GiteaClient.APICall.Business.Wrappers.Abstractions;
 
-namespace Mohaymen.GitClient.APICall.Business.Wrappers;
+namespace Mohaymen.GiteaClient.APICall.Business.Wrappers;
 
 internal sealed class HttpClientWrapper : IHttpClientWrapper
 {
