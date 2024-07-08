@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using Mohaymen.GitClient.APICall.Domain;
 using Mohaymen.GitClient.APICall.Facades.Abstractions;
@@ -20,16 +21,19 @@ public sealed class CreateRepositoryCommand : IRequest<GiteaResponseDto<CreateRe
 
 internal sealed class CreateRepositoryCommandHandler : IRequestHandler<CreateRepositoryCommand, GiteaResponseDto<CreateRepositoryResponseDto>>
 {
+    private readonly IValidator<CreateRepositoryCommand> _validator;
     private readonly IApiCallFacade _apiCallFacade;
 
-    public CreateRepositoryCommandHandler(IApiCallFacade apiCallFacade)
+    public CreateRepositoryCommandHandler(IValidator<CreateRepositoryCommand> validator, IApiCallFacade apiCallFacade)
     {
+        _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         _apiCallFacade = apiCallFacade ?? throw new ArgumentNullException(nameof(apiCallFacade));
     }
 
     public async Task<GiteaResponseDto<CreateRepositoryResponseDto>> Handle(CreateRepositoryCommand request,
         CancellationToken cancellationToken)
     {
+        await _validator.ValidateAndThrowAsync(request, cancellationToken);
         var httpRestApiDto = new HttpRestApiDto<CreateRepositoryCommand>
         {
             HttpMethod = HttpMethod.Post,
