@@ -11,5 +11,6 @@ internal class CommonDependencyInstaller : IDependencyInstaller
     {
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        serviceCollection.AddRefitClientTypes();
     }
 }

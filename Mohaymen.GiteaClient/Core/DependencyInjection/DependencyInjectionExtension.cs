@@ -10,39 +10,20 @@ namespace Mohaymen.GiteaClient.Core.DependencyInjection;
 
 public static class DependencyInjectionExtension
 {
-    public static IServiceCollection AddGiteaClientServices(this IServiceCollection serviceCollection, Action<GiteaApiConfiguration> giteaOptionsAction)
+    public static IServiceCollection AddGiteaClient(this IServiceCollection serviceCollection,
+        Action<GiteaApiConfiguration> giteaOptionsAction)
     {
+        InstallConfigs(serviceCollection, giteaOptionsAction);
         InstallGeneralDefinedDependencies(serviceCollection);
-        InstallRefitRestClients(serviceCollection, giteaOptionsAction);
         return serviceCollection;
     }
 
-    private static void InstallRefitRestClients(IServiceCollection serviceCollection, Action<GiteaApiConfiguration> giteaOptionsAction)
+    private static void InstallConfigs(IServiceCollection serviceCollection,
+        Action<GiteaApiConfiguration> giteaOptionsAction)
     {
-        var refitClientInstallers = GetRefitClientDependencyInstallers();
-        var giteaClientConfiguration = new GiteaApiConfiguration
-        {
-            BaseUrl = "",
-            PersonalAccessToken = "",
-            RepositoriesOwner = ""
-        };
-        giteaOptionsAction(giteaClientConfiguration);
-        foreach (var refitClientInstaller in refitClientInstallers)
-        {
-            refitClientInstaller.Install(serviceCollection, giteaClientConfiguration);
-        }
+        serviceCollection.Configure(giteaOptionsAction);
     }
-
-    private static IEnumerable<IRefitClientDependencyInstaller> GetRefitClientDependencyInstallers()
-    {
-        return typeof(IAssemblyMarkerInterface)
-            .Assembly
-            .DefinedTypes
-            .Where(type => !type.IsAbstract && !type.IsInterface && typeof(IRefitClientDependencyInstaller).IsAssignableFrom(type))
-            .Select(Activator.CreateInstance)
-            .Cast<IRefitClientDependencyInstaller>();
-    }
-
+    
     private static void InstallGeneralDefinedDependencies(IServiceCollection serviceCollection)
     {
         var dependencyInstallers = GetGeneralDependencyInstallers();
