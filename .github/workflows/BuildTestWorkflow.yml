@@ -7,7 +7,7 @@ on:
       - feature/**
 
 jobs:
-  build&Test:
+  BuildAndTest:
     
     runs-on: ubuntu-latest
     
