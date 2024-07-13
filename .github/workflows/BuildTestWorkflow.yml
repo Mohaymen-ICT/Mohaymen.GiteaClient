@@ -18,7 +18,7 @@ jobs:
       - name: set up dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.7'
+          dotnet-version: '8.0.0'
       
       - name: nuget restore
         run: dotnet restore --no-cache
