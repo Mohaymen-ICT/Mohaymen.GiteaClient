@@ -1,0 +1,23 @@
+name: build, test, pack and publish nuget package on nuget repository
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: build and test
+        uses: ./.github/actions/build-and-test/
+
+      - name: deploy
+        uses: ./.github/actions/deploy/
+        with:
+          nuget_api_key:
+            ${{ secrets.NUGET_API_KEY }}
