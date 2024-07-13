@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.HttpHeader;
-using Mohaymen.GiteaClient.Core.ApiCall.Serialization;
 using Mohaymen.GiteaClient.Core.Configs;
 using Refit;
 
