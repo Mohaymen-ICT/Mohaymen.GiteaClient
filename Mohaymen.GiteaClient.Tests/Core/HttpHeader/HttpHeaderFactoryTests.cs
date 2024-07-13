@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Mohaymen.GiteaClient.Core.ApiCall.Exceptions;
 using Mohaymen.GiteaClient.Core.ApiCall.HttpHeader;
-using NSubstitute.ExceptionExtensions;
 using Xunit;
 
 namespace Mohaymen.GitClient.Tests.Core.HttpHeader;
@@ -19,7 +18,7 @@ public class HttpHeaderFactoryTests
         var actual = () => HttpHeaderFactory.GetAuthorizationHeader(token);
         
         // Assert
-        actual.Should().Throws<InvalidApiKeyException>();
+        actual.Should().Throw<InvalidApiKeyException>();
     }
     
     [Fact]

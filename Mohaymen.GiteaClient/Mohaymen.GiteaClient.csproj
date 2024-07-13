@@ -11,6 +11,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="Refit"/>
         <PackageReference Include="Refit.HttpClientFactory"/>
+        <PackageReference Include="Refit.Newtonsoft.Json"/>
         <PackageReference Include="Riok.Mapperly"/>
         <PackageReference Include="Microsoft.Extensions.Options"/>
         <PackageReference Include="Newtonsoft.Json"/>
