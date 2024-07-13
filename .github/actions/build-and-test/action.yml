@@ -1,0 +1,22 @@
+name: build and test
+description: the action file for building and testing dotnet project
+
+runs:
+  using: 'composite'
+  steps:
+    - name: set up dotnet core sdk
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+      
+    - name: restoring dependencies
+      run: dotnet restore --no-cache
+      shell: bash
+    
+    - name: build project
+      run: dotnet build --no-restore --configuration Release
+      shell: bash
+    
+    - name: run unit tests
+      run: dotnet test -c Release --no-restore --verbosity normal
+      shell: bash
