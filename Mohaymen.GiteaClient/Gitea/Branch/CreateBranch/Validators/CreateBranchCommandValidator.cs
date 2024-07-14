@@ -7,10 +7,6 @@ internal sealed class CreateBranchCommandValidator : AbstractValidator<CreateBra
 {
     public CreateBranchCommandValidator()
     {
-        RuleFor(x => x.Owner)
-            .NotEmpty()
-            .WithErrorCode(CreateBranchErrorCodes.EmptyOwnerErrorCode)
-            .WithMessage("owner should not be empty");
         RuleFor(x => x.RepositoryName)
             .NotEmpty()
             .WithErrorCode(CreateBranchErrorCodes.EmptyRepositoryNameErrorCode)
