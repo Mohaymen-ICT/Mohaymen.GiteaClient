@@ -18,17 +18,6 @@ runs:
       run: dotnet build --no-restore --configuration Release
       shell: bash
 
-    - name: Run tests
-      run: |
-        dotnet test --no-build --verbosity normal \
-          --collect:"XPlat Code Coverage" \
-          -r ./TestResults \
-          --logger "trx;LogFileName=test_results.trx"
-      shell: bash
-
-    - name: Report coverage
-      run: |
-        dotnet tool install --global dotnet-reportgenerator-globaltool
-        reportgenerator "-reports:./TestResults/**/coverage.cobertura.xml" "-targetdir:./TestResults/CoverageReport" -reporttypes:Html
-        
+    - name: run unit tests
+      run: dotnet test -c Release --no-restore --verbosity normal
       shell: bash
