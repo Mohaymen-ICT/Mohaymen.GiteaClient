@@ -5,13 +5,14 @@ on:
     branches:
       - master
 
-
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: build and test
         uses: ./.github/actions/build-and-test/
@@ -19,5 +20,4 @@ jobs:
       - name: deploy
         uses: ./.github/actions/deploy/
         with:
-          nuget_api_key:
-            ${{ secrets.NUGET_API_KEY }}
+          nuget_api_key: ${{ secrets.NUGET_API_KEY }}
