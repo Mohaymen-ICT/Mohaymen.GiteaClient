@@ -1,6 +1,5 @@
 name: Gitea.client cicd workflow
 
-
 on:
   push:
   pull_request:

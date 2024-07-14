@@ -1,5 +1,7 @@
 name: Pack and publish nuget
-description: action for pack and publish nuget to nuget repository
+description: Action for packing and publishing NuGet packages to the NuGet repository
+author: a.eiji
+
 inputs:
   nuget_api_key:
     required: true

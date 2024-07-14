@@ -1,5 +1,6 @@
 name: Build and test
-description: the action file for building and testing dotnet project
+description: The action file for building and testing a .NET project.
+author: a.eiji
 
 runs:
   using: 'composite'
