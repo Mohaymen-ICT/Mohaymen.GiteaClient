@@ -1,6 +1,5 @@
-name: pack and publish nuget
+name: Pack and publish nuget
 description: action for pack and publish nuget to nuget repository
-
 inputs:
   nuget_api_key:
     required: true
@@ -29,4 +28,3 @@ runs:
       if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
       run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ inputs.nuget_api_key }} --source https://api.nuget.org/v3/index.json --skip-duplicate
       shell: bash
-      

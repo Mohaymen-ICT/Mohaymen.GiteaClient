@@ -1,7 +1,9 @@
-name: build, test, pack and publish nuget package on nuget repository
+name: Gitea.client cicd workflow
+
 
 on:
   push:
+  pull_request:
     branches:
       - master
 
@@ -17,7 +19,8 @@ jobs:
       - name: build and test
         uses: ./.github/actions/build-and-test/
 
-      - name: deploy
-        uses: ./.github/actions/deploy/
+      - name: pack and push nuget
+        if: github.event_name == 'push' && github.base_ref == 'master'
+        uses: ./.github/actions/create-and-push-artifact/
         with:
           nuget_api_key: ${{ secrets.NUGET_API_KEY }}
