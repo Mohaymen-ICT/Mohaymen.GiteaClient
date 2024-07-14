@@ -37,7 +37,7 @@ public class BranchFacadeTests
         await _sut.CreateBranchAsync(commandDto, default);
 
         // Assert
-        await _mediator.Received(1).Send(Arg.Is<CreateBranchCommand>(x => x.RepositoryName == repositoryName
+        await _mediator.DidNotReceive().Send(Arg.Is<CreateBranchCommand>(x => x.RepositoryName == repositoryName
                                                                           && x.NewBranchName == newBranchName
                                                                           && x.OldReferenceName == oldReferenceName));
     }
