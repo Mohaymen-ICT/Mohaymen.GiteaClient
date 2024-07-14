@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/actions/build-and-test/
 
       - name: pack and push nuget
-        if: github.event_name == 'push' && github.base_ref == 'master'
+        if: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
         uses: ./.github/actions/create-and-push-artifact/
         with:
           nuget_api_key: ${{ secrets.NUGET_API_KEY }}
