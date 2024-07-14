@@ -14,12 +14,23 @@ runs:
       id: get_next_version
       uses: thenativeweb/get-next-version@main
 
-    - name: create tag
-      if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
-      run: |
-        git tag v${{ steps.get_next_version.outputs.version }}
-        git push origin v${{ steps.get_next_version.outputs.version }}
-      shell: bash
+    # - name: create tag
+    #   if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
+    #   run: |
+    #     git tag v${{ steps.get_next_version.outputs.version }}
+    #     git push origin v${{ steps.get_next_version.outputs.version }}
+    #   shell: bash
+
+    - name: Create tag
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/v${{ steps.get_next_version.outputs.version }}',
+            sha: context.sha
+          })
 
     - name: pack the nuget package
       if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
