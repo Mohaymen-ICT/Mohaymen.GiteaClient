@@ -12,21 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A66B4D60-E439-497A-B93A-08EB91944525}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build-and-test", "build-and-test", "{E60EFB16-B020-484C-B8B5-95CF6863ACC0}"
-	ProjectSection(SolutionItems) = preProject
-		.github\actions\build-and-test\action.yml = .github\actions\build-and-test\action.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{C5A07C52-4F02-4577-834F-2D947921AE43}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{270E6508-517D-4572-8A72-DDD499591A8D}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\feature_branch_ci.yml = .github\workflows\feature_branch_ci.yml
-		.github\workflows\master_ci.yml = .github\workflows\master_ci.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,9 +29,5 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{70E107E2-9048-46B7-A7BB-335852285AD9} = {AFC7EA0B-B70D-420E-BCBC-91787115C752}
-		{A66B4D60-E439-497A-B93A-08EB91944525} = {7C8D7D91-CBC2-4868-AF72-64AE84F7C517}
-		{C5A07C52-4F02-4577-834F-2D947921AE43} = {A66B4D60-E439-497A-B93A-08EB91944525}
-		{E60EFB16-B020-484C-B8B5-95CF6863ACC0} = {C5A07C52-4F02-4577-834F-2D947921AE43}
-		{270E6508-517D-4572-8A72-DDD499591A8D} = {A66B4D60-E439-497A-B93A-08EB91944525}
 	EndGlobalSection
 EndGlobal
