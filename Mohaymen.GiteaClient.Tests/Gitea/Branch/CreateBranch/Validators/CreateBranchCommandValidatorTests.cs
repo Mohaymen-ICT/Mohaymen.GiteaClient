@@ -23,7 +23,9 @@ public class CreateBranchCommandValidatorTests
         // Arrange
         var command = new CreateBranchCommand
         {
-            RepositoryName = repositoryName
+            RepositoryName = repositoryName,
+            NewBranchName = "new_branch",
+            OldReferenceName = "old_ref"
         };
 
         // Act
@@ -42,7 +44,9 @@ public class CreateBranchCommandValidatorTests
         // Arrange
         var command = new CreateBranchCommand
         {
-            NewBranchName = newBranchName
+            RepositoryName = "repo",
+            NewBranchName = newBranchName,
+            OldReferenceName = "old_ref"
         };
 
         // Act
@@ -61,6 +65,8 @@ public class CreateBranchCommandValidatorTests
         // Arrange
         var command = new CreateBranchCommand
         {
+            RepositoryName = "repo",
+            NewBranchName = "new_branch",
             OldReferenceName = oldReferenceName
         };
 

@@ -2,7 +2,7 @@
 
 public class CreateBranchCommandDto
 {
-    public string RepositoryName { get; init; }
-    public string NewBranchName { get; init; }
-    public string OldReferenceName { get; init; }
+    public required string RepositoryName { get; init; }
+    public required string NewBranchName { get; init; }
+    public required string OldReferenceName { get; init; }
 }

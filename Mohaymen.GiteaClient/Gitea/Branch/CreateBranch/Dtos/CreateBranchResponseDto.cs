@@ -5,5 +5,5 @@ namespace Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
 public class CreateBranchResponseDto
 {
     [JsonProperty("name")] 
-    public string BranchName { get; init; }
+    public required string BranchName { get; init; }
 }
