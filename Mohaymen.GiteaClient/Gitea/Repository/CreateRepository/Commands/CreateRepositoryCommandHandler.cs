@@ -12,9 +12,9 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Commands;
 
 internal class CreateRepositoryCommand : IRequest<ApiResponse<CreateRepositoryResponseDto>>
 {
-    public string DefaultBranch { get; init; }
+    public required string DefaultBranch { get; init; }
 
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     public bool IsPrivateBranch { get; init; }
 }
