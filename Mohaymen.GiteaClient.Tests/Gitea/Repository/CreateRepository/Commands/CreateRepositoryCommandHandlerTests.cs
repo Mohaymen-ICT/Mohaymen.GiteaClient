@@ -9,7 +9,7 @@ using NSubstitute;
 using Refit;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Repository.CreateRepository.Commands;
+namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.CreateRepository.Commands;
 
 public class CreateRepositoryCommandHandlerTests
 {

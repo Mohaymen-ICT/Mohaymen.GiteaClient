@@ -5,7 +5,7 @@ using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Commands;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Validators;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Repository.CreateRepository.Validators;
+namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.CreateRepository.Validators;
 
 public class CreateRepositoryCommandValidatorTests
 {

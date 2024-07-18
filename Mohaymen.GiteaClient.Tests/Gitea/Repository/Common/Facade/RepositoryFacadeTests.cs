@@ -6,7 +6,7 @@ using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using NSubstitute;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Repository.Common.Facade;
+namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.Common.Facade;
 
 public class RepositoryFacadeTests
 {
