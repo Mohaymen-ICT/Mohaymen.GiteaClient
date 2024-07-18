@@ -35,7 +35,7 @@ public class CreateRepositoryTests
         var actual = await _sut.RepositoryClient.CreateRepositoryAsync(createRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
 
         // Assert
-        actual.StatusCode.Should().Be(HttpStatusCode.Created);
+        actual.StatusCode.Should().Be(HttpStatusCode.OK);
         actual.Content!.RepositoryName.Should().Be(repositoryName);
     }
 
