@@ -6,7 +6,7 @@ using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using NSubstitute;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Repository.Common.Facade;
+namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.Common.Facade;
 
 public class RepositoryFacadeTests
 {
@@ -36,9 +36,9 @@ public class RepositoryFacadeTests
         await _sut.CreateRepositoryAsync(commandDto, default);
 
         // Assert
-        _mediator.Received(1).Send(Arg.Is<CreateRepositoryCommand>(x => x.DefaultBranch == branchName &&
-                                                                        x.Name == repositoryName &&
-                                                                        x.IsPrivateBranch == true), default);
+        await _mediator.Received(1).Send(Arg.Is<CreateRepositoryCommand>(x => x.DefaultBranch == branchName &&
+                                                                              x.Name == repositoryName &&
+                                                                              x.IsPrivateBranch == true), default);
     }
     
 }
