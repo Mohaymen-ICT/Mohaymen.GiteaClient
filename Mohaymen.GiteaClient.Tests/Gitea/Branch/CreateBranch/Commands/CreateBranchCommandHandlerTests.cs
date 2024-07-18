@@ -32,7 +32,7 @@ public class CreateBranchCommandHandlerTests
     public async Task Handle_ShouldThrowsValidationException_WhenInputIsInvalid()
     {
         // Arrange
-        _validator.RuleFor(x => x).Must(x => false);
+        _validator.RuleFor(x => x).Must(_ => false);
         var command = new CreateBranchCommand
         {
             RepositoryName = "repo",
@@ -51,7 +51,7 @@ public class CreateBranchCommandHandlerTests
     public async Task Handle_ShouldCallCreateBranchAsync_AndInputsAreValid()
     {
         // Arrange
-        _validator.RuleFor(x => x).Must(x => true);
+        _validator.RuleFor(x => x).Must(_ => true);
         const string owner = "owner";
         const string repositoryName = "repo";
         const string newBranchName = "new_branch";

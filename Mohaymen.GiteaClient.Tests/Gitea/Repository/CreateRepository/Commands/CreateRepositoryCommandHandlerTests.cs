@@ -28,7 +28,7 @@ public class CreateRepositoryCommandHandlerTests
     public async Task Handle_ShouldThrowsValidationException_WhenInputIsInvalidAndValidatorThrowsException()
     {
         // Arrange
-        _validator.RuleFor(x => x).Must(x => false);
+        _validator.RuleFor(x => x).Must(_ => false);
         var command = new CreateRepositoryCommand
         {
             Name = "test",
@@ -39,7 +39,7 @@ public class CreateRepositoryCommandHandlerTests
         // Act
         var actual = async () => await _sut.Handle(command, default);
         // Assert
-        actual.Should().ThrowAsync<ValidationException>();
+        await actual.Should().ThrowAsync<ValidationException>();
     }
 
     [Fact]
