@@ -9,7 +9,7 @@ using NSubstitute;
 using Refit;
 using Xunit;
 
-namespace Mohaymen.GitClient.Tests.Gitea.Repository.CreateRepository.Commands;
+namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.CreateRepository.Commands;
 
 public class CreateRepositoryCommandHandlerTests
 {
@@ -28,7 +28,7 @@ public class CreateRepositoryCommandHandlerTests
     public async Task Handle_ShouldThrowsValidationException_WhenInputIsInvalidAndValidatorThrowsException()
     {
         // Arrange
-        _validator.RuleFor(x => x).Must(x => false);
+        _validator.RuleFor(x => x).Must(_ => false);
         var command = new CreateRepositoryCommand
         {
             Name = "test",
@@ -38,8 +38,9 @@ public class CreateRepositoryCommandHandlerTests
         
         // Act
         var actual = async () => await _sut.Handle(command, default);
+        
         // Assert
-        actual.Should().ThrowAsync<ValidationException>();
+        await actual.Should().ThrowAsync<ValidationException>();
     }
 
     [Fact]
@@ -57,6 +58,7 @@ public class CreateRepositoryCommandHandlerTests
 
         // Act
         await _sut.Handle(command, default);
+        
         // Assert
         await _repositoryRestClient.Received(1).CreateRepositoryAsync(Arg.Is<CreateRepositoryRequest>(x => x.DefaultBranch == branchName
          && x.Name == repositoryName
