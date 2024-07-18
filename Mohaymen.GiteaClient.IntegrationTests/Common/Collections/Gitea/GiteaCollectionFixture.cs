@@ -31,6 +31,7 @@ public class GiteaCollectionFixture : IAsyncLifetime
     private void BuildDependencies(GiteaApiConfiguration giteaApiConfiguration)
     {
         var serviceCollection = new ServiceCollection();
+        serviceCollection.AddHttpClient();
         serviceCollection.AddGiteaClient(configuration =>
         {
             configuration.BaseUrl = giteaApiConfiguration.BaseUrl;
