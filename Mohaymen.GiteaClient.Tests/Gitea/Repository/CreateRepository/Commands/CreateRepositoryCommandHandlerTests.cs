@@ -38,6 +38,7 @@ public class CreateRepositoryCommandHandlerTests
         
         // Act
         var actual = async () => await _sut.Handle(command, default);
+        
         // Assert
         await actual.Should().ThrowAsync<ValidationException>();
     }
@@ -57,6 +58,7 @@ public class CreateRepositoryCommandHandlerTests
 
         // Act
         await _sut.Handle(command, default);
+        
         // Assert
         await _repositoryRestClient.Received(1).CreateRepositoryAsync(Arg.Is<CreateRepositoryRequest>(x => x.DefaultBranch == branchName
          && x.Name == repositoryName
