@@ -20,7 +20,7 @@ internal static class RefitDependencyInjection
         var httpClientConfigureAction = new Action<IServiceProvider, HttpClient>((sp, httpClient) =>
         {
             var giteaConfigOptions = sp.GetService<IOptions<GiteaApiConfiguration>>();
-            httpClient.BaseAddress = new Uri(giteaConfigOptions!.Value.BaseUrl);
+            httpClient.BaseAddress = new Uri($"{giteaConfigOptions!.Value.BaseUrl}/api/v1");
             var apiKey = HttpHeaderFactory.GetAuthorizationHeader(giteaConfigOptions.Value.PersonalAccessToken);
             httpClient.DefaultRequestHeaders.Add("Authorization", apiKey);
         });
