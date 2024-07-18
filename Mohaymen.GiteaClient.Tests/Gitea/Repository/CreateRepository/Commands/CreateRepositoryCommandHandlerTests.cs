@@ -38,6 +38,7 @@ public class CreateRepositoryCommandHandlerTests
         
         // Act
         var actual = async () => await _sut.Handle(command, default);
+        
         // Assert
         await actual.Should().ThrowAsync<ValidationException>();
     }
