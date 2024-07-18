@@ -1,11 +1,19 @@
-﻿using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
+﻿using System;
+using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Context;
-using Riok.Mapperly.Abstractions;
 
 namespace Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Mappers;
 
-[Mapper]
-internal static partial class CreateBranchRequestMapper
+internal static class CreateBranchRequestMapper
 {
-    public static partial CreateBranchRequest Map(CreateBranchCommand createBranchCommand);
+    internal static CreateBranchRequest ToCreateBranchRequest(this CreateBranchCommand createBranchCommand)
+    {
+        ArgumentNullException.ThrowIfNull(createBranchCommand);
+
+        return new CreateBranchRequest
+        {
+            NewBranchName = createBranchCommand.NewBranchName,
+            OldReferenceName = createBranchCommand.OldReferenceName
+        };
+    }
 }

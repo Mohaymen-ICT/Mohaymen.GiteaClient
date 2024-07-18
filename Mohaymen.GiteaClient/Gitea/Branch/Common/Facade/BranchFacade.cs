@@ -21,7 +21,7 @@ internal class BranchFacade : IBranchFacade
     public async Task<ApiResponse<CreateBranchResponseDto>> CreateBranchAsync(CreateBranchCommandDto createBranchCommandDto, 
         CancellationToken cancellationToken)
     {
-        var command = CreateBranchCommandMapper.Map(createBranchCommandDto);
+        var command = createBranchCommandDto.ToCreateBranchCommand();
         return await _mediator.Send(command, cancellationToken);
     }
 }

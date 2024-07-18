@@ -37,7 +37,7 @@ internal class CreateBranchCommandHandler : IRequestHandler<CreateBranchCommand,
     public async Task<ApiResponse<CreateBranchResponseDto>> Handle(CreateBranchCommand command, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(command);
-        var createBranchRequest = CreateBranchRequestMapper.Map(command);
+        var createBranchRequest = command.ToCreateBranchRequest();
         var owner = _options.Value.RepositoriesOwner;
         return await _branchRestClient.CreateBranchAsync(owner, command.RepositoryName, createBranchRequest)
             .ConfigureAwait(false);
