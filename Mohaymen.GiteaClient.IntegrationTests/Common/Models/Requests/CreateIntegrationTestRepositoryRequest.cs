@@ -7,4 +7,7 @@ internal class CreateIntegrationTestRepositoryRequest : CreateRepositoryRequest
 {
     [JsonProperty("readme")]
     public required string Readme { get; init; }
+    
+    [JsonProperty("auto_init")]
+    public bool AutoInit { get; init; }
 }

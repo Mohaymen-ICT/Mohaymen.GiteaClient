@@ -31,10 +31,14 @@ public class BranchTestsClassFixture : IAsyncLifetime
         {
             DefaultBranch = "main",
             Name = RepositoryName,
-            Readme = "some readme to add content to the repo"
+            Readme = "Default",
+            AutoInit = true,
+            IsPrivateBranch = true
         };
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(createRepositoryRequest));
+        jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        await httpClient.PostAsJsonAsync(new Uri($"{_giteaOptions.Value.BaseUrl}/api/v1/user/repos"), createRepositoryRequest);
+        await httpClient.PostAsync(new Uri($"{_giteaOptions.Value.BaseUrl}/api/v1/user/repos"), jsonContent);
     }
 
     public Task DisposeAsync()
