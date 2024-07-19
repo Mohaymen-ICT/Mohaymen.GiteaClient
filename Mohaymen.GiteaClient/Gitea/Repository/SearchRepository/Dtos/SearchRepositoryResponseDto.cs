@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Dtos;
 
-public class SearchRepositoryResponseDto
+public sealed class SearchRepositoryResponseDto
 {
     public required List<RepositorySearchDto> SearchResult { get; init; }
 }

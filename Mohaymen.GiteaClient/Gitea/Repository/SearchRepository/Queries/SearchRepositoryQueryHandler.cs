@@ -10,12 +10,12 @@ using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 
-internal class SearchRepositoryQuery : IRequest<ApiResponse<SearchRepositoryResponseDto>>
+internal sealed class SearchRepositoryQuery : IRequest<ApiResponse<SearchRepositoryResponseDto>>
 {
     public required string Query { get; init; }
 }
 
-internal class SearchRepositoryQueryHandler : IRequestHandler<SearchRepositoryQuery, ApiResponse<SearchRepositoryResponseDto>>
+internal sealed class SearchRepositoryQueryHandler : IRequestHandler<SearchRepositoryQuery, ApiResponse<SearchRepositoryResponseDto>>
 {
     private readonly IValidator<SearchRepositoryQuery> _validator;
     private readonly IRepositoryRestClient _repositoryRestClient;

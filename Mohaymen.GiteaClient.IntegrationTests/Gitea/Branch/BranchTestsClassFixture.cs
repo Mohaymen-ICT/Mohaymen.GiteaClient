@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Branch;
 
-public class BranchTestsClassFixture : IAsyncLifetime
+internal sealed class BranchTestsClassFixture : IAsyncLifetime
 {
     public const string RepositoryName = "BranchUseCaseRepository";
     

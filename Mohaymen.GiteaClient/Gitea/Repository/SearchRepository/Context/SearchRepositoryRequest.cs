@@ -2,7 +2,7 @@
 
 namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Context;
 
-internal class SearchRepositoryRequest
+internal sealed class SearchRepositoryRequest
 {
     [JsonProperty("q")]
     public required string Query { get; init; }

@@ -4,7 +4,7 @@ using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 
 namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Validators;
 
-internal class SearchRepositoryQueryValidator : AbstractValidator<SearchRepositoryQuery>
+internal sealed class SearchRepositoryQueryValidator : AbstractValidator<SearchRepositoryQuery>
 {
     public SearchRepositoryQueryValidator()
     {
