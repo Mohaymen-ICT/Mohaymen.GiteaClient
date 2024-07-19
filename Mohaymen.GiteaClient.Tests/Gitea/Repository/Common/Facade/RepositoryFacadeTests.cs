@@ -3,6 +3,8 @@ using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade;
 using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Commands;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
+using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Dtos;
+using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 using NSubstitute;
 using Xunit;
 
@@ -39,6 +41,23 @@ public class RepositoryFacadeTests
         await _mediator.Received(1).Send(Arg.Is<CreateRepositoryCommand>(x => x.DefaultBranch == branchName &&
                                                                               x.Name == repositoryName &&
                                                                               x.IsPrivateBranch == true), default);
+    }
+
+    [Fact]
+    public async Task SearchRepositoryAsync_ShouldCallSend_WhenEvenr()
+    {
+        // Arrange
+        const string query = "fakeQuery";
+        var searchRepositoryQueryDto = new SearchRepositoryQueryDto
+        {
+            Query = query
+        };
+
+        // Act
+        await _sut.SearchRepositoryAsync(searchRepositoryQueryDto, default);
+
+        // Assert
+        await _mediator.Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
     }
     
 }
