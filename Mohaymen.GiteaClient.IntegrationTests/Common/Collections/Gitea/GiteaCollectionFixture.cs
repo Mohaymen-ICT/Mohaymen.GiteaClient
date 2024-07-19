@@ -3,6 +3,7 @@ using DotNet.Testcontainers.Containers;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Core.DependencyInjection;
+using Mohaymen.GiteaClient.IntegrationTests.Common.DependencyInjection;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.GiteaConfiguration.Factories;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 
@@ -31,7 +32,7 @@ public class GiteaCollectionFixture : IAsyncLifetime
     private void BuildDependencies(GiteaApiConfiguration giteaApiConfiguration)
     {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddHttpClient();
+        serviceCollection.AddGiteaIntegrationTestsServices();
         serviceCollection.AddGiteaClient(configuration =>
         {
             configuration.BaseUrl = giteaApiConfiguration.BaseUrl;
