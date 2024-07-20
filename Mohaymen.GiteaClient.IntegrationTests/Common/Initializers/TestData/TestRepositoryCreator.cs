@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
 using Newtonsoft.Json;
 
@@ -22,7 +23,7 @@ internal class TestRepositoryCreator : ITestRepositoryCreator
 
     public async Task CreateRepository(string repositoryName)
     {
-        var httpClient = _httpClientFactory.CreateClient();
+        var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
         var createRepositoryRequest = new CreateIntegrationTestRepositoryRequest
         {
             DefaultBranch = "main",
@@ -34,6 +35,6 @@ internal class TestRepositoryCreator : ITestRepositoryCreator
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createRepositoryRequest));
         jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        await httpClient.PostAsync(new Uri($"{_giteaOptions.Value.BaseUrl}/api/v1/user/repos"), jsonContent);
+        await httpClient.PostAsync("user/repos", jsonContent);
     }
 }
