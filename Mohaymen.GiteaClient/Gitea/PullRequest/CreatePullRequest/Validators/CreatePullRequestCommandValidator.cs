@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Validators;
+using Mohaymen.GiteaClient.Gitea.PullRequest.CreatePullRequest.Commands;
 
 namespace Mohaymen.GiteaClient.Gitea.PullRequest.CreatePullRequest.Validators;
 
-internal sealed class CreatePullRequestCommandValidator : AbstractValidator<CreateBranchCommand>
+internal sealed class CreatePullRequestCommandValidator : AbstractValidator<CreatePullRequestCommand>
 {
     public CreatePullRequestCommandValidator()
     {
