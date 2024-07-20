@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Core.Abstractions;
 using Mohaymen.GiteaClient.Core.Configs;
@@ -15,7 +17,13 @@ public static class DependencyInjectionExtension
     {
         InstallConfigs(serviceCollection, giteaOptionsAction);
         InstallGeneralDefinedDependencies(serviceCollection);
+        InstallValidators(serviceCollection);
         return serviceCollection;
+    }
+
+    private static void InstallValidators(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Singleton, includeInternalTypes:true);
     }
 
     private static void InstallConfigs(IServiceCollection serviceCollection,
