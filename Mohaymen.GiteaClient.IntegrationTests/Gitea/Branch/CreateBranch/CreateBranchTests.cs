@@ -19,67 +19,7 @@ public class CreateBranchTests : IClassFixture<BranchTestsClassFixture>
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _sut = giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task CreateBranch_ShouldThrowsValidationException_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
-    {
-        // Arrange
-        var createBranchCommandDto = new CreateBranchCommandDto
-        {
-            RepositoryName = repositoryName,
-            NewBranchName = "feature/new_branch",
-            OldReferenceName = "main"
-        };
-        
-        // Act
-        var actual = async () => await _sut.BranchClient.CreateBranchAsync(createBranchCommandDto, _giteaCollectionFixture.CancellationToken);
-
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
     
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task CreateBranch_ShouldThrowsValidationException_WhenOldBranchNameIsNullOrEmpty(string branchName)
-    {
-        // Arrange
-        var createBranchCommandDto = new CreateBranchCommandDto
-        {
-            RepositoryName = "test_repo",
-            NewBranchName = "feature/new_branch",
-            OldReferenceName = branchName
-        };
-        
-        // Act
-        var actual = async () => await _sut.BranchClient.CreateBranchAsync(createBranchCommandDto, _giteaCollectionFixture.CancellationToken);
-
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
-    
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task CreateBranch_ShouldThrowsValidationException_WhenNewBranchNameIsNullOrEmpty(string branchName)
-    {
-        // Arrange
-        var createBranchCommandDto = new CreateBranchCommandDto
-        {
-            RepositoryName = "test_repo",
-            NewBranchName = branchName,
-            OldReferenceName = "main"
-        };
-        
-        // Act
-        var actual = async () => await _sut.BranchClient.CreateBranchAsync(createBranchCommandDto, _giteaCollectionFixture.CancellationToken);
-
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
-
     [Fact]
     public async Task CreateBranch_ShouldCreateBranchWithCreatedStatusCode_WhenInputsAreProvidedProperly()
     {

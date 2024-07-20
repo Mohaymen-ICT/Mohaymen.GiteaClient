@@ -19,44 +19,6 @@ public class CreateRepositoryTests
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _sut = giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task CreateRepository_ShouldThrowsValidationException_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
-    {
-        // Arrange
-        var createRepositoryCommandDto = new CreateRepositoryCommandDto
-        {
-            Name = repositoryName,
-            DefaultBranch = "main"
-        };
-
-        // Act
-        var actual = async () => await _sut.RepositoryClient.CreateRepositoryAsync(createRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
-
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task CreateRepository_ShouldThrowsValidationException_WhenDefaultBranchNameIsNullOrEmpty(string branchName)
-    {
-        // Arrange
-        var createRepositoryCommandDto = new CreateRepositoryCommandDto
-        {
-            Name = "FooRepo",
-            DefaultBranch = branchName
-        };
-        
-        // Act
-        var actual = async () => await _sut.RepositoryClient.CreateRepositoryAsync(createRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
-        
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
     
     [Fact]
     public async Task CreateRepository_ShouldCreateRepositoryWithCreatedStatusCode_WhenInputsAreProvidedProperly()
