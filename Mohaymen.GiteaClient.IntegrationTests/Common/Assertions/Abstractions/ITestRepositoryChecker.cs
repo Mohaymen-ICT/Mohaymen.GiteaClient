@@ -4,5 +4,5 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 
 internal interface ITestRepositoryChecker
 {
-    Task<bool> ContainsRepositoryAsync(string repositoryName);
+    Task<bool> ContainsRepositoryAsync(string repositoryName, CancellationToken cancellationToken);
 }

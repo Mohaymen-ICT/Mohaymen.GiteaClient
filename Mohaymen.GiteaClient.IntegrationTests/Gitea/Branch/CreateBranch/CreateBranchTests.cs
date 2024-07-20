@@ -41,7 +41,7 @@ public class CreateBranchTests : IClassFixture<BranchTestsClassFixture>
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         actual.Content!.BranchName.Should().Be(newBranchName);
-        var branchExist = await _branchChecker.ContainsBranch(BranchTestsClassFixture.RepositoryName, newBranchName);
+        var branchExist = await _branchChecker.ContainsBranch(BranchTestsClassFixture.RepositoryName, newBranchName, _giteaCollectionFixture.CancellationToken);
         branchExist.Should().BeTrue();
     }
 }

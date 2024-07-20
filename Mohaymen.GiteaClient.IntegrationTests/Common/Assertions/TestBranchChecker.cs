@@ -20,12 +20,12 @@ internal class TestBranchChecker : ITestBranchChecker
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
-    public async Task<bool> ContainsBranch(string repositoryName, string branchName)
+    public async Task<bool> ContainsBranch(string repositoryName, string branchName, CancellationToken cancellationToken)
     {
         var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        var httpResponse = await httpClient.GetAsync($"repos/{_giteaOptions.Value.RepositoriesOwner}/{repositoryName}/branches");
-        var responseString = await httpResponse.Content.ReadAsStringAsync();
+        var httpResponse = await httpClient.GetAsync($"repos/{_giteaOptions.Value.RepositoriesOwner}/{repositoryName}/branches", cancellationToken);
+        var responseString = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         var branches = JsonConvert.DeserializeObject<List<RepositoryBranchesResponse>>(responseString);
         return branches!.Select(x => x.BranchName).Contains(branchName);
     }

@@ -2,5 +2,5 @@
 
 internal interface ITestBranchChecker
 {
-    Task<bool> ContainsBranch(string repositoryName, string branchName);
+    Task<bool> ContainsBranch(string repositoryName, string branchName, CancellationToken cancellationToken);
 }

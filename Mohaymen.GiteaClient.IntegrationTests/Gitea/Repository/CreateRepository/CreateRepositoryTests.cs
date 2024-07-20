@@ -41,7 +41,7 @@ public class CreateRepositoryTests
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         actual.Content!.RepositoryName.Should().Be(repositoryName);
-        var containsRepository = await _repositoryChecker.ContainsRepositoryAsync(repositoryName);
+        var containsRepository = await _repositoryChecker.ContainsRepositoryAsync(repositoryName, _giteaCollectionFixture.CancellationToken);
         containsRepository.Should().BeTrue();
     }
 }

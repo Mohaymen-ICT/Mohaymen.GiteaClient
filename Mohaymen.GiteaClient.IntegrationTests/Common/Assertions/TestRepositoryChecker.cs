@@ -20,12 +20,12 @@ internal class TestRepositoryChecker : ITestRepositoryChecker
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
-    public async Task<bool> ContainsRepositoryAsync(string repositoryName)
+    public async Task<bool> ContainsRepositoryAsync(string repositoryName, CancellationToken cancellationToken)
     {
         var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        var httpResponse = await httpClient.GetAsync($"users/{_giteaOptions.Value.RepositoriesOwner}/repos");
-        var responseString = await httpResponse.Content.ReadAsStringAsync();
+        var httpResponse = await httpClient.GetAsync($"users/{_giteaOptions.Value.RepositoriesOwner}/repos", cancellationToken);
+        var responseString = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         var repositoryDtos = JsonConvert.DeserializeObject<List<UserRepositoriesDto>>(responseString);
         return repositoryDtos!.Select(x => x.RepositoryName).Contains(repositoryName);
     }
