@@ -13,6 +13,8 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 internal sealed class SearchRepositoryQuery : IRequest<ApiResponse<SearchRepositoryResponseDto>>
 {
     public required string Query { get; init; }
+    public int Page { get; init; } = 1;
+    public int Limit { get; init; } = 5;
 }
 
 internal sealed class SearchRepositoryQueryHandler : IRequestHandler<SearchRepositoryQuery, ApiResponse<SearchRepositoryResponseDto>>
@@ -30,7 +32,6 @@ internal sealed class SearchRepositoryQueryHandler : IRequestHandler<SearchRepos
     public async Task<ApiResponse<SearchRepositoryResponseDto>> Handle(SearchRepositoryQuery searchRepositoryQuery, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(searchRepositoryQuery);
-        var request = searchRepositoryQuery.Map();
-        return await _repositoryRestClient.SearchRepositoryAsync(request);
+        return await _repositoryRestClient.SearchRepositoryAsync(searchRepositoryQuery.Query, searchRepositoryQuery.Page, searchRepositoryQuery.Limit);
     }
 }

@@ -3,6 +3,8 @@ using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade;
 using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Commands;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
+using Mohaymen.GiteaClient.Gitea.Repository.DeleteRepository.Commands;
+using Mohaymen.GiteaClient.Gitea.Repository.DeleteRepository.Dto;
 using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Dtos;
 using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 using NSubstitute;
@@ -44,7 +46,7 @@ public class RepositoryFacadeTests
     }
 
     [Fact]
-    public async Task SearchRepositoryAsync_ShouldCallSend_WhenEvenr()
+    public async Task SearchRepositoryAsync_ShouldCallSend_WhenEver()
     {
         // Arrange
         const string query = "fakeQuery";
@@ -59,5 +61,21 @@ public class RepositoryFacadeTests
         // Assert
         await _mediator.Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
     }
-    
+
+    [Fact]
+    public async Task DeleteRepositoryAsync_ShouldCallSend_WhenEver()
+    {
+        // Arrange
+        const string repositoryName = "fakeRepoName";
+        var deleteRepositoryCommandDto = new DeleteRepositoryCommandDto
+        {
+            RepositoryName = repositoryName
+        };
+
+        // Act
+        await _sut.DeleteRepositoryAsync(deleteRepositoryCommandDto, default);
+
+        // Assert
+        await _mediator.Received(1).Send(Arg.Is<DeleteRepositoryCommand>(x => x.RepositoryName == repositoryName), default);
+    }
 }

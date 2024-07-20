@@ -34,6 +34,45 @@ public class SearchRepositoryQueryValidatorTests
         actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptySearchQueryErrorCode);
     }
 
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void Validate_ShouldReturnInvalidPageSizeErrorCode_WhenPageSizeIsLowerThanOne(int pageSize)
+    {
+        // Arrange
+        var searchRepositoryQuery = new SearchRepositoryQuery
+        {
+            Query = "query",
+            Page = pageSize
+        };
+
+        // Act
+        var actual = _sut.Validate(searchRepositoryQuery);
+
+        // Assert
+        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.InvalidPageSizeErrorCode);
+    }
+    
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void Validate_ShouldReturnInvalidPageSizeErrorCode_WhenLimitIsLowerThanZero(int limit)
+    {
+        // Arrange
+        var searchRepositoryQuery = new SearchRepositoryQuery
+        {
+            Query = "query",
+            Page = 1,
+            Limit = limit
+        };
+
+        // Act
+        var actual = _sut.Validate(searchRepositoryQuery);
+
+        // Assert
+        actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.InvalidLimitErrorCode);
+    }
+
     [Fact]
     public void Validate_ShouldReturnValidResult_WhenInputIsProvidedProperly()
     {

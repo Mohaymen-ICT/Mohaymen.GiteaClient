@@ -12,7 +12,9 @@ internal static class SearchRepositoryQueryMapper
 
         return new SearchRepositoryQuery
         {
-            Query = searchRepositoryQueryDto.Query
+            Query = searchRepositoryQueryDto.Query,
+            Limit = searchRepositoryQueryDto.Limit,
+            Page = searchRepositoryQueryDto.Page
         };
     }
 }

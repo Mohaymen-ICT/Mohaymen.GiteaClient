@@ -6,7 +6,8 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository;
 
 internal sealed class RepositoryClassFixture : IAsyncLifetime
 {
-    public const string RepositoryName = "RepositoryUseCaseRepository"; 
+    public const string SearchRepositoryName = "SearchUseCaseRepository";
+    public const string DeleteRepositoryName = "DeleteUseCaseRepository";
     
     private readonly ITestRepositoryCreator _testRepositoryCreator;
 
@@ -18,7 +19,8 @@ internal sealed class RepositoryClassFixture : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        await _testRepositoryCreator.CreateRepository(RepositoryName);
+        await _testRepositoryCreator.CreateRepository(SearchRepositoryName);
+        await _testRepositoryCreator.CreateRepository(DeleteRepositoryName);
     }
 
     public Task DisposeAsync()

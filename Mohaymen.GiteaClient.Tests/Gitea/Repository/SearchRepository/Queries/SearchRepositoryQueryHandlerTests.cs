@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using Mohaymen.GiteaClient.Gitea.Repository.Common.ApiCall.Abstractions;
-using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Context;
 using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Dtos;
 using Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Queries;
 using NSubstitute;
@@ -46,17 +45,19 @@ public class SearchRepositoryQueryHandlerTests
     {
         // Arrange
         const string query = "fakeQuery";
+        const int page = 1;
+        const int limit = 5;
         var searchRepositoryQuery = new SearchRepositoryQuery
         {
-            Query = query
+            Query = query,
+            Page = page,
+            Limit = limit
         };
         
         // Act
         await _sut.Handle(searchRepositoryQuery, default);
 
         // Assert
-        await _repositoryRestClient.Received(1).SearchRepositoryAsync(Arg.Is<SearchRepositoryRequest>(x => x.Query == query));
+        await _repositoryRestClient.Received(1).SearchRepositoryAsync(query, page, limit);
     }
-    
-    
 }
