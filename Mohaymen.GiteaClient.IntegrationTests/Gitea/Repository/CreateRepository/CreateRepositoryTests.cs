@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.CreateRepository;
@@ -12,11 +13,13 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.CreateRepositor
 public class CreateRepositoryTests
 {
     private readonly IGiteaClient _sut;
+    private readonly ITestRepositoryChecker _repositoryChecker;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
     
     public CreateRepositoryTests(GiteaCollectionFixture giteaCollectionFixture)
     {
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
+        _repositoryChecker = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryChecker>();
         _sut = giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
     
@@ -38,5 +41,7 @@ public class CreateRepositoryTests
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         actual.Content!.RepositoryName.Should().Be(repositoryName);
+        var containsRepository = await _repositoryChecker.ContainsRepositoryAsync(repositoryName);
+        containsRepository.Should().BeTrue();
     }
 }
