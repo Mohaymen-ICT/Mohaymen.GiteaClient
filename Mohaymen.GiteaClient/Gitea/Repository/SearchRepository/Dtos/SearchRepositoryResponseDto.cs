@@ -5,6 +5,7 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.SearchRepository.Dtos;
 
 public sealed class SearchRepositoryResponseDto
 {
+    [JsonProperty("data")]
     public required List<RepositorySearchDto> SearchResult { get; init; }
 }
 

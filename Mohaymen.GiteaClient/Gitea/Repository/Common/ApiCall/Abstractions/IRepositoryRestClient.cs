@@ -14,6 +14,6 @@ internal interface IRepositoryRestClient : IRefitClientInterface
     [Post("/user/repos")]
     Task<ApiResponse<CreateRepositoryResponseDto>> CreateRepositoryAsync([Body] CreateRepositoryRequest createRepositoryRequest);
 
-    [Get("repos/search")]
+    [Get("/repos/search")]
     Task<ApiResponse<SearchRepositoryResponseDto>> SearchRepositoryAsync([Body] SearchRepositoryRequest searchRepositoryRequest);
 }

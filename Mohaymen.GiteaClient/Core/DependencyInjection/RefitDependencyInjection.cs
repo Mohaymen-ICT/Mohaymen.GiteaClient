@@ -41,7 +41,7 @@ internal static class RefitDependencyInjection
         return typeof(IAssemblyMarkerInterface)
             .Assembly
             .DefinedTypes
-            .Where(type => type.IsInterface && typeof(IRefitClientInterface).IsAssignableFrom(type))
+            .Where(type => type.IsInterface && typeof(IRefitClientInterface).IsAssignableFrom(type) && type.AsType() != typeof(IRefitClientInterface))
             .Select(x => x.AsType());
     }
 }
