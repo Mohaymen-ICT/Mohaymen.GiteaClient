@@ -3,6 +3,7 @@ using System.Text;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.AccessToken.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests.TokenRequest;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Responses;
 using Newtonsoft.Json;
 
