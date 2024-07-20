@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -11,7 +12,7 @@ using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.Commit.GetBranchCommits.Queries;
 
-internal sealed class LoadBranchCommitsQuery : IRequest<ApiResponse<LoadBranchCommitsResponseDto>>
+internal sealed class LoadBranchCommitsQuery : IRequest<ApiResponse<List<LoadBranchCommitsResponseDto>>>
 {
     public required string RepositoryName { get; init; }
     public required string BranchName { get; init; }
@@ -19,7 +20,7 @@ internal sealed class LoadBranchCommitsQuery : IRequest<ApiResponse<LoadBranchCo
     public int Limit { get; init; }
 }
 
-internal sealed class LoadBranchCommitsQueryHandler : IRequestHandler<LoadBranchCommitsQuery, ApiResponse<LoadBranchCommitsResponseDto>>
+internal sealed class LoadBranchCommitsQueryHandler : IRequestHandler<LoadBranchCommitsQuery, ApiResponse<List<LoadBranchCommitsResponseDto>>>
 {
     private readonly IValidator<LoadBranchCommitsQuery> _validator;
     private readonly ICommitRestClient _commitRestClient;
@@ -34,7 +35,7 @@ internal sealed class LoadBranchCommitsQueryHandler : IRequestHandler<LoadBranch
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
-    public async Task<ApiResponse<LoadBranchCommitsResponseDto>> Handle(LoadBranchCommitsQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<List<LoadBranchCommitsResponseDto>>> Handle(LoadBranchCommitsQuery request, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(request);
         return await _commitRestClient.LoadBranchCommitsAsync(_giteaOptions.Value.RepositoriesOwner,

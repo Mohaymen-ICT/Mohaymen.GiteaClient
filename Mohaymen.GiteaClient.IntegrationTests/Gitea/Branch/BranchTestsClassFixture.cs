@@ -9,15 +9,17 @@ public class BranchTestsClassFixture : IAsyncLifetime
     public const string RepositoryName = "BranchUseCaseRepository";
     
     private readonly ITestRepositoryCreator _testRepositoryCreator;
+    private readonly GiteaCollectionFixture _giteaCollectionFixture;
     
     public BranchTestsClassFixture(GiteaCollectionFixture giteaCollectionFixture)
     {
-         _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
+        _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
+        _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
     }
 
     public async Task InitializeAsync()
     {
-        await _testRepositoryCreator.CreateRepository(RepositoryName);
+        await _testRepositoryCreator.CreateRepositoryAsync(RepositoryName, _giteaCollectionFixture.CancellationToken);
     }
 
     public Task DisposeAsync()

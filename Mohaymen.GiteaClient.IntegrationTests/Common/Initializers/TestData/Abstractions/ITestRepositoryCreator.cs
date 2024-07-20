@@ -2,5 +2,5 @@
 
 internal interface ITestRepositoryCreator
 {
-    Task CreateRepository(string repositoryName);
+    Task CreateRepositoryAsync(string repositoryName, CancellationToken cancellationToken);
 }

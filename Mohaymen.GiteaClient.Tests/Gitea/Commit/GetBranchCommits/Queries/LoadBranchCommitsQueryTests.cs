@@ -17,7 +17,7 @@ public class LoadBranchCommitsQueryTests
     private readonly InlineValidator<LoadBranchCommitsQuery> _validator;
     private readonly ICommitRestClient _commitRestClient;
     private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
-    private readonly IRequestHandler<LoadBranchCommitsQuery, ApiResponse<LoadBranchCommitsResponseDto>> _sut;
+    private readonly IRequestHandler<LoadBranchCommitsQuery, ApiResponse<List<LoadBranchCommitsResponseDto>>> _sut;
 
     public LoadBranchCommitsQueryTests()
     {

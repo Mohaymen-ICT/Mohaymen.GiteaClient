@@ -8,33 +8,34 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
-internal class TestRepositoryCreator : ITestRepositoryCreator
+internal class TestCommiter : ITestCommiter
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
-    
-    public TestRepositoryCreator(IHttpClientFactory httpClientFactory,
-        IOptions<GiteaApiConfiguration> giteaOptions)
+
+    public TestCommiter(IHttpClientFactory httpClientFactory, IOptions<GiteaApiConfiguration> giteaOptions)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
-
-    public async Task CreateRepositoryAsync(string repositoryName, CancellationToken cancellationToken)
+    public async Task CreateFileAsync(string repositoryName,
+        string branchName,
+        string filePath,
+        string commitMessage,
+        CancellationToken cancellationToken)
     {
         var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
-        var createRepositoryRequest = new CreateIntegrationTestRepositoryRequest
+        httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
+        var createFileRequest = new CreateFileRequest
         {
-            DefaultBranch = "main",
-            Name = repositoryName,
-            Readme = "Default",
-            AutoInit = true,
-            IsPrivateBranch = true
+            Content = Convert.ToBase64String("sample test content"u8.ToArray()),
+            CommitMessage = commitMessage,
+            BranchName = branchName
         };
-        var jsonContent = new StringContent(JsonConvert.SerializeObject(createRepositoryRequest));
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(createFileRequest));
         jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        await httpClient.PostAsync("user/repos", jsonContent, cancellationToken);
+        var resykt = await httpClient.PostAsync($"repos/{_giteaOptions.Value.RepositoriesOwner}/{repositoryName}/contents/{filePath}", jsonContent, cancellationToken);
     }
 }
