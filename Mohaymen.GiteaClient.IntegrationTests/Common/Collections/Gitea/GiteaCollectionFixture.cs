@@ -13,26 +13,26 @@ public class GiteaCollectionFixture : IAsyncLifetime
 {
     public IServiceProvider ServiceProvider { get; private set; } = null!;
     public CancellationToken CancellationToken { get; private set; }
-    private IContainer _container;
+    private IContainer _container = null!;
     
 
     public async Task InitializeAsync()
     {
-        var cts = new CancellationTokenSource();
-        CancellationToken = cts.Token;
-        await StartContainerAsync();
-        var baseUrl = GetBaseUrl();
+        var cancellationTokenSource = new CancellationTokenSource();
+        CancellationToken = cancellationTokenSource.Token;
+        _container = await StartContainerAsync();
+        var baseUrl = GetBaseUrl(_container);
         var giteaConfigurationInitializer = GiteaConfigurationInitializerFactory.Create();
         var giteaApiConfiguration = await giteaConfigurationInitializer
             .CreateGiteaApiConfiguration(baseUrl)
             .ConfigureAwait(false);
-        BuildDependencies(giteaApiConfiguration);
+        BuildDependencies(giteaApiConfiguration, baseUrl);
     }
 
-    private void BuildDependencies(GiteaApiConfiguration giteaApiConfiguration)
+    private void BuildDependencies(GiteaApiConfiguration giteaApiConfiguration, string baseUrl)
     {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddGiteaIntegrationTestsServices();
+        serviceCollection.AddGiteaIntegrationTestsServices($"{baseUrl}/api/v1/");
         serviceCollection.AddGiteaClient(configuration =>
         {
             configuration.BaseUrl = giteaApiConfiguration.BaseUrl;
@@ -42,15 +42,15 @@ public class GiteaCollectionFixture : IAsyncLifetime
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
 
-    private string GetBaseUrl()
+    private static string GetBaseUrl(IContainer container)
     {
-        var hostPort = _container.GetMappedPublicPort(GiteaTestConstants.PortNumber);
-        return $"http://{_container.Hostname}:{hostPort}";
+        var hostPort = container.GetMappedPublicPort(GiteaTestConstants.PortNumber);
+        return $"http://{container.Hostname}:{hostPort}";
     }
 
-    private async Task StartContainerAsync()
+    private static async Task<IContainer> StartContainerAsync()
     {
-        _container = new ContainerBuilder()
+        var container = new ContainerBuilder()
             .WithImage(GiteaTestConstants.ImageName)
             .WithPortBinding(GiteaTestConstants.PortNumber, true)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(r => r.ForPort(3000)))
@@ -61,7 +61,8 @@ public class GiteaCollectionFixture : IAsyncLifetime
                 { "GITEA__security__INSTALL_LOCK", "true" }
             })
             .Build();
-        await _container.StartAsync();
+        await container.StartAsync();
+        return container;
     }
 
     public async Task DisposeAsync()

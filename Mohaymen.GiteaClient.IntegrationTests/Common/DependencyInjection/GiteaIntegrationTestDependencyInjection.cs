@@ -1,14 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.DependencyInjection;
 
 internal static class GiteaIntegrationTestDependencyInjection
 {
-    public static IServiceCollection AddGiteaIntegrationTestsServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddGiteaIntegrationTestsServices(this IServiceCollection serviceCollection,
+        string baseApiUrl)
     {
-        serviceCollection.AddHttpClient();
+        serviceCollection.AddHttpClient(GiteaTestConstants.ApiClientName, httpClient =>
+        {
+            httpClient.BaseAddress = new Uri(baseApiUrl);
+        });
         serviceCollection.AddSingleton<ITestRepositoryCreator, TestRepositoryCreator>();
         return serviceCollection;
     }
