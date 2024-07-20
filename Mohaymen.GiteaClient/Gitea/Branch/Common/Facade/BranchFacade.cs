@@ -18,7 +18,7 @@ internal class BranchFacade : IBranchFacade
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    public async Task<ApiResponse<CreateBranchResponseDto>> CreateBranchAsync(CreateBranchCommandDto createBranchCommandDto, 
+    public async Task<ApiResponse<BranchResponseDto>> CreateBranchAsync(CreateBranchCommandDto createBranchCommandDto, 
         CancellationToken cancellationToken)
     {
         var command = createBranchCommandDto.ToCreateBranchCommand();

@@ -18,7 +18,7 @@ public class CreateBranchCommandHandlerTests
     private readonly IBranchRestClient _branchRestClient;
     private readonly IOptions<GiteaApiConfiguration> _options;
     private readonly InlineValidator<CreateBranchCommand> _validator;
-    private readonly IRequestHandler<CreateBranchCommand, ApiResponse<CreateBranchResponseDto>> _sut;
+    private readonly IRequestHandler<CreateBranchCommand, ApiResponse<BranchResponseDto>> _sut;
 
     public CreateBranchCommandHandlerTests()
     {

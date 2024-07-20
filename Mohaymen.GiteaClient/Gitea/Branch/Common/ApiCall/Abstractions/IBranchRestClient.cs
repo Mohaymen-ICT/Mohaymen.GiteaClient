@@ -9,7 +9,7 @@ namespace Mohaymen.GiteaClient.Gitea.Branch.Common.ApiCall.Abstractions;
 internal interface IBranchRestClient : IRefitClientInterface
 {
     [Post("/repos/{owner}/{repo}/branches")]
-    Task<ApiResponse<CreateBranchResponseDto>> CreateBranchAsync(
+    Task<ApiResponse<BranchResponseDto>> CreateBranchAsync(
         [AliasAs("owner")] string owner,
         [AliasAs("repo")] string repositoryName,
         [Body] CreateBranchRequest createBranchRequest);
