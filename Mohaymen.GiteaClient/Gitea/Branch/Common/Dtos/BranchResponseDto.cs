@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
+namespace Mohaymen.GiteaClient.Gitea.Branch.Common.Dtos;
 
 public class BranchResponseDto
 {

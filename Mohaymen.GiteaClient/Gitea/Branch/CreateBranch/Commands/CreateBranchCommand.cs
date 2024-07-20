@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.Branch.Common.ApiCall.Abstractions;
-using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
+using Mohaymen.GiteaClient.Gitea.Branch.Common.Dtos;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Mappers;
 using Refit;
 
