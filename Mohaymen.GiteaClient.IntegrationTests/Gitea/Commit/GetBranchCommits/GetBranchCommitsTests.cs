@@ -12,23 +12,52 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
 {
     private readonly IGiteaClient _sut;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
-    
+
     public GetBranchCommitsTests(GiteaCollectionFixture giteaCollectionFixture)
     {
-        _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
+        _giteaCollectionFixture =
+            giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
-
-    [Fact]
-    public async Task GetBranchCommitsAsync_ShouldReturnOkAndBranchCommits_WhenInputsAreProvided()
+    
+    public static TheoryData<int, int, List<string>> PageLimitCommitMessages()
     {
-        // Arrange
+        return new TheoryData<int, int, List<string>>()
+        {
+            {
+                1,
+                1,
+                [$"{GetBranchCommitsClassFixture.CommitMessage}\n"]
+            },
+            {
+                2,
+                1,
+                ["Initial commit\n"]
+            },
+            {
+                2,
+                2,
+                []
+            },
+            {
+                1,
+                10,
+                [$"{GetBranchCommitsClassFixture.CommitMessage}\n", "Initial commit\n"]
+            }
+        };
+    }
+
+    [Theory]
+    [MemberData(nameof(PageLimitCommitMessages))]
+    public async Task GetBranchCommitsAsync_ShouldReturnOkAndBranchCommitsBasedOnPageSizeAndLimitSize_WhenPageSizeAndLimitSizeAreSet(int page, int limit, List<string> expectedCommitMessages)
+    {
+        // Arrange 
         var loadBranchCommitsDto = new LoadBranchCommitsQueryDto
         {
             RepositoryName = GetBranchCommitsClassFixture.RepositoryName,
             BranchName = GetBranchCommitsClassFixture.BranchName,
-            Page = 1,
-            Limit = 10
+            Page = page,
+            Limit = limit
         };
 
         // Act
@@ -36,9 +65,7 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
-        actual.Content.Should().HaveCount(2);
-        actual.Content!.Select(x => x.CommitDto.CommitMessage).Should().Contain($"{GetBranchCommitsClassFixture.CommitMessage}\n");
-        actual.Content!.Select(x => x.CommitDto.CommitMessage).Should().Contain("Initial commit\n");
+        var commitMessages = actual.Content!.Select(x => x.CommitDto.CommitMessage);
+        commitMessages.Should().BeEquivalentTo(expectedCommitMessages);
     }
-
 }
