@@ -37,16 +37,17 @@ public class FileCommitCommandModelValidatorTests
     }
     
     [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public void Validate_ShouldReturnInvalidFileContentErrorCode_WhenFileContentIsNullOrEmpty(string fileContent)
+    [InlineData("", CommitActionCommand.Create)]
+    [InlineData(null, CommitActionCommand.Update)]
+    internal void Validate_ShouldReturnInvalidFileContentErrorCode_WhenFileContentIsNullOrEmptyAndCommitActionIsNotDelete(string fileContent,
+        CommitActionCommand commitActionCommand)
     {
         // Arrange
         var fileCommitDto = new FileCommitCommandModel
         {
             Path = "fakePath",
             Content = fileContent,
-            CommitActionCommand = CommitActionCommand.Create
+            CommitActionCommand = commitActionCommand
         };
 
         // Act
@@ -56,8 +57,10 @@ public class FileCommitCommandModelValidatorTests
         actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.InvalidFileContentErrorCode);
     }
 
-    [Fact]
-    public void Validate_ShouldReturnValidResult_WhenInputIsProvidedProperly()
+    [Theory]
+    [InlineData(CommitActionCommand.Create)]
+    [InlineData(CommitActionCommand.Update)]
+    public void Validate_ShouldReturnValidResult_WhenInputIsProvidedProperlyAndCommitActionIsNotDelete()
     {
         // Arrange
         var fileCommitDto = new FileCommitCommandModel

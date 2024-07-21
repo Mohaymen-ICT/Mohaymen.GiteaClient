@@ -4,6 +4,12 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Response;
 
 public class CreateCommitResponseDto
 {
+    [JsonProperty("commit")]
+    public required CommitResponseDto CommitResponseDto { get; init; }
+}
+
+public class CommitResponseDto
+{
     [JsonProperty("sha")]
     public required string Sha { get; init; }
     

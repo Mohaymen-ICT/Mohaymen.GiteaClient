@@ -35,8 +35,7 @@ internal class TestFileChecker : ITestFileChecker
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_options.Value.PersonalAccessToken}");
         var httpResponse = await httpClient.GetAsync($"repos/{_options.Value.RepositoriesOwner}/{repositoryName}/contents/{filePath}", cancellationToken);
         var serializedResponse = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
-        var filesList = JsonConvert.DeserializeObject<List<FileMetadataResponse>>(serializedResponse);
-        var file = filesList!.First(x => x.FilePath == filePath);
-        return file.Content == content;
+        var file = JsonConvert.DeserializeObject<FileMetadataResponse>(serializedResponse);
+        return file!.Content == content;
     }
 }
