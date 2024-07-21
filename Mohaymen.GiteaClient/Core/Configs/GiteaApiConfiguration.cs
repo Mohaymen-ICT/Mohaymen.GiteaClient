@@ -7,11 +7,11 @@ public sealed class GiteaApiConfiguration
     /// <summary>
     /// gitea server url
     /// </summary>
-    public required string BaseUrl { get; init; }
+    public required string BaseUrl { get; set; }
     /// <summary>
     /// personal access token from gitea account
     /// </summary>
-    public required string PersonalAccessToken { get; init; }
+    public required string PersonalAccessToken { get; set; }
     /// <summary>
     /// http connection timeout
     /// </summary>
@@ -20,5 +20,5 @@ public sealed class GiteaApiConfiguration
     /// <summary>
     /// owner of repository username
     /// </summary>
-    public required string RepositoriesOwner { get; init; }
+    public required string RepositoriesOwner { get; set; }
 }

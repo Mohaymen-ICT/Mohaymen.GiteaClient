@@ -22,7 +22,7 @@ internal class RepositoryFacade : IRepositoryFacade
     public async Task<ApiResponse<CreateRepositoryResponseDto>> CreateRepositoryAsync(CreateRepositoryCommandDto createRepositoryCommandDto,
         CancellationToken cancellationToken)
     {
-        var command = CreateRepositoryCommandDtoMapper.Map(createRepositoryCommandDto);
+        var command = CreateRepositoryCommandMapper.Map(createRepositoryCommandDto);
         return await _mediator.Send(command, cancellationToken);
     }
 }
