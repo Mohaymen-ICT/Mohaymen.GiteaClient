@@ -1,23 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 
-namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Branch;
+namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Branch.CreateBranch;
 
-public class BranchTestsClassFixture : IAsyncLifetime
+public class CreateBranchTestsClassFixture : IAsyncLifetime
 {
-    public const string RepositoryName = "BranchUseCaseRepository";
-    
     private readonly ITestRepositoryCreator _testRepositoryCreator;
     
-    public BranchTestsClassFixture(GiteaCollectionFixture giteaCollectionFixture)
+    public CreateBranchTestsClassFixture(GiteaCollectionFixture giteaCollectionFixture)
     {
          _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
     }
 
     public async Task InitializeAsync()
     {
-        await _testRepositoryCreator.CreateRepository(RepositoryName);
+        await _testRepositoryCreator.CreateRepository(GiteaTestConstants.RepositoryName);
     }
 
     public Task DisposeAsync()

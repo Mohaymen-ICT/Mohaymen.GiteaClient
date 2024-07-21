@@ -17,6 +17,7 @@ internal static class GiteaIntegrationTestDependencyInjection
             httpClient.BaseAddress = new Uri(baseApiUrl);
         });
         serviceCollection.AddSingleton<ITestRepositoryCreator, TestRepositoryCreator>();
+        serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();
         serviceCollection.AddSingleton<ITestRepositoryChecker, TestRepositoryChecker>();
         serviceCollection.AddSingleton<ITestBranchChecker, TestBranchChecker>();
         return serviceCollection;
