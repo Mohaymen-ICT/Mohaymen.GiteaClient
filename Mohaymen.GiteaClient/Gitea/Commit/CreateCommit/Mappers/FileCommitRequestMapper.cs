@@ -7,6 +7,6 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Mappers;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 internal static partial class FileCommitRequestMapper
 {
-    [MapProperty(nameof(FileCommitCommand.CommitActionCommand), nameof(FileCommitRequest.CommitAction))]
-    public static partial FileCommitRequest Map(FileCommitCommand fileCommitCommand);
+    [MapProperty(nameof(FileCommitCommandModel.CommitActionCommand), nameof(FileCommitRequest.CommitAction))]
+    public static partial FileCommitRequest Map(FileCommitCommandModel fileCommitCommandModel);
 }

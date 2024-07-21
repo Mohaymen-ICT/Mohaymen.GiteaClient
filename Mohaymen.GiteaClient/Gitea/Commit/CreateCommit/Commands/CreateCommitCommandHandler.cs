@@ -15,7 +15,7 @@ internal class CreateCommitCommand : IRequest<ApiResponse<CreateCommitResponseDt
     
     public required string CommitMessage { get; init; }
     
-    public required List<FileCommitCommand> FileCommitCommands { get; init; }
+    public required List<FileCommitCommandModel> FileCommitCommands { get; init; }
 }
 
 internal class CreateCommitCommandHandler : IRequestHandler<CreateCommitCommand, ApiResponse<CreateCommitResponseDto>>
