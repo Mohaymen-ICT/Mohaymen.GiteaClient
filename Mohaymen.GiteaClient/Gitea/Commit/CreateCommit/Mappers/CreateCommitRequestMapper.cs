@@ -9,5 +9,5 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Mappers;
 internal static partial class CreateCommitRequestMapper
 {
     [MapProperty(nameof(CreateCommitCommand.FileCommitCommands), nameof(CreateCommitRequest.FileCommitRequests))]
-    public static partial CreateCommitRequest MapToRequest(CreateCommitCommand createCommitCommand);
+    public static partial CreateCommitRequest MapToRequest(this CreateCommitCommand createCommitCommand);
 }
