@@ -10,7 +10,7 @@ internal class FileCommitRequest
     public required string Path { get; init; }
     
     [JsonProperty("content")]
-    public required string Content { get; init; }
+    public required string Content { get; set; }
     
     [JsonConverter(typeof(StringEnumConverter))]
     [JsonProperty("operation")]

@@ -7,6 +7,7 @@ using Mohaymen.GiteaClient.Gitea.Commit.Common.ApiCall;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Commands;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Context;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Response;
+using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder.Abstractions;
 using NSubstitute;
 using Refit;
 using Xunit;
@@ -18,6 +19,7 @@ public class CreateCommitCommandHandlerTests
     private readonly InlineValidator<CreateCommitCommand> _validator;
     private readonly ICommitRestClient _commitRestClient;
     private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
+    private readonly IBase64CommitEncoder _base64CommitEncoder;
     private readonly IRequestHandler<CreateCommitCommand, ApiResponse<CreateCommitResponseDto>> _sut;
 
     public CreateCommitCommandHandlerTests()
@@ -25,7 +27,8 @@ public class CreateCommitCommandHandlerTests
         _validator = new InlineValidator<CreateCommitCommand>();
         _commitRestClient = Substitute.For<ICommitRestClient>();
         _giteaOptions = Substitute.For<IOptions<GiteaApiConfiguration>>();
-        _sut = new CreateCommitCommandHandler(_validator, _commitRestClient, _giteaOptions);
+        _base64CommitEncoder = Substitute.For<IBase64CommitEncoder>();
+        _sut = new CreateCommitCommandHandler(_validator, _commitRestClient, _giteaOptions, _base64CommitEncoder);
     }
 
     [Fact]
@@ -63,15 +66,15 @@ public class CreateCommitCommandHandlerTests
             RepositoryName = "fakeRepo",
             BranchName = "fakeBranch",
             CommitMessage = "fakeCommit",
-            FileCommitCommands = new List<FileCommitCommandModel>()
-            {
-                new()
+            FileCommitCommands =
+            [
+                new FileCommitCommandModel
                 {
                     Path = path,
                     Content = content,
                     CommitActionCommand = CommitActionCommand.Create
                 }
-            }
+            ]
         };
         var giteaConfigurationApi = new GiteaApiConfiguration
         {
@@ -80,7 +83,7 @@ public class CreateCommitCommandHandlerTests
             RepositoriesOwner = repoOwner
         };
         _giteaOptions.Value.Returns(giteaConfigurationApi);
-
+        
         // Act
         await _sut.Handle(request, default);
 
