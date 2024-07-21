@@ -1,16 +1,16 @@
 ﻿using System.Net;
 using FluentAssertions;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Branch.CreateBranch;
 
 [Collection("GiteaIntegrationTests")]
-public class CreateBranchTests : IClassFixture<BranchTestsClassFixture>
+public class CreateBranchTests : IClassFixture<CreateBranchTestsClassFixture>
 {
     private readonly IGiteaClient _sut;
     private readonly ITestBranchChecker _branchChecker;
@@ -30,7 +30,7 @@ public class CreateBranchTests : IClassFixture<BranchTestsClassFixture>
         const string newBranchName = "feature/test_new_branch";
         var createBranchCommandDto = new CreateBranchCommandDto
         {
-            RepositoryName = BranchTestsClassFixture.RepositoryName,
+            RepositoryName = GiteaTestConstants.RepositoryName,
             NewBranchName = newBranchName,
             OldReferenceName = "main"
         };
@@ -41,7 +41,7 @@ public class CreateBranchTests : IClassFixture<BranchTestsClassFixture>
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         actual.Content!.BranchName.Should().Be(newBranchName);
-        var branchExist = await _branchChecker.ContainsBranch(BranchTestsClassFixture.RepositoryName, newBranchName, _giteaCollectionFixture.CancellationToken);
+        var branchExist = await _branchChecker.ContainsBranch(GiteaTestConstants.RepositoryName, newBranchName, _giteaCollectionFixture.CancellationToken);
         branchExist.Should().BeTrue();
     }
 }

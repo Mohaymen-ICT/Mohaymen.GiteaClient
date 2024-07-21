@@ -1,40 +1,37 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
+using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Context;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
-using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
 using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
-internal class TestRepositoryCreator : ITestRepositoryCreator
+public class TestBranchCreator : ITestBranchCreator
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
     
-    public TestRepositoryCreator(IHttpClientFactory httpClientFactory,
+    public TestBranchCreator(IHttpClientFactory httpClientFactory,
         IOptions<GiteaApiConfiguration> giteaOptions)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
-
-
-    public async Task CreateRepository(string repositoryName)
+    
+    public async Task CreateBranch(string repositoryName, string branchName)
     {
         var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
-        var createRepositoryRequest = new CreateIntegrationTestRepositoryRequest
+        var owner = GiteaTestConstants.Username;
+        var createBranchRequest = new CreateBranchRequest
         {
-            DefaultBranch = GiteaTestConstants.DefaultBranch,
-            Name = repositoryName,
-            Readme = "Default",
-            AutoInit = true,
-            IsPrivateBranch = true
+            NewBranchName = branchName,
+            OldReferenceName = GiteaTestConstants.DefaultBranch
         };
-        var jsonContent = new StringContent(JsonConvert.SerializeObject(createRepositoryRequest));
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(createBranchRequest));
         jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        await httpClient.PostAsync("user/repos", jsonContent);
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", _giteaOptions.Value.PersonalAccessToken);
+        await httpClient.PostAsync($"repos/{owner}/{repositoryName}/branches", jsonContent);
     }
 }
