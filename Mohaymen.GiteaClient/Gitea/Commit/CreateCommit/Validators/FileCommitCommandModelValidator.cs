@@ -12,12 +12,5 @@ internal class FileCommitCommandModelValidator : AbstractValidator<FileCommitCom
             .NotEmpty()
             .WithErrorCode(ValidationErrorCodes.InvalidFilePathErrorCode)
             .WithMessage("file path is empty");
-
-        RuleFor(x => x.Content)
-            .NotEmpty()
-            .WithErrorCode(ValidationErrorCodes.InvalidFileContentErrorCode)
-            .When(x => x.CommitActionCommand != CommitActionCommand.Delete)
-            .WithMessage("file content is empty");
-        
     }
 }

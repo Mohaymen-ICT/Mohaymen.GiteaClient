@@ -7,6 +7,5 @@ internal static class ValidationErrorCodes
     internal const string EmptyCommitMessageErrorCode = "EmptyCommitMessageErrorCode";
     internal const string InvalidPageSizeErrorCode = "InvalidPageSizeErrorCode";
     internal const string InvalidLimitErrorCode = "InvalidLimitErrorCode";
-    internal const string InvalidFileContentErrorCode = "InvalidFileContentErrorCode";
     internal const string InvalidFilePathErrorCode = "InvalidFilePathErrorCode";
 }

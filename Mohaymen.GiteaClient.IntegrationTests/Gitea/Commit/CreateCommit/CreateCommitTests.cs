@@ -150,5 +150,4 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeFalse();
     }
-    
 }
