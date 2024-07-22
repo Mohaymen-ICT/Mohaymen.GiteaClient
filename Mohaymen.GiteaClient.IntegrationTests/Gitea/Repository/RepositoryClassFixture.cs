@@ -15,8 +15,7 @@ internal sealed class RepositoryClassFixture : IAsyncLifetime
     {
         _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
     }
-
-
+    
     public async Task InitializeAsync()
     {
         await _testRepositoryCreator.CreateRepository(SearchRepositoryName);

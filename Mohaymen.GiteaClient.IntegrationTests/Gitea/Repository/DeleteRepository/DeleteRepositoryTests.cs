@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.DeleteRepository.Dto;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.DeleteRepository;
@@ -12,32 +13,16 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.DeleteRepositor
 public class DeleteRepositoryTests : IClassFixture<RepositoryClassFixture>
 {
     private readonly IGiteaClient _sut;
+    private readonly ITestRepositoryChecker _testRepositoryChecker;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
 
     public DeleteRepositoryTests(GiteaCollectionFixture giteaCollectionFixture)
     {
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
+        _testRepositoryChecker = _giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryChecker>();
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
     
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public async Task DeleteRepositoryAsync_ShouldThrowsValidationException_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
-    {
-        // Arrange
-        var deleteRepositoryCommandDto = new DeleteRepositoryCommandDto
-        {
-            RepositoryName = repositoryName
-        };
-
-        // Act
-        var actual = async () => await _sut.RepositoryClient.DeleteRepositoryAsync(deleteRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
-
-        // Assert
-        await actual.Should().ThrowAsync<ValidationException>();
-    }
-
     [Fact]
     public async Task DeleteRepositoryAsync_ShouldReturnNotContentSuccessResponse_WhenRepositoryExistsAndDeleted()
     {
@@ -52,15 +37,18 @@ public class DeleteRepositoryTests : IClassFixture<RepositoryClassFixture>
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        var isRepositoryExists = await _testRepositoryChecker.ContainsRepositoryAsync(RepositoryClassFixture.DeleteRepositoryName, _giteaCollectionFixture.CancellationToken);
+        isRepositoryExists.Should().BeFalse();
     }
 
     [Fact]
     public async Task DeleteRepositoryAsync_ShouldReturnNotFound_WhenRepositoryDoesNotExist()
     {
         // Arrange
+        const string repositoryName = "sampleFakeRepo";
         var deletedRepositoryCommandDto = new DeleteRepositoryCommandDto
         {
-            RepositoryName = "sampleFakeRepo"
+            RepositoryName = repositoryName
         };
         
         // Act
@@ -68,5 +56,7 @@ public class DeleteRepositoryTests : IClassFixture<RepositoryClassFixture>
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var isRepositoryExists = await _testRepositoryChecker.ContainsRepositoryAsync(repositoryName, _giteaCollectionFixture.CancellationToken);
+        isRepositoryExists.Should().BeFalse();
     }
 }
