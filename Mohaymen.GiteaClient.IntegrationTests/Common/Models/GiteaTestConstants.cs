@@ -8,4 +8,5 @@ internal class GiteaTestConstants
     internal const ushort PortNumber = 3000;
     internal const string TokenName = "test_token";
     internal const string ImageName = "gitea/gitea:latest";
+    internal const string ApiClientName = "IntegrationTestApiClient";
 }
