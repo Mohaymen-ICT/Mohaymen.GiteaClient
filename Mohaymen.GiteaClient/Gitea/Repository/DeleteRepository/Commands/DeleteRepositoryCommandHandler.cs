@@ -36,6 +36,4 @@ internal class DeleteRepositoryCommandHandler : IRequestHandler<DeleteRepository
         _validator.ValidateAndThrow(request);
         return await _repositoryRestClient.DeleteRepositoryAsync(_giteaOptions.Value.RepositoriesOwner, request.RepositoryName);
     }
-    
-    
 }
