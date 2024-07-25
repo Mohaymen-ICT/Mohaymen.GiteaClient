@@ -29,10 +29,10 @@ public class GetBranchListTests
     public async Task GetBranchList_ShouldGetBranchListOfRepo_WhenInputsAreProvidedProperly()
     {
         // Arrange
-        const string repositoryName = GiteaTestConstants.RepositoryName;
-        const string branch1 = "branch1";
-        const string branch2 = "branch2";
-        const string branch3 = "branch3";
+        const string repositoryName = "get_branch_list_repo";
+        const string branch1 = "get_branch_list_repo_branch_1";
+        const string branch2 = "get_branch_list_repo_branch_2";
+        const string branch3 = "get_branch_list_repo_branch_3";
         var cancellationToken = _giteaCollectionFixture.CancellationToken;
 
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, cancellationToken);

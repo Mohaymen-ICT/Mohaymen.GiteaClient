@@ -30,15 +30,15 @@ public class CreateBranchTests
     public async Task CreateBranch_ShouldCreateBranchWithCreatedStatusCode_WhenInputsAreProvidedProperly()
     {
         // Arrange
-        const string repositoryName = GiteaTestConstants.RepositoryName;
+        const string repositoryName = "create_branch_repo";
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, _giteaCollectionFixture.CancellationToken);
         
-        const string newBranchName = "feature/test_new_branch";
+        const string newBranchName = "create_branch_branch";
         var createBranchCommandDto = new CreateBranchCommandDto
         {
             RepositoryName = repositoryName,
             NewBranchName = newBranchName,
-            OldReferenceName = "main"
+            OldReferenceName = GiteaTestConstants.DefaultBranch
         };
 
         // Act
