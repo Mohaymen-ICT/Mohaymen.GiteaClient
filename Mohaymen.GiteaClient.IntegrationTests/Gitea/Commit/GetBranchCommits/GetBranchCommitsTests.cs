@@ -18,7 +18,7 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
-    
+   
     public static TheoryData<int, int, List<string>> PageLimitCommitMessages()
     {
         return new TheoryData<int, int, List<string>>()
