@@ -14,7 +14,8 @@ internal static class CreateRepositoryCommandMapper
         {
             DefaultBranch = createRepositoryCommandDto.DefaultBranch,
             Name = createRepositoryCommandDto.Name,
-            IsPrivateBranch = createRepositoryCommandDto.IsPrivateBranch
+            IsPrivateBranch = createRepositoryCommandDto.IsPrivateBranch,
+            AutoInit = createRepositoryCommandDto.AutoInit
         };
     }
 }

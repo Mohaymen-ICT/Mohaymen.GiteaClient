@@ -9,4 +9,6 @@ internal class GiteaTestConstants
     internal const string TokenName = "test_token";
     internal const string ImageName = "gitea/gitea:latest";
     internal const string ApiClientName = "IntegrationTestApiClient";
+    internal const string RepositoryName = "BranchUseCaseRepository";
+    internal const string DefaultBranch = "main";
 }

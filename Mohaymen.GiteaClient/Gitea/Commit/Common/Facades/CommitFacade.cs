@@ -35,5 +35,4 @@ internal class CommitFacade : ICommitFacade
         var command = createCommitCommandDto.MapToCommand();
         return await _mediator.Send(command, cancellationToken);
     }
-    
 }
