@@ -17,6 +17,8 @@ internal class CreateRepositoryCommand : IRequest<ApiResponse<CreateRepositoryRe
     public required string Name { get; init; }
 
     public bool IsPrivateBranch { get; init; }
+    
+    public bool AutoInit { get; init; }
 }
 
 internal class CreateRepositoryCommandHandler : IRequestHandler<CreateRepositoryCommand, ApiResponse<CreateRepositoryResponseDto>>
