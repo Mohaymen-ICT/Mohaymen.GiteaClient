@@ -1,40 +1,30 @@
-﻿using System.Net.Http.Headers;
-using Microsoft.Extensions.Options;
-using Mohaymen.GiteaClient.Core.Configs;
+﻿using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
+using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
-using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
-using Newtonsoft.Json;
+using Refit;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
 internal class TestRepositoryCreator : ITestRepositoryCreator
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
-    
-    public TestRepositoryCreator(IHttpClientFactory httpClientFactory,
-        IOptions<GiteaApiConfiguration> giteaOptions)
+    private readonly IRepositoryFacade _repositoryFacade;
+
+    public TestRepositoryCreator(IRepositoryFacade repositoryFacade)
     {
-        _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-        _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
+        _repositoryFacade = repositoryFacade ?? throw new ArgumentNullException(nameof(repositoryFacade));
     }
-
-
-    public async Task CreateRepository(string repositoryName)
+    
+    public async Task CreateRepositoryAsync(string repositoryName, 
+        CancellationToken cancellationToken)
     {
-        var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
-        var createRepositoryRequest = new CreateIntegrationTestRepositoryRequest
+        var createRepositoryCommandDto = new CreateRepositoryCommandDto
         {
-            DefaultBranch = "main",
+            DefaultBranch = GiteaTestConstants.DefaultBranch,
             Name = repositoryName,
-            Readme = "Default",
-            AutoInit = true,
-            IsPrivateBranch = true
+            IsPrivateBranch = true,
+            AutoInit = true
         };
-        var jsonContent = new StringContent(JsonConvert.SerializeObject(createRepositoryRequest));
-        jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        await httpClient.PostAsync("user/repos", jsonContent);
+        await _repositoryFacade.CreateRepositoryAsync(createRepositoryCommandDto, cancellationToken);
     }
 }

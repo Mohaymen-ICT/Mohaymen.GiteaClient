@@ -8,5 +8,5 @@ public sealed class CreateRepositoryResponseDto
     public long RepositoryId { get; init; }
     
     [JsonProperty("name")] 
-    public string RepositoryName { get; init; }
+    public required string RepositoryName { get; init; }
 }
