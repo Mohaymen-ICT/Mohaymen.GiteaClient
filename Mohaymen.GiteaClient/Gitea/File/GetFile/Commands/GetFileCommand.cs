@@ -8,7 +8,6 @@ using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.File.Common.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Mappers;
-using Mohaymen.GiteaClient.Gitea.Repository.Common.ApiCall.Abstractions;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
