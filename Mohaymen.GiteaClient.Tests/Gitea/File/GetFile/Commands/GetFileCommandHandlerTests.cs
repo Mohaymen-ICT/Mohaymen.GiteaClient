@@ -76,6 +76,7 @@ public class GetFileCommandHandlerTests
             repositoryName, 
             filePath, 
             Arg.Is<GetFileRequest>(x => 
-            x.ReferenceName == referenceName));
+            x.ReferenceName == referenceName),
+            default);
     }
 }

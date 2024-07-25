@@ -39,7 +39,7 @@ internal class GetFileCommandHandler : IRequestHandler<GetFileCommand, ApiRespon
         _validator.ValidateAndThrow(command);
         var createBranchRequest = command.ToGetRepositoryFileRequest();
         var owner = _options.Value.RepositoriesOwner;
-        return await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, createBranchRequest)
+        return await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, createBranchRequest, cancellationToken)
             .ConfigureAwait(false);
     }
 }

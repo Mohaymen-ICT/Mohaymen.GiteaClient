@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Mohaymen.GiteaClient.Core.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Context;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
@@ -13,5 +14,6 @@ internal interface IFileRestClient : IRefitClientInterface
         [AliasAs("owner")] string owner,
         [AliasAs("repo")] string repositoryName,
         [AliasAs("filepath")] string filePath,
-        [Body] GetFileRequest getFileRequest);
+        [Body] GetFileRequest getFileRequest,
+        CancellationToken cancellationToken);
 }
