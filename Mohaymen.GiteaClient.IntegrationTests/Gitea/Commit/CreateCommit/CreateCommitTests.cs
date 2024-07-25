@@ -5,15 +5,19 @@ using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Request;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Commit.CreateCommit;
 
 [Collection("GiteaIntegrationTests")]
-public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
+public class CreateCommitTests
 {
+    private const string RepositoryName = "CreateCommitRepository";
     private readonly IGiteaClient _sut;
     private readonly ITestCommitChecker _testCommitChecker;
     private readonly ITestFileChecker _testFileChecker;
+    private readonly ITestRepositoryCreator _testRepositoryCreator;
+    private readonly ITestCommiter _testCommiter;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
 
     public CreateCommitTests(GiteaCollectionFixture giteaCollectionFixture)
@@ -22,6 +26,8 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
         _testFileChecker = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestFileChecker>();
         _testCommitChecker = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestCommitChecker>();
+        _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
+        _testCommiter = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestCommiter>();
     }
 
     [Fact]
@@ -33,7 +39,7 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         const string expectedContent = "YWxpcmV6YSBlaWppIGlzIHRoZSBtYW4gb2YgZm9jdXMh";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = CreateCommitClassFixture.RepositoryName,
+            RepositoryName = RepositoryName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
@@ -53,16 +59,16 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(CreateCommitClassFixture.RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(CreateCommitClassFixture.RepositoryName,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
             filePath,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeTrue();
-        var doesFileHaveContent = await _testFileChecker.HasFileContent(CreateCommitClassFixture.RepositoryName,
+        var doesFileHaveContent = await _testFileChecker.HasFileContent(RepositoryName,
             filePath,
             expectedContent,
             _giteaCollectionFixture.CancellationToken);
@@ -78,7 +84,7 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         const string expectedContent = "YWxpcmV6YSBlaWppIGlzIHRoZSBtYW4gb2YgZm9jdXMh";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = CreateCommitClassFixture.RepositoryName,
+            RepositoryName = RepositoryName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
@@ -98,16 +104,16 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(CreateCommitClassFixture.RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(CreateCommitClassFixture.RepositoryName,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
             filePath,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeTrue();
-        var doesFileHaveContent = await _testFileChecker.HasFileContent(CreateCommitClassFixture.RepositoryName,
+        var doesFileHaveContent = await _testFileChecker.HasFileContent(RepositoryName,
             filePath,
             expectedContent,
             _giteaCollectionFixture.CancellationToken);
@@ -118,21 +124,29 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
     public async Task CreateCommitAsync_ShouldCreateCommitAndDeleteFileWithItsContent_WhenCommitIsForFileDeleting()
     {
         // Arrange
+        const string FileDelete = "SampleDeleteFile.txt";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = CreateCommitClassFixture.RepositoryName,
+            RepositoryName = RepositoryName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
             [
                 new FileCommitDto
                 {
-                    Path = CreateCommitClassFixture.FileDelete,
+                    Path = FileDelete,
                     Content = "",
                     CommitActionDto = CommitActionDto.Delete
                 }
             ]
         };
+        
+        await _testRepositoryCreator.CreateRepositoryAsync(RepositoryName, _giteaCollectionFixture.CancellationToken);
+        await _testCommiter.CreateFileAsync(RepositoryName,
+            "main",
+            FileDelete,
+            "ccc",
+            _giteaCollectionFixture.CancellationToken);
 
         // Act
         var actual = await _sut.CommitClient.CreateCommitAsync(createCommitCommandDto, _giteaCollectionFixture.CancellationToken);
@@ -140,13 +154,13 @@ public class CreateCommitTests : IClassFixture<CreateCommitClassFixture>
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(CreateCommitClassFixture.RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(CreateCommitClassFixture.RepositoryName,
-            CreateCommitClassFixture.FileDelete,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
+            FileDelete,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeFalse();
     }

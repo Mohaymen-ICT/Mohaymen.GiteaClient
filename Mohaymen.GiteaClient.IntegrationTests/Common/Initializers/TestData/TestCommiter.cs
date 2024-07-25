@@ -1,6 +1,9 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
+using Mohaymen.GiteaClient.Gitea.Commit.Common.Facades.Abstractions;
+using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Request;
+using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
@@ -10,12 +13,12 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
 internal class TestCommiter : ITestCommiter
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ICommitFacade _commitFacade;
     private readonly IOptions<GiteaApiConfiguration> _giteaOptions;
 
-    public TestCommiter(IHttpClientFactory httpClientFactory, IOptions<GiteaApiConfiguration> giteaOptions)
+    public TestCommiter(IOptions<GiteaApiConfiguration> giteaOptions, ICommitFacade commitFacade)
     {
-        _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        _commitFacade = commitFacade ?? throw new ArgumentNullException(nameof(commitFacade));
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
@@ -25,17 +28,22 @@ internal class TestCommiter : ITestCommiter
         string commitMessage,
         CancellationToken cancellationToken)
     {
-        var httpClient = _httpClientFactory.CreateClient(GiteaTestConstants.ApiClientName);
-        httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("token", $"{_giteaOptions.Value.PersonalAccessToken}");
-        var createFileRequest = new CreateFileRequest
+        var createCommitDto = new CreateCommitCommandDto
         {
-            Content = Convert.ToBase64String("sample test content"u8.ToArray()),
+            RepositoryName = repositoryName,
+            BranchName = branchName,
             CommitMessage = commitMessage,
-            BranchName = branchName
+            FileDtos =
+            [
+                new FileCommitDto
+                {
+                    Path = "1.txt",
+                    Content = Convert.ToBase64String("sample test content"u8.ToArray()),
+                    CommitActionDto = CommitActionDto.Create
+                }
+            ]
         };
-        var jsonContent = new StringContent(JsonConvert.SerializeObject(createFileRequest));
-        jsonContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        var resykt = await httpClient.PostAsync($"repos/{_giteaOptions.Value.RepositoriesOwner}/{repositoryName}/contents/{filePath}", jsonContent, cancellationToken);
+
+        await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
     }
 }

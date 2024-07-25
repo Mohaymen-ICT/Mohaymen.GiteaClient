@@ -9,7 +9,7 @@ using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstrac
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Commit.GetBranchCommits;
 
 [Collection("GiteaIntegrationTests")]
-public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
+public class GetBranchCommitsTests
 {
     private const string RepositoryName = "GetBranchCommitsRepo";
     private const string BranchName = "feature/IntegrationTest";
@@ -23,8 +23,6 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
 
     public GetBranchCommitsTests(GiteaCollectionFixture giteaCollectionFixture)
     {
-        _giteaCollectionFixture =
-            giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _testRepositoryCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
         _testBranchCreator = giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestBranchCreator>();
@@ -39,6 +37,7 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
             {
                 1,
                 1,
+                [$"{CommitMessage}\n"]
             },
             {
                 2,
@@ -53,6 +52,7 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
             {
                 1,
                 10,
+                [$"{CommitMessage}\n", "Initial commit\n"]
             }
         };
     }
