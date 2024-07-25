@@ -6,6 +6,7 @@ using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
+using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.CreateRepository;
 
@@ -31,7 +32,7 @@ public class CreateRepositoryTests
         var createRepositoryCommandDto = new CreateRepositoryCommandDto
         {
             Name = repositoryName,
-            DefaultBranch = "main",
+            DefaultBranch = GiteaTestConstants.DefaultBranch,
             IsPrivateBranch = true
         };
         
