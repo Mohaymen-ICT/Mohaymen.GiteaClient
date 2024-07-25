@@ -45,7 +45,7 @@ internal class CreatePullRequestCommandHandler : IRequestHandler<CreatePullReque
         _validator.ValidateAndThrow(command);
         var createPullRequestRequest = command.ToCreatePullRequestRequest();
         var owner = _options.Value.RepositoriesOwner;
-        return await _pullRequestRestClient.CreatePullRequestAsync(owner, command.RepositoryName, createPullRequestRequest)
+        return await _pullRequestRestClient.CreatePullRequestAsync(owner, command.RepositoryName, createPullRequestRequest, cancellationToken)
             .ConfigureAwait(false);
     }
 }
