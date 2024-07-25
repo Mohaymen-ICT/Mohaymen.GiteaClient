@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
+
 internal class CreateAccessTokenRequest
 {
     [JsonProperty("name")]
