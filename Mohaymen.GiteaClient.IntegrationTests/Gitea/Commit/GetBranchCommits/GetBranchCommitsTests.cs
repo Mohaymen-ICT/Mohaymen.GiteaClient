@@ -15,8 +15,7 @@ public class GetBranchCommitsTests : IClassFixture<GetBranchCommitsClassFixture>
 
     public GetBranchCommitsTests(GiteaCollectionFixture giteaCollectionFixture)
     {
-        _giteaCollectionFixture =
-            giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
+        _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
     
