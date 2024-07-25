@@ -12,4 +12,7 @@ internal class CreateRepositoryRequest
 
     [JsonProperty("private")]
     public bool IsPrivateBranch { get; init; }
+    
+    [JsonProperty("auto_init")]
+    public bool AutoInit { get; init; }
 }

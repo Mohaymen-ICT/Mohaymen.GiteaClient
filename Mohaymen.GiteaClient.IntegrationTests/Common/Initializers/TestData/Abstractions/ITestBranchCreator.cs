@@ -1,6 +1,9 @@
-﻿namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+﻿using Mohaymen.GiteaClient.Gitea.Branch.Common.Dtos;
+using Refit;
+
+namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
 public interface ITestBranchCreator
 {
-    Task CreateBranch(string repositoryName, string branchName);
+    Task CreateBranchAsync(string repositoryName, string branchName, CancellationToken cancellationToken);
 }

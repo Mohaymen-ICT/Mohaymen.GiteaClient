@@ -6,9 +6,11 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 
 public class CreateRepositoryCommandDto
 {
-    public string DefaultBranch { get; init; }
+    public required string DefaultBranch { get; init; }
 
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     public bool IsPrivateBranch { get; init; }
+    
+    public bool AutoInit { get; init; }
 }
