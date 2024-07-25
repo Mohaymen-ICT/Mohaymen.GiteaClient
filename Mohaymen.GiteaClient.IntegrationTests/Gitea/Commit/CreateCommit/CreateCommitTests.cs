@@ -37,9 +37,10 @@ public class CreateCommitTests
         const string filePath = "sample.txt";
         const string content = "alireza eiji is the man of focus!";
         const string expectedContent = "YWxpcmV6YSBlaWppIGlzIHRoZSBtYW4gb2YgZm9jdXMh";
+        const string repoName = $"CreateFile_{RepositoryName}";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = RepositoryName,
+            RepositoryName = repoName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
@@ -52,6 +53,8 @@ public class CreateCommitTests
                 }
             ]
         };
+        
+        await _testRepositoryCreator.CreateRepositoryAsync(repoName, _giteaCollectionFixture.CancellationToken);
 
         // Act
         var actual = await _sut.CommitClient.CreateCommitAsync(createCommitCommandDto, _giteaCollectionFixture.CancellationToken);
@@ -59,16 +62,16 @@ public class CreateCommitTests
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(repoName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(repoName,
             filePath,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeTrue();
-        var doesFileHaveContent = await _testFileChecker.HasFileContent(RepositoryName,
+        var doesFileHaveContent = await _testFileChecker.HasFileContent(repoName,
             filePath,
             expectedContent,
             _giteaCollectionFixture.CancellationToken);
@@ -82,9 +85,10 @@ public class CreateCommitTests
         const string filePath = "README.md";
         const string content = "alireza eiji is the man of focus!";
         const string expectedContent = "YWxpcmV6YSBlaWppIGlzIHRoZSBtYW4gb2YgZm9jdXMh";
+        const string repoName = $"EditFile_{RepositoryName}";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = RepositoryName,
+            RepositoryName = repoName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
@@ -97,6 +101,8 @@ public class CreateCommitTests
                 }
             ]
         };
+        
+        await _testRepositoryCreator.CreateRepositoryAsync($"EditFile_{RepositoryName}", _giteaCollectionFixture.CancellationToken);
 
         // Act
         var actual = await _sut.CommitClient.CreateCommitAsync(createCommitCommandDto, _giteaCollectionFixture.CancellationToken);
@@ -104,16 +110,16 @@ public class CreateCommitTests
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(repoName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(repoName,
             filePath,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeTrue();
-        var doesFileHaveContent = await _testFileChecker.HasFileContent(RepositoryName,
+        var doesFileHaveContent = await _testFileChecker.HasFileContent(repoName,
             filePath,
             expectedContent,
             _giteaCollectionFixture.CancellationToken);
@@ -124,27 +130,28 @@ public class CreateCommitTests
     public async Task CreateCommitAsync_ShouldCreateCommitAndDeleteFileWithItsContent_WhenCommitIsForFileDeleting()
     {
         // Arrange
-        const string FileDelete = "SampleDeleteFile.txt";
+        const string fileDelete = "SampleDeleteFile.txt";
+        const string repoName = $"DeleteFile_{RepositoryName}";
         var createCommitCommandDto = new CreateCommitCommandDto
         {
-            RepositoryName = RepositoryName,
+            RepositoryName = repoName,
             BranchName = "main",
             CommitMessage = "some trivial commit",
             FileDtos =
             [
                 new FileCommitDto
                 {
-                    Path = FileDelete,
+                    Path = fileDelete,
                     Content = "",
                     CommitActionDto = CommitActionDto.Delete
                 }
             ]
         };
-        
-        await _testRepositoryCreator.CreateRepositoryAsync(RepositoryName, _giteaCollectionFixture.CancellationToken);
-        await _testCommiter.CreateFileAsync(RepositoryName,
+
+        await _testRepositoryCreator.CreateRepositoryAsync(repoName, _giteaCollectionFixture.CancellationToken);
+        await _testCommiter.CreateFileAsync(repoName,
             "main",
-            FileDelete,
+            fileDelete,
             "ccc",
             _giteaCollectionFixture.CancellationToken);
 
@@ -154,13 +161,13 @@ public class CreateCommitTests
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
         var commitSha = actual.Content!.CommitResponseDto.Sha;
-        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(RepositoryName,
+        var isCommitCreated= await _testCommitChecker.ContainsCommitWithShaAsync(repoName,
             "main",
             commitSha,
             _giteaCollectionFixture.CancellationToken);
         isCommitCreated.Should().BeTrue();
-        var isFileExists = await _testFileChecker.ContainsFileAsync(RepositoryName,
-            FileDelete,
+        var isFileExists = await _testFileChecker.ContainsFileAsync(repoName,
+            fileDelete,
             _giteaCollectionFixture.CancellationToken);
         isFileExists.Should().BeFalse();
     }

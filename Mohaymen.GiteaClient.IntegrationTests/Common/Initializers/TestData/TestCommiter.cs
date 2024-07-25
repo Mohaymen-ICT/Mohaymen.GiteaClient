@@ -37,13 +37,13 @@ internal class TestCommiter : ITestCommiter
             [
                 new FileCommitDto
                 {
-                    Path = "1.txt",
+                    Path = filePath,
                     Content = Convert.ToBase64String("sample test content"u8.ToArray()),
                     CommitActionDto = CommitActionDto.Create
                 }
             ]
         };
 
-        await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
+        var rr = await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
     }
 }
