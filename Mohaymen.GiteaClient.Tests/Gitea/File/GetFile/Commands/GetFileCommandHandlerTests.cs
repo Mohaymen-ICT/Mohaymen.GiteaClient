@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.File.Common.ApiCall.Abstractions;
+using Mohaymen.GiteaClient.Gitea.File.Common.Encoding.Abstraction;
 using Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Context;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
@@ -19,13 +20,15 @@ public class GetFileCommandHandlerTests
     private readonly IOptions<GiteaApiConfiguration> _options;
     private readonly InlineValidator<GetFileCommand> _validator;
     private readonly IRequestHandler<GetFileCommand, ApiResponse<GetFileResponseDto>> _sut;
+    private IContentDecoder _contentDecoder;
 
     public GetFileCommandHandlerTests()
     {
         _fileRestClient = Substitute.For<IFileRestClient>();
         _options = Substitute.For<IOptions<GiteaApiConfiguration>>();
+        _contentDecoder = Substitute.For<IContentDecoder>();
         _validator = new InlineValidator<GetFileCommand>();
-        _sut = new GetFileCommandHandler(_fileRestClient, _options, _validator);
+        _sut = new GetFileCommandHandler(_fileRestClient, _contentDecoder, _options, _validator);
     }
 
     [Fact]

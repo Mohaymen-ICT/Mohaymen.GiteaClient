@@ -5,7 +5,7 @@ namespace Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 public class GetFileResponseDto
 {
     [JsonProperty("content")]
-    public required string Content { get; init; }
+    public required string Content { get; set; }
     
     [JsonProperty("name")]
     public required string FileName { get; init; }

@@ -22,6 +22,7 @@ internal static class GiteaIntegrationTestDependencyInjection
         });
         serviceCollection.AddSingleton<ITestRepositoryCreator, TestRepositoryCreator>();
         serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();
+        serviceCollection.AddSingleton<ITestFileCreator, TestFileCreator>();
         serviceCollection.AddSingleton<ITestRepositoryChecker, TestRepositoryChecker>();
         serviceCollection.AddSingleton<ITestBranchChecker, TestBranchChecker>();
         serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();

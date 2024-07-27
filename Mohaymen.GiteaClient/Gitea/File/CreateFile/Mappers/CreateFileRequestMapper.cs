@@ -6,13 +6,13 @@ namespace Mohaymen.GiteaClient.Gitea.File.CreateFile.Mappers;
 
 internal static class CreateFileRequestMapper
 {
-    internal static CreateFileRequest ToCreateFileRequest(this CreateFileCommand createFileCommand)
+    internal static CreateFileRequest ToCreateFileRequest(this CreateFileCommand createFileCommand, string encodedContent)
     {
         ArgumentNullException.ThrowIfNull(createFileCommand);
 
         return new CreateFileRequest
         {
-            Content = createFileCommand.Content,
+            Content = encodedContent,
             Author = createFileCommand.Author,
             BranchName = createFileCommand.BranchName,
             CommitMessage = createFileCommand.CommitMessage,
