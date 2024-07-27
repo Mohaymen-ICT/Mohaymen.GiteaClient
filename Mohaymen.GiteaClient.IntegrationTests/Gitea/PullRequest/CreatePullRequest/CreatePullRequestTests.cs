@@ -29,8 +29,8 @@ public class CreatePullRequestTests
     public async Task CreatePullRequest_ShouldGetBranchListOfRepo_WhenInputsAreProvidedProperly()
     {
         // Arrange
-        const string repositoryName = GiteaTestConstants.RepositoryName;
-        const string branchName = "test_branch";
+        const string repositoryName = "create_pull_request_repo";
+        const string branchName = "create_pull_request_branch";
         var cancellationToken = _giteaCollectionFixture.CancellationToken;
 
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, cancellationToken);

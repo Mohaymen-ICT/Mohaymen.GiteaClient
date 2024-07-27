@@ -90,6 +90,7 @@ public class CreatePullRequestCommandHandlerTests
                                                   && x.Body == body
                                                   && x.Title == title
                                                   && x.Assignee == assignee
-                                                  && x.Assignees!.SequenceEqual(assignees)));
+                                                  && x.Assignees!.SequenceEqual(assignees)),
+            default);
     }
 }
