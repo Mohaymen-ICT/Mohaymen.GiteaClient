@@ -6,8 +6,8 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.File.Common.ApiCall.Abstractions;
+using Mohaymen.GiteaClient.Gitea.File.GetFile.Mappers;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
-using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Mappers;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
@@ -37,9 +37,9 @@ internal class GetFileCommandHandler : IRequestHandler<GetFileCommand, ApiRespon
     public async Task<ApiResponse<GetFileResponseDto>> Handle(GetFileCommand command, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(command);
-        var createBranchRequest = command.ToGetRepositoryFileRequest();
+        var getFileRequest = command.ToGetFileRequest();
         var owner = _options.Value.RepositoriesOwner;
-        return await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, createBranchRequest, cancellationToken)
+        return await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, getFileRequest, cancellationToken)
             .ConfigureAwait(false);
     }
 }

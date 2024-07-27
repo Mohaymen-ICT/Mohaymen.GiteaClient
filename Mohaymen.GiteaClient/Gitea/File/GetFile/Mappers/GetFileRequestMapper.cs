@@ -2,11 +2,11 @@
 using Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Context;
 
-namespace Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Mappers;
+namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Mappers;
 
 internal static class GetFileRequestMapper
 {
-    internal static GetFileRequest ToGetRepositoryFileRequest(this GetFileCommand getFileCommand)
+    internal static GetFileRequest ToGetFileRequest(this GetFileCommand getFileCommand)
     {
         ArgumentNullException.ThrowIfNull(getFileCommand);
 

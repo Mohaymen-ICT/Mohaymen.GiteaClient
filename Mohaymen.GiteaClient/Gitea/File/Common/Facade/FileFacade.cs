@@ -3,8 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Mohaymen.GiteaClient.Gitea.File.Common.Facade.Abstractions;
+using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
+using Mohaymen.GiteaClient.Gitea.File.CreateFile.Mappers;
+using Mohaymen.GiteaClient.Gitea.File.GetFile.Mappers;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
-using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Mappers;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.File.Common.Facade;
@@ -21,7 +23,14 @@ internal class FileFacade : IFileFacade
     public async Task<ApiResponse<GetFileResponseDto>> GetFileAsync(GetFileCommandDto getFileCommandDto,
         CancellationToken cancellationToken)
     {
-        var command = getFileCommandDto.ToGetRepositoryFileCommand();
+        var command = getFileCommandDto.ToGetFileCommand();
+        return await _mediator.Send(command, cancellationToken);
+    }
+
+    public async Task<ApiResponse<CreateFileResponseDto>> CreateFileAsync(CreateFileCommandDto createFileCommandDto, 
+        CancellationToken cancellationToken)
+    {
+        var command = createFileCommandDto.ToCreateFileCommand();
         return await _mediator.Send(command, cancellationToken);
     }
 }
