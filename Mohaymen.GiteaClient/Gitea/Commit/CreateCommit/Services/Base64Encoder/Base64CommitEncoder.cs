@@ -8,7 +8,7 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder;
 
 internal class Base64CommitEncoder : IBase64CommitEncoder
 {
-    public void EncodeFileContentsToBase64(List<FileCommitRequest> fileCommitRequests)
+    public void EncodeFileContentsToBase64(IReadOnlyList<FileCommitRequest> fileCommitRequests)
     {
         foreach (var fileCommitRequest in fileCommitRequests)
         {
