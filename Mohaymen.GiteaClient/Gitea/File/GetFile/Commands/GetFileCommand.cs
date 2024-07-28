@@ -45,7 +45,8 @@ internal class GetFileCommandHandler : IRequestHandler<GetFileCommand, ApiRespon
         var owner = _options.Value.RepositoriesOwner;
         var apiResponse = await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, getFileRequest, cancellationToken)
             .ConfigureAwait(false);
-        if (apiResponse?.Content != null)
+        await apiResponse.EnsureSuccessStatusCodeAsync();
+        if (apiResponse.Content is not null)
         {
             apiResponse.Content.Content = _contentDecoder.Base64Decode(apiResponse.Content.Content);
         }

@@ -52,7 +52,7 @@ public class CreateFileCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldCallCreateFileAsync_AndInputsAreValid()
+    public async Task Handle_ShouldCallCreateFileAsync_WhenInputsAreValid()
     {
         // Arrange
         _validator.RuleFor(x => x).Must(_ => true);
