@@ -44,6 +44,6 @@ internal class TestCommiter : ITestCommiter
             ]
         };
 
-        var rr = await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
+        await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
     }
 }
