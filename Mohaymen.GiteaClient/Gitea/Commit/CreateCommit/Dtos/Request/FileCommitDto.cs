@@ -6,10 +6,3 @@ public class FileCommitDto
     public required string Content { get; init; }
     public required CommitActionDto CommitActionDto { get; init; }
 }
-
-public enum CommitActionDto
-{
-    Create,
-    Update,
-    Delete
-}
