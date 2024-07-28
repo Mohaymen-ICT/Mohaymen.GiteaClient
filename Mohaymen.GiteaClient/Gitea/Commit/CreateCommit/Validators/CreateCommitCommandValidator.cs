@@ -12,14 +12,17 @@ internal class CreateCommitCommandValidator : AbstractValidator<CreateCommitComm
             .NotEmpty()
             .WithErrorCode(ValidationErrorCodes.EmptyRepositoryNameErrorCode)
             .WithMessage("repository name should not be empty");
+        
         RuleFor(x => x.BranchName)
             .NotEmpty()
             .WithErrorCode(ValidationErrorCodes.EmptyBranchNameErrorCode)
             .WithMessage("branch name should not be empty");
+        
         RuleFor(x => x.CommitMessage)
             .NotEmpty()
             .WithErrorCode(ValidationErrorCodes.EmptyCommitMessageErrorCode)
             .WithMessage("commit message should not be empty");
+        
         RuleForEach(x => x.FileCommitCommands)
             .SetValidator(new FileCommitCommandModelValidator());
     }
