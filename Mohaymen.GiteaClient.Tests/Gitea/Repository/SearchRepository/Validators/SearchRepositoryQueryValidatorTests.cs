@@ -88,5 +88,4 @@ public class SearchRepositoryQueryValidatorTests
         // Assert
         actual.IsValid.Should().BeTrue();
     }
-    
 }
