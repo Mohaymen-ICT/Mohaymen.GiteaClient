@@ -11,6 +11,6 @@ internal class DeleteRepositoryCommandValidator : AbstractValidator<DeleteReposi
         RuleFor(x => x.RepositoryName)
             .NotEmpty()
             .WithErrorCode(ValidationErrorCodes.EmptyRepositoryNameErrorCode)
-            .WithMessage("repository name is empty.");
+            .WithMessage("Repository name is empty.");
     }
 }
