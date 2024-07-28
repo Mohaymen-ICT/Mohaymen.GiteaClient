@@ -59,7 +59,7 @@ public class RepositoryFacadeTests
         await _sut.SearchRepositoryAsync(searchRepositoryQueryDto, default);
 
         // Assert
-        await _mediator.Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
+        await _mediator.Received(1).Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
     }
 
     [Fact]

@@ -10,6 +10,7 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
 public interface IRepositoryFacade
 {
     Task<ApiResponse<CreateRepositoryResponseDto>> CreateRepositoryAsync(CreateRepositoryCommandDto createRepositoryCommandDto, CancellationToken cancellationToken);
+    
     Task<ApiResponse<SearchRepositoryResponseDto>> SearchRepositoryAsync(SearchRepositoryQueryDto searchRepositoryQueryDto, CancellationToken cancellationToken);
 
     Task<ApiResponse<DeleteRepositoryResponseDto>> DeleteRepositoryAsync(DeleteRepositoryCommandDto deleteRepositoryCommandDto,
