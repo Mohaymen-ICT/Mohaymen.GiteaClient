@@ -14,7 +14,8 @@ internal static class CreateRepositoryRequestMapper
         {
             DefaultBranch = createRepositoryCommand.DefaultBranch,
             Name = createRepositoryCommand.Name,
-            IsPrivateBranch = createRepositoryCommand.IsPrivateBranch
+            IsPrivateBranch = createRepositoryCommand.IsPrivateBranch,
+            AutoInit = createRepositoryCommand.AutoInit
         };
     }
 }

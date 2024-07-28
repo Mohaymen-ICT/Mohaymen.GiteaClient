@@ -11,4 +11,6 @@ public class CreateRepositoryCommandDto
     public required string Name { get; init; }
 
     public bool IsPrivateBranch { get; init; }
+    
+    public bool AutoInit { get; init; }
 }

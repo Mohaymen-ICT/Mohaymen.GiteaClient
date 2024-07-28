@@ -3,6 +3,8 @@ using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade;
 using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
+using Mohaymen.GiteaClient.Gitea.Branch.GetBranchList.Commands;
+using Mohaymen.GiteaClient.Gitea.Branch.GetBranchList.Dtos;
 using NSubstitute;
 using Xunit;
 
@@ -40,5 +42,22 @@ public class BranchFacadeTests
         await _mediator.Received(1).Send(Arg.Is<CreateBranchCommand>(x => x.RepositoryName == repositoryName
                                                                           && x.NewBranchName == newBranchName
                                                                           && x.OldReferenceName == oldReferenceName));
+    }
+    
+    [Fact]
+    public async Task GetBranchListAsync_ShouldCallSend_WhenEver()
+    {
+        // Arrange
+        const string repositoryName = "repo";
+        var commandDto = new GetBranchListCommandDto
+        {
+            RepositoryName = repositoryName
+        };
+
+        // Act
+        await _sut.GetBranchListAsync(commandDto, default);
+
+        // Assert
+        await _mediator.Received(1).Send(Arg.Is<GetBranchListCommand>(x => x.RepositoryName == repositoryName));
     }
 }

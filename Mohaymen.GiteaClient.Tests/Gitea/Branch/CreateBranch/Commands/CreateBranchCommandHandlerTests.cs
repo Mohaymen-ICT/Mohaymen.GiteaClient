@@ -4,9 +4,9 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.Branch.Common.ApiCall.Abstractions;
+using Mohaymen.GiteaClient.Gitea.Branch.Common.Dtos;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Context;
-using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
 using NSubstitute;
 using Refit;
 using Xunit;
@@ -18,7 +18,7 @@ public class CreateBranchCommandHandlerTests
     private readonly IBranchRestClient _branchRestClient;
     private readonly IOptions<GiteaApiConfiguration> _options;
     private readonly InlineValidator<CreateBranchCommand> _validator;
-    private readonly IRequestHandler<CreateBranchCommand, ApiResponse<CreateBranchResponseDto>> _sut;
+    private readonly IRequestHandler<CreateBranchCommand, ApiResponse<BranchResponseDto>> _sut;
 
     public CreateBranchCommandHandlerTests()
     {
