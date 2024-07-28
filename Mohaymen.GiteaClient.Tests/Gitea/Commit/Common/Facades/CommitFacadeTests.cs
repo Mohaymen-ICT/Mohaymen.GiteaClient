@@ -40,8 +40,8 @@ public class CommitFacadeTests
         // Act
         await _sut.LoadBranchCommitsAsync(queryDto, default);
         // Assert
-        await _mediator.Send(Arg.Is<LoadBranchCommitsQuery>(x => x.RepositoryName == repositoryName
-            && x.BranchName == branchName
+        await _mediator.Send(Arg.Is<LoadBranchCommitsQuery>(x => x.RepositoryName.Equals(repositoryName)
+            && x.BranchName.Equals(branchName)
             && x.Page == page
             && x.Limit == limit), default);
     }
@@ -96,17 +96,17 @@ public class CommitFacadeTests
 
         // Assert
         await _mediator.Received(1).Send(Arg.Is<CreateCommitCommand>(x => x.RepositoryName == repositoryName
-            && x.BranchName == branchName
-            && x.CommitMessage == commitMessage
+            && x.BranchName.Equals(branchName) 
+            && x.CommitMessage.Equals(commitMessage)
             && x.FileCommitCommands.Count == 3
-            && x.FileCommitCommands[0].Path == fakePath1
-            && x.FileCommitCommands[0].Content == fakeContent1
+            && x.FileCommitCommands[0].Path.Equals(fakePath1)
+            && x.FileCommitCommands[0].Content.Equals(fakeContent1)
             && x.FileCommitCommands[0].CommitActionCommand == CommitActionCommand.Create
-            && x.FileCommitCommands[1].Path == fakePath2
-            && x.FileCommitCommands[1].Content == fakeContent2
+            && x.FileCommitCommands[1].Path.Equals(fakePath2)
+            && x.FileCommitCommands[1].Content.Equals(fakeContent2)
             && x.FileCommitCommands[1].CommitActionCommand == CommitActionCommand.Update
-            && x.FileCommitCommands[2].Path == fakePath3
-            && x.FileCommitCommands[2].Content == fakeContent3
+            && x.FileCommitCommands[2].Path.Equals(fakePath3) 
+            && x.FileCommitCommands[2].Content.Equals(fakeContent3)
             && x.FileCommitCommands[2].CommitActionCommand == CommitActionCommand.Delete), 
             default);
     }

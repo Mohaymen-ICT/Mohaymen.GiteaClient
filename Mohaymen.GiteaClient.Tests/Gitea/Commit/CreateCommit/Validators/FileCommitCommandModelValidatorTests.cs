@@ -49,12 +49,11 @@ public class FileCommitCommandModelValidatorTests
             Content = content,
             CommitActionCommand = CommitActionCommand.Create
         };
-        
+
         // Act
         var actual = _sut.Validate(fileCommitDto);
-        
+
         // Assert
         actual.IsValid.Should().BeTrue();
     }
-    
 }
