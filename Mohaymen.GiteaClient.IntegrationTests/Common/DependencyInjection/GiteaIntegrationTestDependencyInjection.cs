@@ -1,8 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade;
-using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade.Abstractions;
-using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade;
-using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
@@ -22,6 +18,7 @@ internal static class GiteaIntegrationTestDependencyInjection
         });
         serviceCollection.AddSingleton<ITestRepositoryCreator, TestRepositoryCreator>();
         serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();
+        serviceCollection.AddSingleton<ITestPullRequestCreator, TestPullRequestCreator>();
         serviceCollection.AddSingleton<ITestRepositoryChecker, TestRepositoryChecker>();
         serviceCollection.AddSingleton<ITestBranchChecker, TestBranchChecker>();
         serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();
