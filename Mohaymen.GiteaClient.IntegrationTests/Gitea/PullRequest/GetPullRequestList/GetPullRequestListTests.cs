@@ -68,11 +68,11 @@ public class GetPullRequestListTests
         var responsePullRequest = actual.Content?.First()!;
         responsePullRequest.Title.Should().Be(title);
         responsePullRequest.Body.Should().Be(body);
-        responsePullRequest.HeadBranch.Should().BeEquivalentTo(new GiteaBranch
+        responsePullRequest.HeadBranchDto.Should().BeEquivalentTo(new BranchDto
         {
             Name = headBranch
         });
-        responsePullRequest.BaseBranch.Should().BeEquivalentTo(new GiteaBranch
+        responsePullRequest.BaseBranchDto.Should().BeEquivalentTo(new BranchDto
         {
             Name = baseBranch
         });

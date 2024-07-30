@@ -31,7 +31,7 @@ internal class PullRequestFacade : IPullRequestFacade
     public async Task<ApiResponse<List<GetPullRequestListResponseDto>>> GetPullRequestListAsync(GetPullRequestListCommandDto getPullRequestListCommandDto,
         CancellationToken cancellationToken)
     {
-        var command = getPullRequestListCommandDto.ToGetPullRequestListCommand();
+        var command = getPullRequestListCommandDto.Map();
         return await _mediator.Send(command, cancellationToken);
     }
 }

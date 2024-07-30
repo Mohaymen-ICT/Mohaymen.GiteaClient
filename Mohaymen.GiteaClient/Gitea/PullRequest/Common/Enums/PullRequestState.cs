@@ -6,11 +6,3 @@ public enum PullRequestState
     Open,
     All
 }
-
-public static class PullRequestStateExtensions
-{
-    public static string ToLowerString(this PullRequestState pullRequestState)
-    {
-        return pullRequestState.ToString().ToLowerInvariant();
-    }
-}

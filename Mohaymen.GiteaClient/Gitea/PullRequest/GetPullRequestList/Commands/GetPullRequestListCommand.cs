@@ -13,7 +13,7 @@ using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Commands;
 
-public class GetPullRequestListCommand : IRequest<ApiResponse<List<GetPullRequestListResponseDto>>>
+public record GetPullRequestListCommand : IRequest<ApiResponse<List<GetPullRequestListResponseDto>>>
 {
     public required string RepositoryName { get; init; } 
     public PullRequestState State { get; init; }
@@ -36,7 +36,7 @@ internal class GetPullRequestListCommandHandler : IRequestHandler<GetPullRequest
     public async Task<ApiResponse<List<GetPullRequestListResponseDto>>> Handle(GetPullRequestListCommand command, 
         CancellationToken cancellationToken)
     {
-        var getPullRequestListRequest = command.ToGetPullRequestListRequest();
+        var getPullRequestListRequest = command.Map();
         var owner = _options.Value.RepositoriesOwner;
         return await _pullRequestRestClient.GetPullRequestListAsync(owner, command.RepositoryName, getPullRequestListRequest, cancellationToken)
             .ConfigureAwait(false);

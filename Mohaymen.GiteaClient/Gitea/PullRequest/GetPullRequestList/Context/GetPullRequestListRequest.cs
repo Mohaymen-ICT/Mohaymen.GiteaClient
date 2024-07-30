@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Context;
 
-internal class GetPullRequestListRequest
+internal record GetPullRequestListRequest
 {
     [JsonProperty("state")] 
     public string? State { get; init; }

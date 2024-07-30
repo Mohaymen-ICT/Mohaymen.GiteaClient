@@ -6,7 +6,7 @@ namespace Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Mappers;
 
 internal static class GetPullRequestListCommandMapper
 {
-    internal static GetPullRequestListCommand ToGetPullRequestListCommand(this GetPullRequestListCommandDto getPullRequestListCommandDto)
+    internal static GetPullRequestListCommand Map(this GetPullRequestListCommandDto getPullRequestListCommandDto)
     {
         ArgumentNullException.ThrowIfNull(getPullRequestListCommandDto);
 

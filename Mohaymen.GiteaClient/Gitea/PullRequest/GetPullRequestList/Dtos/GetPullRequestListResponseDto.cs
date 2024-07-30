@@ -4,19 +4,19 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Dtos;
 
-public class GetPullRequestListResponseDto
+public record GetPullRequestListResponseDto
 {
     [JsonProperty("title")] 
     public required string Title { get; init; }
 
     [JsonProperty("head")] 
-    public required GiteaBranch HeadBranch { get; init; }
+    public required BranchDto HeadBranchDto { get; init; }
 
     [JsonProperty("base")] 
-    public required GiteaBranch BaseBranch { get; init; }
+    public required BranchDto BaseBranchDto { get; init; }
 
     [JsonProperty("body")] 
-    public string? Body { get; init; }
+    public string Body { get; init; } = "";
 
     [JsonProperty("assignees")] 
     public List<User> Assignees { get; init; } = [];

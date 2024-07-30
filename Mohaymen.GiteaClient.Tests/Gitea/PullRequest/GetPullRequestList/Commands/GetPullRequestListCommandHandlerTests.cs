@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.PullRequest.Common.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Gitea.PullRequest.Common.Enums;
+using Mohaymen.GiteaClient.Gitea.PullRequest.Common.Enums.Extensions;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Commands;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Context;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Dtos;
@@ -50,6 +51,12 @@ public class GetPullRequestListCommandHandlerTests
             PersonalAccessToken = "token",
             RepositoriesOwner = owner
         });
+        var expected = new GetPullRequestListRequest
+        {
+            State = pullRequestState.Normalize(),
+            SortBy = sortCriteria.Normalize(),
+            LabelIds = labelIds
+        };
 
         // Act
         await _sut.Handle(command, default);
@@ -57,9 +64,7 @@ public class GetPullRequestListCommandHandlerTests
         // Assert
         await _pullRequestRestClient.Received(1).GetPullRequestListAsync(owner,
             repositoryName,
-            Arg.Is<GetPullRequestListRequest>(x => x.State == pullRequestState.ToLowerString()
-                                                  && x.SortBy == sortCriteria.ToLowerString()
-                                                  && x.LabelIds == labelIds),
+            Arg.Is<GetPullRequestListRequest>(x => x.Equals(expected)),
             default);
     }
 }
