@@ -90,6 +90,24 @@ public class CommitFacadeTests
             CommitMessage = commitMessage,
             FileDtos = fileDtos
         };
+        var expectedFileCommitCommandModel1 = new FileCommitCommandModel
+        {
+            Path = fakePath1,
+            Content = fakeContent1,
+            CommitActionCommand = CommitActionCommand.Create
+        };
+        var expectedFileCommitCommandModel2 = new FileCommitCommandModel
+        {
+            Path = fakePath2,
+            Content = fakeContent2,
+            CommitActionCommand = CommitActionCommand.Update
+        };
+        var expectedFileCommitCommandModel3 = new FileCommitCommandModel
+        {
+            Path = fakePath3,
+            Content = fakeContent3,
+            CommitActionCommand = CommitActionCommand.Delete
+        };
 
         // Act
         await _sut.CreateCommitAsync(commandDto, default);
@@ -99,16 +117,9 @@ public class CommitFacadeTests
             && x.BranchName.Equals(branchName) 
             && x.CommitMessage.Equals(commitMessage)
             && x.FileCommitCommands.Count == 3
-            && x.FileCommitCommands[0].Path.Equals(fakePath1)
-            && x.FileCommitCommands[0].Content.Equals(fakeContent1)
-            && x.FileCommitCommands[0].CommitActionCommand == CommitActionCommand.Create
-            && x.FileCommitCommands[1].Path.Equals(fakePath2)
-            && x.FileCommitCommands[1].Content.Equals(fakeContent2)
-            && x.FileCommitCommands[1].CommitActionCommand == CommitActionCommand.Update
-            && x.FileCommitCommands[2].Path.Equals(fakePath3) 
-            && x.FileCommitCommands[2].Content.Equals(fakeContent3)
-            && x.FileCommitCommands[2].CommitActionCommand == CommitActionCommand.Delete), 
+            && x.FileCommitCommands[0].Equals(expectedFileCommitCommandModel1)
+            && x.FileCommitCommands[1].Equals(expectedFileCommitCommandModel2)
+            && x.FileCommitCommands[2].Equals(expectedFileCommitCommandModel3)),
             default);
     }
-    
 }
