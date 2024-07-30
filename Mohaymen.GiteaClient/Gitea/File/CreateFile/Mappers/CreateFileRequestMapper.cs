@@ -6,7 +6,7 @@ namespace Mohaymen.GiteaClient.Gitea.File.CreateFile.Mappers;
 
 internal static class CreateFileRequestMapper
 {
-    internal static CreateFileRequest ToCreateFileRequest(this CreateFileCommand createFileCommand, string encodedContent)
+    internal static CreateFileRequest Map(this CreateFileCommand createFileCommand, string encodedContent)
     {
         ArgumentNullException.ThrowIfNull(createFileCommand);
 

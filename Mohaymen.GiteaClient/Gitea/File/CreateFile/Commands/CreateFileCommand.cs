@@ -14,7 +14,7 @@ using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.File.CreateFile.Commands;
 
-public class CreateFileCommand : IRequest<ApiResponse<CreateFileResponseDto>>
+public record CreateFileCommand : IRequest<ApiResponse<CreateFileResponseDto>>
 {
     public required string RepositoryName { get; init; }
     public required string FilePath { get; init; }
@@ -46,7 +46,7 @@ internal class CreateFileCommandHandler : IRequestHandler<CreateFileCommand, Api
     {
         _validator.ValidateAndThrow(command);
         var encodedContent = _contentEncoder.Base64Encode(command.Content);
-        var createFileRequest = command.ToCreateFileRequest(encodedContent);
+        var createFileRequest = command.Map(encodedContent);
         var owner = _options.Value.RepositoriesOwner;
         return await _fileRestClient.CreateFileAsync(owner, command.RepositoryName, command.FilePath, createFileRequest, cancellationToken)
             .ConfigureAwait(false);

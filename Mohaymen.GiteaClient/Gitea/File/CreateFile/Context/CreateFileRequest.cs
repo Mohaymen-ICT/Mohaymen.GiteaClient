@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.File.CreateFile.Context;
 
-internal class CreateFileRequest
+internal record CreateFileRequest
 {
     [JsonProperty("content")]
     public required string Content { get; init; }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
 using Mohaymen.GiteaClient.Gitea.File.CreateFile.Models;
+using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
@@ -45,14 +46,27 @@ public class CreateFileTests
             },
             CommitMessage = "create_file_test"
         };
+        var expectedGetFileCommandDto = new GetFileCommandDto
+        {
+            RepositoryName = repositoryName,
+            FilePath = filePath
+        };
 
         // Act
         var actual = await _sut.FileClient.CreateFileAsync(createFileCommandDto, _giteaCollectionFixture.CancellationToken);
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.Created);
+        actual.Content.Should().NotBeNull();
         actual.Content!.Content.FileName.Should().Be(filePath);
-        actual.Content!.Content.FilePath.Should().Be(filePath);
-        actual.Content!.Content.StringContent.Should().Be(encodedContent);
+        actual.Content.Content.FilePath.Should().Be(filePath);
+        actual.Content.Content.StringContent.Should().Be(encodedContent);
+        
+        var getFileApiResponse = await _sut.FileClient.GetFileAsync(expectedGetFileCommandDto, _giteaCollectionFixture.CancellationToken);
+        getFileApiResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        getFileApiResponse.Content.Should().NotBeNull();
+        getFileApiResponse.Content!.Content.Should().Be(content);
+        getFileApiResponse.Content.FileName.Should().Be(filePath);
+        getFileApiResponse.Content.FilePath.Should().Be(filePath);
     }
 }

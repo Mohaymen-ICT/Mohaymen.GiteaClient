@@ -30,7 +30,7 @@ internal class FileFacade : IFileFacade
     public async Task<ApiResponse<CreateFileResponseDto>> CreateFileAsync(CreateFileCommandDto createFileCommandDto, 
         CancellationToken cancellationToken)
     {
-        var command = createFileCommandDto.ToCreateFileCommand();
+        var command = createFileCommandDto.Map();
         return await _mediator.Send(command, cancellationToken);
     }
 }

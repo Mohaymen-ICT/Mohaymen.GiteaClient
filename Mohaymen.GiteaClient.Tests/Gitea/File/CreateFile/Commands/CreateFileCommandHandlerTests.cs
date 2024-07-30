@@ -85,6 +85,14 @@ public class CreateFileCommandHandlerTests
         });
         _contentEncoder.Base64Encode(content).Returns(encodedContent);
 
+        var expected = new CreateFileRequest
+        {
+            Content = encodedContent,
+            Author = identity,
+            BranchName = branchName,
+            CommitMessage = commitMessage
+        };
+
         // Act
         await _sut.Handle(command, default);
         
@@ -92,10 +100,7 @@ public class CreateFileCommandHandlerTests
         await _fileRestClient.Received(1).CreateFileAsync(owner, 
             repositoryName, 
             filePath, 
-            Arg.Is<CreateFileRequest>(x => x.Content == encodedContent
-                                           && x.Author == identity
-                                           && x.BranchName == branchName
-                                           && x.CommitMessage == commitMessage),
+            Arg.Is<CreateFileRequest>(x => x.Equals(expected)),
             default);
     }
 }

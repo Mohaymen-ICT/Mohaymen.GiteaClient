@@ -2,7 +2,7 @@
 
 namespace Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
 
-public class CreateFileCommandDto
+public record CreateFileCommandDto
 {
     public required string RepositoryName { get; init; }
     public required string FilePath { get; init; }
