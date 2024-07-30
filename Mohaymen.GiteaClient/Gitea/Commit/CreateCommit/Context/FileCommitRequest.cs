@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Context;
 
-internal class FileCommitRequest
+internal record FileCommitRequest
 {
     [JsonProperty("path")]
     public required string Path { get; init; }

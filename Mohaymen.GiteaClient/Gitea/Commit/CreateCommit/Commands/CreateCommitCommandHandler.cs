@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -14,7 +15,7 @@ using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Commands;
 
-internal class CreateCommitCommand : IRequest<ApiResponse<CreateCommitResponseDto>>
+internal sealed record CreateCommitCommand : IRequest<ApiResponse<CreateCommitResponseDto>>
 {
     public required string RepositoryName { get; init; }
     
@@ -25,7 +26,7 @@ internal class CreateCommitCommand : IRequest<ApiResponse<CreateCommitResponseDt
     public required List<FileCommitCommandModel> FileCommitCommands { get; init; }
 }
 
-internal class CreateCommitCommandHandler : IRequestHandler<CreateCommitCommand, ApiResponse<CreateCommitResponseDto>>
+internal sealed class CreateCommitCommandHandler : IRequestHandler<CreateCommitCommand, ApiResponse<CreateCommitResponseDto>>
 {
     private readonly IValidator<CreateCommitCommand> _validator;
     private readonly ICommitRestClient _commitRestClient;
@@ -46,8 +47,11 @@ internal class CreateCommitCommandHandler : IRequestHandler<CreateCommitCommand,
     public async Task<ApiResponse<CreateCommitResponseDto>> Handle(CreateCommitCommand createCommitCommand, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(createCommitCommand);
-        var request = createCommitCommand.MapToRequest();
-        _base64CommitEncoder.EncodeFileContentsToBase64(request.FileCommitRequests);
+        var command = createCommitCommand with
+        {
+            FileCommitCommands = _base64CommitEncoder.EncodeFileContentsToBase64(createCommitCommand.FileCommitCommands).ToList()
+        };
+        var request = command.MapToRequest();
         return await _commitRestClient.CreateCommitAsync(_giteaOptions.Value.RepositoriesOwner,
             createCommitCommand.RepositoryName,
             request);

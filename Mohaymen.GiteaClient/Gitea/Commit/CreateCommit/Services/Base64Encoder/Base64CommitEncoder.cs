@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Commands;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Context;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder.Abstractions;
 
@@ -8,12 +10,11 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder;
 
 internal class Base64CommitEncoder : IBase64CommitEncoder
 {
-    public void EncodeFileContentsToBase64(IReadOnlyList<FileCommitRequest> fileCommitRequests)
+    public IReadOnlyList<FileCommitCommandModel> EncodeFileContentsToBase64(IReadOnlyList<FileCommitCommandModel> fileCommitRequests)
     {
-        foreach (var fileCommitRequest in fileCommitRequests)
+        return fileCommitRequests.Select(fileCommitRequest => fileCommitRequest with
         {
-            var base64StringContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(fileCommitRequest.Content));
-            fileCommitRequest.Content = base64StringContent;
-        }
+            Content = Convert.ToBase64String(Encoding.UTF8.GetBytes(fileCommitRequest.Content))
+        }).ToList();
     }
 }

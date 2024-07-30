@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Commands;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Context;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Services.Base64Encoder.Abstractions;
@@ -23,40 +24,41 @@ public class Base64CommitEncoderTests
         const string path2 = "fakePath2";
         const string content1 = "fakeContent1";
         const string content2 = "fakeContent2";
-        var actual = new List<FileCommitRequest>
+        var fileCommitCommandModels = new List<FileCommitCommandModel>
         {
             new()
             {
                 Path = path1,
                 Content = content1,
-                CommitAction = CommitAction.Create
+                CommitActionCommand = CommitActionCommand.Create
             },
             new()
             {
                 Path = path2,
                 Content = content2,
-                CommitAction = CommitAction.Create
+                CommitActionCommand = CommitActionCommand.Create
             }
         };
-        var expected = new List<FileCommitRequest>
+        
+        var expected = new List<FileCommitCommandModel>
         {
             new()
             {
                 Path = path1,
                 Content = "ZmFrZUNvbnRlbnQx",
-                CommitAction = CommitAction.Create
+                CommitActionCommand = CommitActionCommand.Create
             },
             new()
             {
                 Path = path2,
                 Content = "ZmFrZUNvbnRlbnQy",
-                CommitAction = CommitAction.Create
+                CommitActionCommand = CommitActionCommand.Create
             }
         };
         
         
         // Act
-        _sut.EncodeFileContentsToBase64(actual);
+        var actual = _sut.EncodeFileContentsToBase64(fileCommitCommandModels);
         
         // Assert
         actual.Should().BeEquivalentTo(expected);

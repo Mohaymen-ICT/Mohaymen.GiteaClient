@@ -61,6 +61,13 @@ public class CreateCommitCommandHandlerTests
         const string path = "fakePath";
         const string content = "fakeContent";
         const string repoOwner = "fakeOwner";
+        var fileCommitCommandModel = new FileCommitCommandModel
+        {
+            Path = path,
+            Content = content,
+            CommitActionCommand = CommitActionCommand.Create
+        };
+        
         var request = new CreateCommitCommand
         {
             RepositoryName = "fakeRepo",
@@ -68,12 +75,7 @@ public class CreateCommitCommandHandlerTests
             CommitMessage = "fakeCommit",
             FileCommitCommands =
             [
-                new FileCommitCommandModel
-                {
-                    Path = path,
-                    Content = content,
-                    CommitActionCommand = CommitActionCommand.Create
-                }
+                fileCommitCommandModel
             ]
         };
         var giteaConfigurationApi = new GiteaApiConfiguration
@@ -83,6 +85,19 @@ public class CreateCommitCommandHandlerTests
             RepositoriesOwner = repoOwner
         };
         _giteaOptions.Value.Returns(giteaConfigurationApi);
+        _base64CommitEncoder.EncodeFileContentsToBase64(Arg.Is<IReadOnlyList<FileCommitCommandModel>>(x => 
+            x.Count == 1 &&
+            x[0].Equals(fileCommitCommandModel)))
+            .Returns(new FileCommitCommandModel[]
+            {
+                fileCommitCommandModel
+            });
+        var expectedFileCommitRequestArg = new FileCommitRequest
+        {
+            Path = path,
+            Content = content,
+            CommitAction = CommitAction.Create
+        };
         
         // Act
         await _sut.Handle(request, default);
@@ -91,9 +106,7 @@ public class CreateCommitCommandHandlerTests
         await _commitRestClient.Received(1).CreateCommitAsync(repoOwner, repositoryName, Arg.Is<CreateCommitRequest>(
             x => x.BranchName == branchName &&
                  x.CommitMessage == commitMessage &&
-                 x.FileCommitRequests[0].Content == content &&
-                 x.FileCommitRequests[0].Path == path &&
-                 x.FileCommitRequests[0].CommitAction == CommitAction.Create
+                 x.FileCommitRequests[0].Equals(expectedFileCommitRequestArg)
         ));
     }
 }

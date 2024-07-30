@@ -1,6 +1,6 @@
 ﻿namespace Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Commands;
 
-internal class FileCommitCommandModel
+internal sealed record FileCommitCommandModel
 {
     public required string Path { get; init; }
     public required string Content { get; init; }
