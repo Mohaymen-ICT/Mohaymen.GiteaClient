@@ -22,6 +22,8 @@ internal static class GiteaIntegrationTestDependencyInjection
         serviceCollection.AddSingleton<ITestRepositoryChecker, TestRepositoryChecker>();
         serviceCollection.AddSingleton<ITestBranchChecker, TestBranchChecker>();
         serviceCollection.AddSingleton<ITestBranchCreator, TestBranchCreator>();
+        serviceCollection.AddSingleton<ITestCommitChecker, TestCommitChecker>();
+        serviceCollection.AddSingleton<ITestFileChecker, TestFileChecker>();
         serviceCollection.AddSingleton<ITestCommiter, TestCommiter>();
         return serviceCollection;
     }

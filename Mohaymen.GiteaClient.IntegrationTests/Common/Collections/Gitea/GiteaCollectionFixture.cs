@@ -53,7 +53,7 @@ public class GiteaCollectionFixture : IAsyncLifetime
         var container = new ContainerBuilder()
             .WithImage(GiteaTestConstants.ImageName)
             .WithPortBinding(GiteaTestConstants.PortNumber, true)
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(r => r.ForPort(3000)))
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(r => r.ForPort(GiteaTestConstants.PortNumber)))
             .WithEnvironment(new Dictionary<string, string>
             {
                 { "USER_UID", "1000" },
