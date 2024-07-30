@@ -35,7 +35,10 @@ public class CreatePullRequestCommandHandlerTests
         _validator.RuleFor(x => x).Must(_ => false);
         var command = new CreatePullRequestCommand
         {
-            RepositoryName = "repo"
+            RepositoryName = "repo",
+            Title = "title",
+            HeadBranch = "head",
+            BaseBranch = "base"
         };
 
         // Act
