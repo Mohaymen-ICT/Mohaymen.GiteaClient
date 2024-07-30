@@ -21,5 +21,5 @@ internal class CreatePullRequestRequest
     public string? Assignee { get; init; }
 
     [JsonProperty("assignees")]
-    public List<string>? Assignees { get; init; } //TODO list or array ?
+    public List<string> Assignees { get; init; } = []; //TODO list or array ?
 }

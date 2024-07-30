@@ -13,13 +13,13 @@ public class GetPullRequestListResponseDto
     public string? Body { get; init; }
     
     [JsonProperty("head")] 
-    public Common.Models.Branch? HeadBranch { get; init; }
+    public GiteaBranch? HeadBranch { get; init; }
     
     [JsonProperty("base")] 
-    public Common.Models.Branch? BaseBranch { get; init; }
+    public GiteaBranch? BaseBranch { get; init; }
     
     [JsonProperty("assignees")] 
-    public List<User>? Assignees { get; init; }
+    public List<User> Assignees { get; init; } = [];
     
     [JsonProperty("merged")] 
     public bool Merged { get; init; }

@@ -21,7 +21,7 @@ internal class CreatePullRequestCommand : IRequest<ApiResponse<CreatePullRequest
     public string? Body { get; init; }
     public string? Title { get; init; }
     public string? Assignee { get; init; }
-    public List<string>? Assignees { get; init; } //TODO list or array ?
+    public List<string> Assignees { get; init; } = []; //TODO list or array ?
 }
 
 internal class CreatePullRequestCommandHandler : IRequestHandler<CreatePullRequestCommand, ApiResponse<CreatePullRequestResponseDto>>

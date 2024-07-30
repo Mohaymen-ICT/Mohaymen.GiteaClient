@@ -18,7 +18,7 @@ public class GetPullRequestListCommand : IRequest<ApiResponse<List<GetPullReques
     public required string RepositoryName { get; init; } 
     public PullRequestState State { get; init; }
     public SortCriteria SortBy { get; init; }
-    public List<int>? LabelIds { get; init; }
+    public List<int> LabelIds { get; init; } = [];
 }
 
 internal class GetPullRequestListCommandHandler : IRequestHandler<GetPullRequestListCommand, ApiResponse<List<GetPullRequestListResponseDto>>>

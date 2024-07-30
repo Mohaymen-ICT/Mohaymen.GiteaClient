@@ -10,5 +10,5 @@ public class CreatePullRequestCommandDto
     public string? Body { get; init; }
     public string? Title { get; init; }
     public string? Assignee { get; init; }
-    public List<string>? Assignees { get; init; } //TODO list or array ?
+    public List<string> Assignees { get; init; } = []; //TODO list or array ?
 }

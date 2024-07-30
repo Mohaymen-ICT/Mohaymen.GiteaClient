@@ -10,7 +10,7 @@ internal class GetPullRequestListRequest
     
     [JsonProperty("sort")] 
     public string? SortBy { get; init; }
-    
-    [JsonProperty("labels")] 
-    public List<int>? LabelIds { get; init; }
+
+    [JsonProperty("labels")]
+    public List<int> LabelIds { get; init; } = [];
 }

@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
+using Mohaymen.GiteaClient.Gitea.PullRequest.Common.Models;
 using Mohaymen.GiteaClient.Gitea.PullRequest.CreatePullRequest.Dtos;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
@@ -67,11 +68,11 @@ public class GetPullRequestListTests
         var responsePullRequest = actual.Content?.First()!;
         responsePullRequest.Title.Should().Be(title);
         responsePullRequest.Body.Should().Be(body);
-        responsePullRequest.HeadBranch.Should().BeEquivalentTo(new GiteaClient.Gitea.PullRequest.Common.Models.Branch
+        responsePullRequest.HeadBranch.Should().BeEquivalentTo(new GiteaBranch
         {
             Name = headBranch
         });
-        responsePullRequest.BaseBranch.Should().BeEquivalentTo(new GiteaClient.Gitea.PullRequest.Common.Models.Branch
+        responsePullRequest.BaseBranch.Should().BeEquivalentTo(new GiteaBranch
         {
             Name = baseBranch
         });
