@@ -63,9 +63,15 @@ public class PullRequestFacadeTests
     {
         // Arrange
         const string repositoryName = "repo";
+        const string title = "title";
+        const string headBranch = "head";
+        const string baseBranch = "base";
         var commandDto = new CreatePullRequestCommandDto
         {
-            RepositoryName = repositoryName
+            RepositoryName = repositoryName,
+            Title = title,
+            HeadBranch = headBranch,
+            BaseBranch = baseBranch
         };
 
         // Act
