@@ -20,7 +20,7 @@ public class GetFileCommandHandlerTests
     private readonly IOptions<GiteaApiConfiguration> _options;
     private readonly InlineValidator<GetFileCommand> _validator;
     private readonly IRequestHandler<GetFileCommand, ApiResponse<GetFileResponseDto>> _sut;
-    private IContentDecoder _contentDecoder;
+    private readonly IContentDecoder _contentDecoder;
 
     public GetFileCommandHandlerTests()
     {
@@ -70,6 +70,15 @@ public class GetFileCommandHandlerTests
             PersonalAccessToken = "token",
             RepositoriesOwner = owner
         });
+        var mockedResponse = new ApiResponse<GetFileResponseDto>(Substitute.For<HttpResponseMessage>(),
+            Substitute.For<GetFileResponseDto>(),
+            null!);
+        _fileRestClient.GetFileAsync(owner, 
+                repositoryName, 
+                filePath, 
+                Arg.Any<GetFileRequest>(), 
+                Arg.Any<CancellationToken>())
+            .Returns(mockedResponse);
 
         // Act
         await _sut.Handle(command, default);
