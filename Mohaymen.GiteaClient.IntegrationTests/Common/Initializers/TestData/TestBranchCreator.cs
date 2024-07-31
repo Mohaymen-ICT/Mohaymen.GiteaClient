@@ -1,4 +1,4 @@
-﻿using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade.Abstractions;
+using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
