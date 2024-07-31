@@ -13,15 +13,8 @@ public class TestFileCreator : ITestFileCreator
         _fileFacade = fileFacade ?? throw new ArgumentNullException(nameof(fileFacade));
     }
 
-    public async Task CreateFileAsync(string repositoryName, string filePath, string content, CancellationToken cancellationToken)
+    public async Task CreateFileAsync(CreateFileCommandDto createFileCommandDto, CancellationToken cancellationToken)
     {
-        var createFileCommandDto = new CreateFileCommandDto
-        {
-            RepositoryName = repositoryName,
-            FilePath = filePath,
-            Content = content
-        };
-
        await _fileFacade.CreateFileAsync(createFileCommandDto, cancellationToken);
     }
 }

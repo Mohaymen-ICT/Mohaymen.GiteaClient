@@ -35,7 +35,13 @@ public class GetFileTests
         const string content = "Hello, World!";
         var cancellationToken = _giteaCollectionFixture.CancellationToken;
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, cancellationToken);
-        await _fileCreator.CreateFileAsync(repositoryName, filePath, content, cancellationToken);
+        var createFileCommandDto = new CreateFileCommandDto
+        {
+            RepositoryName = repositoryName,
+            FilePath = filePath,
+            Content = content
+        };
+        await _fileCreator.CreateFileAsync(createFileCommandDto, cancellationToken);
 
         var getFileCommandDto = new GetFileCommandDto
         {
