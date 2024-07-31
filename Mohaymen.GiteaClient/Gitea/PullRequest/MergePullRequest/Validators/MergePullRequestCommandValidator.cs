@@ -16,9 +16,5 @@ internal sealed class MergePullRequestCommandValidator : AbstractValidator<Merge
             .GreaterThan(0)
             .WithErrorCode(MergePullRequestErrorCodes.IndexLessThanOneErrorCode)
             .WithMessage("index should be greater than zero");
-        RuleFor(x => x.MergeType)
-            .NotEmpty()
-            .WithErrorCode(MergePullRequestErrorCodes.EmptyMergeTypeErrorCode)
-            .WithMessage("merge type should not be empty");
     }
 }
