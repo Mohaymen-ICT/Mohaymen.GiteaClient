@@ -14,6 +14,8 @@ public class EnumExtensionsTests
     [InlineData(SortCriteria.Recentupdate, "recentupdate")]
     public void Normalize_ShouldConvertEnumValueToProperString_WhenEver(Enum enumValue, string expected)
     {
+        //Arrange
+        
         // Act
         var actual = enumValue.Normalize();
 

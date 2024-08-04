@@ -53,8 +53,8 @@ public class GetPullRequestListCommandHandlerTests
         });
         var expected = new GetPullRequestListRequest
         {
-            State = EnumExtensions.Normalize(pullRequestState),
-            SortBy = EnumExtensions.Normalize(sortCriteria),
+            State = pullRequestState.Normalize(),
+            SortBy = sortCriteria.Normalize(),
             LabelIds = labelIds
         };
 

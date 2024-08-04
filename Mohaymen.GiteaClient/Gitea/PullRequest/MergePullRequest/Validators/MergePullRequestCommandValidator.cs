@@ -12,6 +12,7 @@ internal sealed class MergePullRequestCommandValidator : AbstractValidator<Merge
             .NotEmpty()
             .WithErrorCode(MergePullRequestErrorCodes.EmptyRepositoryNameErrorCode)
             .WithMessage("repository name should not be empty");
+        
         RuleFor(x => x.Index)
             .GreaterThan(0)
             .WithErrorCode(MergePullRequestErrorCodes.IndexLessThanOneErrorCode)
