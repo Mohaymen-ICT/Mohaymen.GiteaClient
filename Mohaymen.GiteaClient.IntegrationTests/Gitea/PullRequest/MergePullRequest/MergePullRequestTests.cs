@@ -87,6 +87,6 @@ public class MergePullRequestTests
             _giteaCollectionFixture.CancellationToken);
         getPullRequestListResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         getPullRequestListResponse.Content.Should().NotBeNull();
-        getPullRequestListResponse.Content!.First().Merged.Should().BeTrue();
+        getPullRequestListResponse.Content!.First(x => x.Title.Equals(title)).Merged.Should().BeTrue();
     }
 }
