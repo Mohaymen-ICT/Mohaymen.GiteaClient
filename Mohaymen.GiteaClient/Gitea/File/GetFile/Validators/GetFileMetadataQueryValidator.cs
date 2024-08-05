@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
+using Mohaymen.GiteaClient.Gitea.File.GetFile.Queries;
 
 namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Validators;
 
-internal sealed class GetFileCommandValidator : AbstractValidator<GetFileCommand>
+internal sealed class GetFileMetadataQueryValidator : AbstractValidator<GetFileMetadataQuery>
 {
-    public GetFileCommandValidator()
+    public GetFileMetadataQueryValidator()
     {
         RuleFor(x => x.RepositoryName)
             .NotEmpty()

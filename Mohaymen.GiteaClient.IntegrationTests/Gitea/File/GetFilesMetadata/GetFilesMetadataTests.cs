@@ -3,22 +3,22 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
-using Mohaymen.GiteaClient.Gitea.File.CreateFile.Models;
+using Mohaymen.GiteaClient.Gitea.File.GetFilesMetadata.Dto;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
-namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.File.GetFile;
+namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.File.GetFilesMetadata;
 
 [Collection("GiteaIntegrationTests")]
-public class GetFileTests
+public class GetFilesMetadataTests
 {
     private readonly IGiteaClient _sut;
     private readonly ITestRepositoryCreator _repositoryCreator;
     private readonly ITestFileCreator _fileCreator;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
-    
-    public GetFileTests(GiteaCollectionFixture giteaCollectionFixture)
+
+    public GetFilesMetadataTests(GiteaCollectionFixture giteaCollectionFixture)
     {
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _repositoryCreator = _giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
@@ -30,8 +30,8 @@ public class GetFileTests
     public async Task GetFile_ShouldGetFileWithOkStatusCode_WhenInputsAreProvidedProperly()
     {
         // Arrange
-        const string repositoryName = "get_file_repo";
-        const string filePath = "get_file.txt";
+        const string repositoryName = "get_files_metadata_repo";
+        const string filePath = "get_files_metadata.txt";
         const string content = "Hello, World!";
         var cancellationToken = _giteaCollectionFixture.CancellationToken;
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, cancellationToken);
@@ -43,19 +43,35 @@ public class GetFileTests
         };
         await _fileCreator.CreateFileAsync(createFileCommandDto, cancellationToken);
 
-        var getFileCommandDto = new GetFileMetadataQueryDto
+        var getFileCommandDto = new GetFilesMetadataQueryDto
         {
             RepositoryName = repositoryName,
-            FilePath = filePath
+            BranchName = "main"
         };
-
+        var expectedFiles = new List<GetFileResponseDto>()
+        {
+            new()
+            {
+                Content = null,
+                FileName = "README.md",
+                FilePath = "README.md",
+                FileSha = ""
+            },
+            new()
+            {
+                Content = null,
+                FileName = filePath,
+                FilePath = filePath,
+                FileSha = ""
+            }
+        };
+        
         // Act
-        var actual = await _sut.FileClient.GetFileAsync(getFileCommandDto, cancellationToken);
+        var actual = await _sut.FileClient.GetFilesMetadataAsync(getFileCommandDto, cancellationToken);
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
-        actual.Content?.Content.Should().Be(content);
-        actual.Content?.FilePath.Should().Be(filePath);
-        actual.Content?.FileName.Should().Be(filePath);
+        actual.Content.Should().BeEquivalentTo(expectedFiles, options => options.Excluding(x => x.FileSha));
     }
+    
 }
