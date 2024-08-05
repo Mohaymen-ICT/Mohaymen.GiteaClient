@@ -4,5 +4,6 @@ public class FileCommitDto
 {
     public required string Path { get; init; }
     public required string Content { get; init; }
+    public string? FileSha { get; init; }
     public required CommitActionDto CommitActionDto { get; init; }
 }
