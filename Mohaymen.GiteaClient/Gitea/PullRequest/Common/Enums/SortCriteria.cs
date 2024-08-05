@@ -3,9 +3,9 @@
 public enum SortCriteria
 {
     Oldest,
-    RecentUpdate,
-    LeastUpdate,
-    MostComment,
-    LeastComment,
+    Recentupdate,
+    Leastupdate,
+    Mostcomment,
+    Leastcomment,
     Priority
 }

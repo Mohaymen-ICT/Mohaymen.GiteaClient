@@ -33,7 +33,7 @@ public class GetPullRequestListCommandHandlerTests
         const string owner = "owner";
         const string repositoryName = "repo";
         const PullRequestState pullRequestState = PullRequestState.Open;
-        const SortCriteria sortCriteria = SortCriteria.RecentUpdate;
+        const SortCriteria sortCriteria = SortCriteria.Recentupdate;
         var labelIds = new List<int>
         {
             1, 2, 3

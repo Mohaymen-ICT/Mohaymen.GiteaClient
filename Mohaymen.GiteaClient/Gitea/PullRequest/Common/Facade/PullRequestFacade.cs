@@ -8,6 +8,8 @@ using Mohaymen.GiteaClient.Gitea.PullRequest.CreatePullRequest.Dtos;
 using Mohaymen.GiteaClient.Gitea.PullRequest.CreatePullRequest.Mappers;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Dtos;
 using Mohaymen.GiteaClient.Gitea.PullRequest.GetPullRequestList.Mappers;
+using Mohaymen.GiteaClient.Gitea.PullRequest.MergePullRequest.Dtos;
+using Mohaymen.GiteaClient.Gitea.PullRequest.MergePullRequest.Mappers;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Gitea.PullRequest.Common.Facade;
@@ -32,6 +34,13 @@ internal class PullRequestFacade : IPullRequestFacade
         CancellationToken cancellationToken)
     {
         var command = getPullRequestListCommandDto.Map();
+        return await _mediator.Send(command, cancellationToken);
+    }
+
+    public async Task<ApiResponse<Unit>> MergePullRequestAsync(MergePullRequestCommandDto mergePullRequestCommandDto, 
+        CancellationToken cancellationToken)
+    {
+        var command = mergePullRequestCommandDto.Map();
         return await _mediator.Send(command, cancellationToken);
     }
 }

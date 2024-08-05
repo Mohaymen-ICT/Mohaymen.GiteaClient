@@ -1,6 +1,8 @@
-﻿namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+﻿using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
+
+namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
 public interface ITestFileCreator
 {
-    Task CreateFileAsync(string repositoryName, string filePath, string content, CancellationToken cancellationToken);
+    Task CreateFileAsync(CreateFileCommandDto createFileCommandDto, CancellationToken cancellationToken);
 }
