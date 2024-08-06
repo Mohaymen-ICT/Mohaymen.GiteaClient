@@ -61,11 +61,13 @@ public class CreateCommitCommandHandlerTests
         const string path = "fakePath";
         const string content = "fakeContent";
         const string repoOwner = "fakeOwner";
+        const string fileSha = "fakeSha";
         var fileCommitCommandModel = new FileCommitCommandModel
         {
             Path = path,
             Content = content,
-            CommitActionCommand = CommitActionCommand.Create
+            CommitActionCommand = CommitActionCommand.Create,
+            FileHash = fileSha
         };
         
         var request = new CreateCommitCommand
@@ -96,7 +98,8 @@ public class CreateCommitCommandHandlerTests
         {
             Path = path,
             Content = content,
-            CommitAction = CommitAction.Create
+            CommitAction = CommitAction.Create,
+            FileHash = fileSha
         };
         
         // Act

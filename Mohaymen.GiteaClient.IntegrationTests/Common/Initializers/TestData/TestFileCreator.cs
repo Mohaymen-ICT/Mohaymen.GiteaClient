@@ -1,6 +1,7 @@
 ﻿using Mohaymen.GiteaClient.Gitea.File.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
+using Refit;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
@@ -13,8 +14,9 @@ public class TestFileCreator : ITestFileCreator
         _fileFacade = fileFacade ?? throw new ArgumentNullException(nameof(fileFacade));
     }
 
-    public async Task CreateFileAsync(CreateFileCommandDto createFileCommandDto, CancellationToken cancellationToken)
+    public async Task<ApiResponse<CreateFileResponseDto>> CreateFileAsync(CreateFileCommandDto createFileCommandDto,
+        CancellationToken cancellationToken)
     {
-       await _fileFacade.CreateFileAsync(createFileCommandDto, cancellationToken);
+       return await _fileFacade.CreateFileAsync(createFileCommandDto, cancellationToken);
     }
 }

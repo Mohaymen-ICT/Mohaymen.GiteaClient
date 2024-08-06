@@ -1,18 +1,18 @@
 ﻿using FluentAssertions;
 using FluentValidation;
-using Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
+using Mohaymen.GiteaClient.Gitea.File.GetFile.Queries;
 using Mohaymen.GiteaClient.Gitea.File.GetFile.Validators;
 using Xunit;
 
 namespace Mohaymen.GiteaClient.Tests.Gitea.File.GetFile.Validators;
 
-public class GetFileCommandValidatorTests
+public class GetFileMetadataQueryValidatorTests
 {
-    private readonly IValidator<GetFileCommand> _sut;
+    private readonly IValidator<GetFileMetadataQuery> _sut;
 
-    public GetFileCommandValidatorTests()
+    public GetFileMetadataQueryValidatorTests()
     {
-        _sut = new GetFileCommandValidator();
+        _sut = new GetFileMetadataQueryValidator();
     }
     
     [Theory]
@@ -21,7 +21,7 @@ public class GetFileCommandValidatorTests
     public void Validate_ShouldReturnEmptyRepositoryNameErrorCode_WhenRepositoryNameIsNullOrEmpty(string repositoryName)
     {
         // Arrange
-        var command = new GetFileCommand
+        var command = new GetFileMetadataQuery
         {
             RepositoryName = repositoryName,
             FilePath = "filePath"
@@ -42,7 +42,7 @@ public class GetFileCommandValidatorTests
     public void Validate_ShouldReturnEmptyFilePathErrorCode_WhenFilePathIsNullOrEmpty(string filePath)
     {
         // Arrange
-        var command = new GetFileCommand
+        var command = new GetFileMetadataQuery
         {
             RepositoryName = "repo",
             FilePath = filePath
@@ -61,7 +61,7 @@ public class GetFileCommandValidatorTests
     public void Validate_ShouldReturnValidResult_WhenEveryThingIsProvidedProperly()
     {
         // Arrange
-        var command = new GetFileCommand
+        var command = new GetFileMetadataQuery
         {
             RepositoryName = "repo",
             FilePath = "path"

@@ -1,20 +1,20 @@
 ﻿using System;
-using Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
+using Mohaymen.GiteaClient.Gitea.File.GetFile.Queries;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 
 namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Mappers;
 
 internal static class GetFileCommandMapper
 {
-    internal static GetFileCommand ToGetFileCommand(this GetFileCommandDto getFileCommandDto)
+    internal static GetFileMetadataQuery ToGetFileCommand(this GetFileMetadataQueryDto getFileMetadataQueryDto)
     {
-        ArgumentNullException.ThrowIfNull(getFileCommandDto);
+        ArgumentNullException.ThrowIfNull(getFileMetadataQueryDto);
 
-        return new GetFileCommand
+        return new GetFileMetadataQuery
         {
-            RepositoryName = getFileCommandDto.RepositoryName,
-            FilePath = getFileCommandDto.FilePath,
-            ReferenceName = getFileCommandDto.ReferenceName
+            RepositoryName = getFileMetadataQueryDto.RepositoryName,
+            FilePath = getFileMetadataQueryDto.FilePath,
+            ReferenceName = getFileMetadataQueryDto.ReferenceName
         };
     }
 }

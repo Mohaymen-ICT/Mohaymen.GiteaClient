@@ -12,6 +12,9 @@ internal record FileCommitRequest
     [JsonProperty("content")]
     public required string Content { get; set; }
     
+    [JsonProperty("sha")]
+    public string? FileHash { get; init; }
+    
     [JsonConverter(typeof(StringEnumConverter))]
     [JsonProperty("operation")]
     public required CommitAction CommitAction { get; init; }

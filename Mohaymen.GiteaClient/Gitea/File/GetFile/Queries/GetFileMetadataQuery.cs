@@ -11,26 +11,26 @@ using Mohaymen.GiteaClient.Gitea.File.GetFile.Mappers;
 using Mohaymen.GiteaClient.Gitea.File.GetRepositoryFile.Dtos;
 using Refit;
 
-namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Commands;
+namespace Mohaymen.GiteaClient.Gitea.File.GetFile.Queries;
 
-public class GetFileCommand : IRequest<ApiResponse<GetFileResponseDto>>
+public class GetFileMetadataQuery : IRequest<ApiResponse<GetFileResponseDto>>
 {
     public required string RepositoryName { get; init; }
     public required string FilePath { get; init; }
     public string? ReferenceName { get; init; }
 }
 
-internal class GetFileCommandHandler : IRequestHandler<GetFileCommand, ApiResponse<GetFileResponseDto>>
+internal class GetFileMetadataQueryHandler : IRequestHandler<GetFileMetadataQuery, ApiResponse<GetFileResponseDto>>
 {
     private readonly IFileRestClient _fileRestClient;
     private readonly IContentDecoder _contentDecoder;
     private readonly IOptions<GiteaApiConfiguration> _options;
-    private readonly IValidator<GetFileCommand> _validator;
+    private readonly IValidator<GetFileMetadataQuery> _validator;
 
-    public GetFileCommandHandler(IFileRestClient fileRestClient,
+    public GetFileMetadataQueryHandler(IFileRestClient fileRestClient,
         IContentDecoder contentDecoder,
         IOptions<GiteaApiConfiguration> options,
-        IValidator<GetFileCommand> validator)
+        IValidator<GetFileMetadataQuery> validator)
     {
         _fileRestClient = fileRestClient ?? throw new ArgumentNullException(nameof(fileRestClient));
         _contentDecoder = contentDecoder ?? throw new ArgumentNullException(nameof(contentDecoder));
@@ -38,12 +38,12 @@ internal class GetFileCommandHandler : IRequestHandler<GetFileCommand, ApiRespon
         _validator = validator ?? throw new ArgumentNullException(nameof(validator));
     }
 
-    public async Task<ApiResponse<GetFileResponseDto>> Handle(GetFileCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetFileResponseDto>> Handle(GetFileMetadataQuery metadataQuery, CancellationToken cancellationToken)
     {
-        _validator.ValidateAndThrow(command);
-        var getFileRequest = command.ToGetFileRequest();
+        _validator.ValidateAndThrow(metadataQuery);
+        var getFileRequest = metadataQuery.ToGetFileRequest();
         var owner = _options.Value.RepositoriesOwner;
-        var apiResponse = await _fileRestClient.GetFileAsync(owner, command.RepositoryName, command.FilePath, getFileRequest, cancellationToken)
+        var apiResponse = await _fileRestClient.GetFileAsync(owner, metadataQuery.RepositoryName, metadataQuery.FilePath, getFileRequest, cancellationToken)
             .ConfigureAwait(false);
         await apiResponse.EnsureSuccessStatusCodeAsync();
         if (apiResponse.Content is not null)

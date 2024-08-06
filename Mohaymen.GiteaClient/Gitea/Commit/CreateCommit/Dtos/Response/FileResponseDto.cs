@@ -8,7 +8,7 @@ public class FileResponseDto
     public required string Path { get; init; }
     
     [JsonProperty("sha")]
-    public required string FileSha { get; init; }
+    public required string FileHash { get; init; }
     
     [JsonProperty("download_url")]
     public required string FileDownloadUrl { get; init; }

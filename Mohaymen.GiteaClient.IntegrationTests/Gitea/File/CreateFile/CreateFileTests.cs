@@ -46,7 +46,7 @@ public class CreateFileTests
             },
             CommitMessage = "create_file_test"
         };
-        var expectedGetFileCommandDto = new GetFileCommandDto
+        var expectedGetFileCommandDto = new GetFileMetadataQueryDto
         {
             RepositoryName = repositoryName,
             FilePath = filePath
