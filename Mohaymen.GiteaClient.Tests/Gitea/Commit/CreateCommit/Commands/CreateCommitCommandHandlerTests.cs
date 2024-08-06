@@ -67,7 +67,7 @@ public class CreateCommitCommandHandlerTests
             Path = path,
             Content = content,
             CommitActionCommand = CommitActionCommand.Create,
-            FileSha = fileSha
+            FileHash = fileSha
         };
         
         var request = new CreateCommitCommand
