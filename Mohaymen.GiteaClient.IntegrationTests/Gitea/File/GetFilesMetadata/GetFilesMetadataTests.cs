@@ -58,14 +58,14 @@ public class GetFilesMetadataTests
                 Content = null,
                 FileName = "README.md",
                 FilePath = "README.md",
-                FileSha = readmeFileMetadata.FileSha
+                FileHash = readmeFileMetadata.FileHash
             },
             new()
             {
                 Content = null,
                 FileName = filePath,
                 FilePath = filePath,
-                FileSha = newFileMetadata.Content!.Content.FileSha
+                FileHash = newFileMetadata.Content!.Content.FileHash
             }
         };
         

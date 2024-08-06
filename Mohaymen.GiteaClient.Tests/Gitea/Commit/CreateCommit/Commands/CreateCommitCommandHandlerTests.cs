@@ -99,7 +99,7 @@ public class CreateCommitCommandHandlerTests
             Path = path,
             Content = content,
             CommitAction = CommitAction.Create,
-            FileSha = fileSha
+            FileHash = fileSha
         };
         
         // Act

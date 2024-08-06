@@ -14,5 +14,5 @@ public class GetFileResponseDto
     public required string FilePath { get; init; }
     
     [JsonProperty("sha")]
-    public required string FileSha { get; init; }
+    public required string FileHash { get; init; }
 }

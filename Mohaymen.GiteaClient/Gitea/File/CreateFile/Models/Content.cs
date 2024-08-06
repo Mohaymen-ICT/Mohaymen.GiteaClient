@@ -14,5 +14,5 @@ public class Content
     public required string StringContent { get; init; }
     
     [JsonProperty("sha")]
-    public required string FileSha { get; init; }
+    public required string FileHash { get; init; }
 }
