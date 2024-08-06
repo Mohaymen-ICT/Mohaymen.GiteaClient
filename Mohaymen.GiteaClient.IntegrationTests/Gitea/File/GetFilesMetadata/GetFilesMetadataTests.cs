@@ -16,6 +16,7 @@ public class GetFilesMetadataTests
     private readonly IGiteaClient _sut;
     private readonly ITestRepositoryCreator _repositoryCreator;
     private readonly ITestFileCreator _fileCreator;
+    private readonly ITestFileMetadataGetter _fileMetadataGetter;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
 
     public GetFilesMetadataTests(GiteaCollectionFixture giteaCollectionFixture)
@@ -23,6 +24,7 @@ public class GetFilesMetadataTests
         _giteaCollectionFixture = giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
         _repositoryCreator = _giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestRepositoryCreator>();
         _fileCreator = _giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestFileCreator>();
+        _fileMetadataGetter = _giteaCollectionFixture.ServiceProvider.GetRequiredService<ITestFileMetadataGetter>();
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
     
@@ -35,34 +37,35 @@ public class GetFilesMetadataTests
         const string content = "Hello, World!";
         var cancellationToken = _giteaCollectionFixture.CancellationToken;
         await _repositoryCreator.CreateRepositoryAsync(repositoryName, cancellationToken);
+        var readmeFileMetadata = await _fileMetadataGetter.GetFileMetadataAsync(repositoryName, "README.md", cancellationToken); 
         var createFileCommandDto = new CreateFileCommandDto
         {
             RepositoryName = repositoryName,
             FilePath = filePath,
             Content = content
         };
-        await _fileCreator.CreateFileAsync(createFileCommandDto, cancellationToken);
+        var newFileMetadata = await _fileCreator.CreateFileAsync(createFileCommandDto, cancellationToken);
 
         var getFileCommandDto = new GetFilesMetadataQueryDto
         {
             RepositoryName = repositoryName,
             BranchName = "main"
         };
-        var expectedFiles = new List<GetFileResponseDto>()
+        var expectedFiles = new List<GetFileResponseDto>
         {
             new()
             {
                 Content = null,
                 FileName = "README.md",
                 FilePath = "README.md",
-                FileSha = ""
+                FileSha = readmeFileMetadata.FileSha
             },
             new()
             {
                 Content = null,
                 FileName = filePath,
                 FilePath = filePath,
-                FileSha = ""
+                FileSha = newFileMetadata.Content!.Content.FileSha
             }
         };
         
@@ -71,7 +74,6 @@ public class GetFilesMetadataTests
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
-        actual.Content.Should().BeEquivalentTo(expectedFiles, options => options.Excluding(x => x.FileSha));
+        actual.Content.Should().BeEquivalentTo(expectedFiles);
     }
-    
 }

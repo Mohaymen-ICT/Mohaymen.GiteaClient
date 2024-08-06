@@ -1,8 +1,10 @@
 ﻿using Mohaymen.GiteaClient.Gitea.File.CreateFile.Dtos;
+using Refit;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
 public interface ITestFileCreator
 {
-    Task CreateFileAsync(CreateFileCommandDto createFileCommandDto, CancellationToken cancellationToken);
+    Task<ApiResponse<CreateFileResponseDto>> CreateFileAsync(CreateFileCommandDto createFileCommandDto,
+        CancellationToken cancellationToken);
 }
