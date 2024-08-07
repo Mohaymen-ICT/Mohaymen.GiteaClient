@@ -9,7 +9,10 @@ internal static class MergePullRequestRequestMapper
 {
     internal static MergePullRequestRequest Map(this MergePullRequestCommand mergePullRequestCommand)
     {
-        ArgumentNullException.ThrowIfNull(mergePullRequestCommand);
+        if (mergePullRequestCommand is null)
+        {
+            throw new ArgumentNullException(nameof(mergePullRequestCommand));
+        }
 
         return new MergePullRequestRequest
         {

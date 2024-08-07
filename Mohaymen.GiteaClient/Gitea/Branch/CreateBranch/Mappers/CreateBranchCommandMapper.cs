@@ -8,7 +8,10 @@ internal static class CreateBranchCommandMapper
 {
     internal static CreateBranchCommand ToCreateBranchCommand(this CreateBranchCommandDto createBranchCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(createBranchCommandDto);
+        if (createBranchCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(createBranchCommandDto));
+        }
 
         return new CreateBranchCommand
         {

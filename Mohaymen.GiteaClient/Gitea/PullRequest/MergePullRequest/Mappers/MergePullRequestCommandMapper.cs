@@ -8,8 +8,11 @@ internal static class MergePullRequestCommandMapper
 {
     internal static MergePullRequestCommand Map(this MergePullRequestCommandDto mergePullRequestCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(mergePullRequestCommandDto);
-
+        if (mergePullRequestCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(mergePullRequestCommandDto));
+        }
+        
         return new MergePullRequestCommand
         {
             RepositoryName = mergePullRequestCommandDto.RepositoryName,

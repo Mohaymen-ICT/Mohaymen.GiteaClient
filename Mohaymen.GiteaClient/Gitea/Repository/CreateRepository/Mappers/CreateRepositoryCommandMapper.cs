@@ -8,7 +8,11 @@ internal static class CreateRepositoryCommandMapper
 {
     public static CreateRepositoryCommand Map(this CreateRepositoryCommandDto createRepositoryCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(createRepositoryCommandDto);
+        if (createRepositoryCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(createRepositoryCommandDto));
+        }
+
 
         return new CreateRepositoryCommand
         {
