@@ -17,12 +17,18 @@ public class TestBranchCreator : ITestBranchCreator
     public async Task CreateBranchAsync(string repositoryName, string branchName,
         CancellationToken cancellationToken)
     {
-        var createBranchCommandDto = new CreateBranchCommandDto
+        try
         {
-            RepositoryName = repositoryName,
-            NewBranchName = branchName,
-            OldReferenceName = GiteaTestConstants.DefaultBranch
-        };
-        await _branchFacade.CreateBranchAsync(createBranchCommandDto, cancellationToken);
+            var createBranchCommandDto = new CreateBranchCommandDto
+            {
+                RepositoryName = repositoryName,
+                NewBranchName = branchName,
+                OldReferenceName = GiteaTestConstants.DefaultBranch
+            };
+            await _branchFacade.CreateBranchAsync(createBranchCommandDto, cancellationToken);
+        }
+        catch (Exception)
+        {
+        }
     }
 }

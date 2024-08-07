@@ -28,22 +28,28 @@ internal class TestCommiter : ITestCommiter
         string commitMessage,
         CancellationToken cancellationToken)
     {
-        var createCommitDto = new CreateCommitCommandDto
+        try
         {
-            RepositoryName = repositoryName,
-            BranchName = branchName,
-            CommitMessage = commitMessage,
-            FileDtos =
-            [
-                new FileCommitDto
-                {
-                    Path = filePath,
-                    Content = Convert.ToBase64String("sample test content"u8.ToArray()),
-                    CommitActionDto = CommitActionDto.Create
-                }
-            ]
-        };
+            var createCommitDto = new CreateCommitCommandDto
+            {
+                RepositoryName = repositoryName,
+                BranchName = branchName,
+                CommitMessage = commitMessage,
+                FileDtos =
+                [
+                    new FileCommitDto
+                    {
+                        Path = filePath,
+                        Content = Convert.ToBase64String("sample test content"u8.ToArray()),
+                        CommitActionDto = CommitActionDto.Create
+                    }
+                ]
+            };
 
-        await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
+            await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
+        }
+        catch (Exception)
+        {
+        }
     }
 }

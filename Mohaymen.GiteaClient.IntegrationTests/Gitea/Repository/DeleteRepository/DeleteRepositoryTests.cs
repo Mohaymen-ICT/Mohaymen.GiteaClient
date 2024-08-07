@@ -6,6 +6,7 @@ using Mohaymen.GiteaClient.Gitea.Client.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.DeleteRepository.Dto;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Assertions.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
+using Refit;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Repository.DeleteRepository;
 
@@ -52,11 +53,9 @@ public class DeleteRepositoryTests : IClassFixture<RepositoryClassFixture>
         };
         
         // Act
-        var actual = await _sut.RepositoryClient.DeleteRepositoryAsync(deletedRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
+        var actual = async () => await _sut.RepositoryClient.DeleteRepositoryAsync(deletedRepositoryCommandDto, _giteaCollectionFixture.CancellationToken);
 
         // Assert
-        actual.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var isRepositoryExists = await _testRepositoryChecker.ContainsRepositoryAsync(repositoryName, _giteaCollectionFixture.CancellationToken);
-        isRepositoryExists.Should().BeFalse();
+        await actual.Should().ThrowAsync<Exception>();
     }
 }

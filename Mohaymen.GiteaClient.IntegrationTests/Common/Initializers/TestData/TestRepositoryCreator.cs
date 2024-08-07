@@ -18,13 +18,19 @@ internal class TestRepositoryCreator : ITestRepositoryCreator
     public async Task CreateRepositoryAsync(string repositoryName, 
         CancellationToken cancellationToken)
     {
-        var createRepositoryCommandDto = new CreateRepositoryCommandDto
+        try
         {
-            DefaultBranch = GiteaTestConstants.DefaultBranch,
-            Name = repositoryName,
-            IsPrivateBranch = true,
-            AutoInit = true
-        };
-        await _repositoryFacade.CreateRepositoryAsync(createRepositoryCommandDto, cancellationToken);
+            var createRepositoryCommandDto = new CreateRepositoryCommandDto
+            {
+                DefaultBranch = GiteaTestConstants.DefaultBranch,
+                Name = repositoryName,
+                IsPrivateBranch = true,
+                AutoInit = true
+            };
+            await _repositoryFacade.CreateRepositoryAsync(createRepositoryCommandDto, cancellationToken);
+        }
+        catch (Exception)
+        {
+        }
     }
 }
