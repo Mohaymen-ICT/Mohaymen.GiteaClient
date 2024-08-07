@@ -28,7 +28,15 @@ internal static class RefitDependencyInjection
         {
             serviceCollection.AddRefitClient(refitClientType, new RefitSettings
                 {
-                    ContentSerializer = new NewtonsoftJsonContentSerializer()
+                    ContentSerializer = new NewtonsoftJsonContentSerializer(),
+                    ExceptionFactory = async httpResponseMessage =>
+                    {
+                        if (httpResponseMessage.IsSuccessStatusCode)
+                        {
+                            return null;
+                        }
+                        throw new Exception(await httpResponseMessage.Content.ReadAsStringAsync());
+                    }
                 })
                 .ConfigureHttpClient(httpClientConfigureAction);
         }
