@@ -8,7 +8,10 @@ internal static class CreateFileRequestMapper
 {
     internal static CreateFileRequest Map(this CreateFileCommand createFileCommand, string encodedContent)
     {
-        ArgumentNullException.ThrowIfNull(createFileCommand);
+        if (createFileCommand is null)
+        {
+            throw new ArgumentNullException(nameof(createFileCommand));
+        }
 
         return new CreateFileRequest
         {

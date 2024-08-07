@@ -8,8 +8,11 @@ internal static class DeleteRepositoryCommandMapper
 {
     public static DeleteRepositoryCommand Map(this DeleteRepositoryCommandDto deleteRepositoryCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(deleteRepositoryCommandDto);
-
+        if (deleteRepositoryCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(deleteRepositoryCommandDto));
+        }
+        
         return new DeleteRepositoryCommand
         {
             RepositoryName = deleteRepositoryCommandDto.RepositoryName

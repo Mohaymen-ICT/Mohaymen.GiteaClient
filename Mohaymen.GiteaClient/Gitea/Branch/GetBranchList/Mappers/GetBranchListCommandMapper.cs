@@ -8,7 +8,10 @@ internal static class GetBranchListCommandMapper
 {
     internal static GetBranchListCommand ToGetBranchListCommand(this GetBranchListCommandDto getBranchListCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(getBranchListCommandDto);
+        if (getBranchListCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(getBranchListCommandDto));
+        }
 
         return new GetBranchListCommand
         {

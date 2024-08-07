@@ -8,7 +8,11 @@ internal static class CreateRepositoryRequestMapper
 {
     public static CreateRepositoryRequest Map(CreateRepositoryCommand createRepositoryCommand)
     {
-        ArgumentNullException.ThrowIfNull(createRepositoryCommand);
+        if (createRepositoryCommand is null)
+        {
+            throw new ArgumentNullException(nameof(createRepositoryCommand));
+        }
+
 
         return new CreateRepositoryRequest
         {

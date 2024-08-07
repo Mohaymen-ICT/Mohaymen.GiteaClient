@@ -8,7 +8,10 @@ internal static class CreateFileCommandMapper
 {
     internal static CreateFileCommand Map(this CreateFileCommandDto createFileCommandDto)
     {
-        ArgumentNullException.ThrowIfNull(createFileCommandDto);
+        if (createFileCommandDto is null)
+        {
+            throw new ArgumentNullException(nameof(createFileCommandDto));
+        }
 
         return new CreateFileCommand
         {

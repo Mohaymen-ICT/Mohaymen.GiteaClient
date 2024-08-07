@@ -8,7 +8,10 @@ internal static class GetFileRequestMapper
 {
     internal static GetFileRequest ToGetFileRequest(this GetFileMetadataQuery getFileMetadataQuery)
     {
-        ArgumentNullException.ThrowIfNull(getFileMetadataQuery);
+        if (getFileMetadataQuery is null)
+        {
+            throw new ArgumentNullException(nameof(getFileMetadataQuery));
+        }
 
         return new GetFileRequest
         {

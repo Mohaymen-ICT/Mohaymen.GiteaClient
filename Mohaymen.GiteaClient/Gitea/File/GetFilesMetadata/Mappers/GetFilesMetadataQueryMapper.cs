@@ -8,8 +8,11 @@ internal static class GetFilesMetadataQueryMapper
 {
     public static GetFilesMetadataQuery Map(GetFilesMetadataQueryDto getFilesMetadataQueryDto)
     {
-        ArgumentNullException.ThrowIfNull(getFilesMetadataQueryDto);
-
+        if (getFilesMetadataQueryDto is null)
+        {
+            throw new ArgumentNullException(nameof(getFilesMetadataQueryDto));
+        }
+        
         return new GetFilesMetadataQuery
         {
             RepositoryName = getFilesMetadataQueryDto.RepositoryName,

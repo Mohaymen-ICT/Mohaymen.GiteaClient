@@ -10,7 +10,10 @@ internal static class GetPullRequestListRequestMapper
 {
     internal static GetPullRequestListRequest Map(this GetPullRequestListCommand getPullRequestListCommand)
     {
-        ArgumentNullException.ThrowIfNull(getPullRequestListCommand);
+        if (getPullRequestListCommand is null)
+        {
+            throw new ArgumentNullException(nameof(getPullRequestListCommand));
+        }
 
         return new GetPullRequestListRequest
         {

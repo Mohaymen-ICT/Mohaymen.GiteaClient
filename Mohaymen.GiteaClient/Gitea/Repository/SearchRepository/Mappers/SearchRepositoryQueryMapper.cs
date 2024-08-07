@@ -8,7 +8,10 @@ internal static class SearchRepositoryQueryMapper
 {
     public static SearchRepositoryQuery Map(this SearchRepositoryQueryDto searchRepositoryQueryDto)
     {
-        ArgumentNullException.ThrowIfNull(searchRepositoryQueryDto);
+        if (searchRepositoryQueryDto is null)
+        {
+            throw new ArgumentNullException(nameof(searchRepositoryQueryDto));
+        }
 
         return new SearchRepositoryQuery
         {

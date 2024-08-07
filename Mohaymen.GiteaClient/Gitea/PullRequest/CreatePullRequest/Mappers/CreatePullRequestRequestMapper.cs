@@ -8,7 +8,11 @@ internal static class CreatePullRequestRequestMapper
 {
     internal static CreatePullRequestRequest ToCreatePullRequestRequest(this CreatePullRequestCommand createPullRequestCommand)
     {
-        ArgumentNullException.ThrowIfNull(createPullRequestCommand);
+        if (createPullRequestCommand is null)
+        {
+            throw new ArgumentNullException(nameof(createPullRequestCommand));
+        }
+
 
         return new CreatePullRequestRequest
         {

@@ -8,7 +8,10 @@ internal static class LoadBranchCommitsQueryMapper
 {
     public static LoadBranchCommitsQuery Map(this LoadBranchCommitsQueryDto loadBranchCommitsQueryDto)
     {
-        ArgumentNullException.ThrowIfNull(loadBranchCommitsQueryDto);
+        if (loadBranchCommitsQueryDto is null)
+        {
+            throw new ArgumentNullException(nameof(loadBranchCommitsQueryDto));
+        }
 
         return new LoadBranchCommitsQuery
         {

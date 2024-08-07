@@ -8,7 +8,10 @@ internal static class GetFileCommandMapper
 {
     internal static GetFileMetadataQuery ToGetFileCommand(this GetFileMetadataQueryDto getFileMetadataQueryDto)
     {
-        ArgumentNullException.ThrowIfNull(getFileMetadataQueryDto);
+        if (getFileMetadataQueryDto is null)
+        {
+            throw new ArgumentNullException(nameof(getFileMetadataQueryDto));
+        }
 
         return new GetFileMetadataQuery
         {
