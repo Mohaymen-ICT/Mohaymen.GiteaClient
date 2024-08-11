@@ -10,9 +10,13 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.Common.Facades.Abstractions;
 
 public interface ICommitFacade
 {
-    Task<ApiResponse<List<LoadBranchCommitsResponseDto>>> LoadBranchCommitsAsync(LoadBranchCommitsQueryDto loadBranchCommitsQueryDto,
+    Task<ApiResponse<List<LoadBranchCommitsResponseDto>>> LoadBranchCommitsAsync(
+        LoadBranchCommitsQueryDto loadBranchCommitsQueryDto,
         CancellationToken cancellationToken);
 
     Task<ApiResponse<CreateCommitResponseDto>> CreateCommitAsync(CreateCommitCommandDto createCommitCommandDto,
+        CancellationToken cancellationToken);
+
+    Task<ApiResponse<GetSingleCommitResponseDto>> GetSingleCommitAsync(GetSingleCommitQueryDto getSingleCommitQueryDto,
         CancellationToken cancellationToken);
 }
