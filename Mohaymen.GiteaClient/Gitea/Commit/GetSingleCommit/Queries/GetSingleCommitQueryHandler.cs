@@ -15,7 +15,7 @@ namespace Mohaymen.GiteaClient.Gitea.Commit.GetBranchCommits.Queries;
 internal sealed class GetSingleCommitQuery : IRequest<ApiResponse<GetSingleCommitResponseDto>>
 {
     public required string RepositoryName { get; init; }
-    public required string? CommitSha { get; init; }
+    public required string CommitSha { get; init; }
 }
 
 internal sealed class
