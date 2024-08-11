@@ -3,11 +3,13 @@ using Microsoft.Extensions.Options;
 using Mohaymen.GiteaClient.Core.Configs;
 using Mohaymen.GiteaClient.Gitea.Commit.Common.Facades.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Request;
+using Mohaymen.GiteaClient.Gitea.Commit.CreateCommit.Dtos.Response;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Models.Requests;
 using Newtonsoft.Json;
+using Refit;
 
 namespace Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData;
 
@@ -22,7 +24,7 @@ internal class TestCommiter : ITestCommiter
         _giteaOptions = giteaOptions ?? throw new ArgumentNullException(nameof(giteaOptions));
     }
 
-    public async Task CreateFileAsync(string repositoryName,
+    public async Task<ApiResponse<CreateCommitResponseDto>?> CreateFileAsync(string repositoryName,
         string branchName,
         string filePath,
         string commitMessage,
@@ -46,10 +48,12 @@ internal class TestCommiter : ITestCommiter
                 ]
             };
 
-            await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
+            return  await _commitFacade.CreateCommitAsync(createCommitDto, cancellationToken);
         }
         catch (Exception)
         {
+            return null;
         }
+
     }
 }
