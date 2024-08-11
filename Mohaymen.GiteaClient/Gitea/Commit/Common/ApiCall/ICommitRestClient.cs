@@ -20,10 +20,10 @@ internal interface ICommitRestClient : IRefitClientInterface
     [Get("/repos/{owner}/{repositoryName}/git/commits/{commitSha}?files=true")]
     Task<ApiResponse<GetSingleCommitResponseDto>> GetSingleCommitAsync(string owner,
         string repositoryName,
-        string commitSha
-    );
+        string commitSha);
 
     [Post("/repos/{owner}/{repositoryName}/contents")]
-    Task<ApiResponse<CreateCommitResponseDto>> CreateCommitAsync(string owner, string repositoryName,
+    Task<ApiResponse<CreateCommitResponseDto>> CreateCommitAsync(string owner,
+        string repositoryName,
         [Body] CreateCommitRequest createCommitRequest);
 }

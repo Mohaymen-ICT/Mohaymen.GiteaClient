@@ -39,7 +39,8 @@ public class GetSingleCommitTests
         await _testRepositoryCreator.CreateRepositoryAsync(RepositoryName, _giteaCollectionFixture.CancellationToken);
         await _testBranchCreator.CreateBranchAsync(RepositoryName, BranchName,
             _giteaCollectionFixture.CancellationToken);
-        var commitSha = await _testCommiter.CreateFileAsync(RepositoryName, BranchName, FilePath, CommitMessage,
+        var commitSha = await _testCommiter.CreateFileAsync(RepositoryName, BranchName,
+            FilePath, CommitMessage,
             _giteaCollectionFixture.CancellationToken);
 
         var getSingleCommitQueryDto = new GetSingleCommitQueryDto()
