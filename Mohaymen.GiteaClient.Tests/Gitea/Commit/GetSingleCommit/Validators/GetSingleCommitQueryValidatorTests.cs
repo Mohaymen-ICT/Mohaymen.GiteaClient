@@ -48,6 +48,23 @@ public class GetSingleCommitQueryValidatorTests
 
         // Assert
         actual.Errors.Select(x => x.ErrorCode).Should().Contain(ValidationErrorCodes.EmptyCommitShaErrorCode);
+    }    
+    
+    [Fact]
+    public void Validate_ShouldReturnValidResult_WhenInputIsProvidedProperly()
+    {
+        // Arrange
+        var command = new GetSingleCommitQuery()
+        {
+            RepositoryName = "testRepo",
+            CommitSha = "testSha"
+        };
+
+        // Act
+        var actual = _sut.Validate(command);
+
+        // Assert
+        actual.IsValid.Should().BeTrue();
     }
     
 }
