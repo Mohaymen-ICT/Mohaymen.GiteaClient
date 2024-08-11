@@ -11,9 +11,9 @@ namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Commit.GetSingleCommit;
 [Collection("GiteaIntegrationTests")]
 public class GetSingleCommitTests
 {
-    private const string RepositoryName = "GetBranchCommitsRepo";
+    private const string RepositoryName = "GetSingleCommitRepo";
     private const string BranchName = "feature/IntegrationTest";
-    private const string FilePath = "README1.md";
+    private const string FilePath = "test.txt";
     private const string CommitMessage = "fakeCommitMessage";
     private readonly ITestRepositoryCreator _testRepositoryCreator;
     private readonly ITestBranchCreator _testBranchCreator;
