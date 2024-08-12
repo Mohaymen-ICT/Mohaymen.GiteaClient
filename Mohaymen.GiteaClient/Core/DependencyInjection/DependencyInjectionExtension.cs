@@ -19,13 +19,14 @@ public static class DependencyInjectionExtension
         InstallDependencies(serviceCollection);
         return serviceCollection;
     }
-
+    
     public static IServiceCollection AddGiteaClient(this IServiceCollection serviceCollection,
         Action<GiteaApiConfiguration> giteaOptionsAction)
     {
-        InstallConfigs(serviceCollection, giteaOptionsAction);
-        InstallDependencies(serviceCollection);
-        return serviceCollection;
+        return serviceCollection.AddGiteaClient((giteaApiConfiguration, _) =>
+        {
+            giteaOptionsAction(giteaApiConfiguration);
+        });
     }
     
     private static void InstallDependencies(IServiceCollection serviceCollection)
@@ -37,12 +38,6 @@ public static class DependencyInjectionExtension
     private static void InstallValidators(IServiceCollection serviceCollection)
     {
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Singleton, includeInternalTypes:true);
-    }
-
-    private static void InstallConfigs(IServiceCollection serviceCollection,
-        Action<GiteaApiConfiguration> giteaOptionsAction)
-    {
-        serviceCollection.Configure(giteaOptionsAction);
     }
     
     private static void InstallGeneralDefinedDependencies(IServiceCollection serviceCollection)
