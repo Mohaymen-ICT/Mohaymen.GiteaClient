@@ -13,6 +13,15 @@ namespace Mohaymen.GiteaClient.Core.DependencyInjection;
 public static class DependencyInjectionExtension
 {
     public static IServiceCollection AddGiteaClient(this IServiceCollection serviceCollection,
+        Action<GiteaApiConfiguration, IServiceProvider> giteaOptionsAction)
+    {
+        serviceCollection.AddOptions<GiteaApiConfiguration>().Configure(giteaOptionsAction);
+        InstallGeneralDefinedDependencies(serviceCollection);
+        InstallValidators(serviceCollection);
+        return serviceCollection;
+    }
+    
+    public static IServiceCollection AddGiteaClient(this IServiceCollection serviceCollection,
         Action<GiteaApiConfiguration> giteaOptionsAction)
     {
         InstallConfigs(serviceCollection, giteaOptionsAction);
