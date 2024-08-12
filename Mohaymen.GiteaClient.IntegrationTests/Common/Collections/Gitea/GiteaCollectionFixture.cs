@@ -33,18 +33,12 @@ public class GiteaCollectionFixture : IAsyncLifetime
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddGiteaIntegrationTestsServices($"{baseUrl}/api/v1/");
-        serviceCollection.AddGiteaClient((giteaConfig, serviceProvider) =>
-        {
-            giteaConfig.RepositoriesOwner = giteaApiConfiguration.RepositoriesOwner;
-            giteaConfig.PersonalAccessToken = giteaApiConfiguration.PersonalAccessToken;
-            giteaConfig.BaseUrl = giteaApiConfiguration.BaseUrl;
-        });
-        /*serviceCollection.AddGiteaClient(configuration =>
+        serviceCollection.AddGiteaClient(configuration =>
         {
             configuration.BaseUrl = giteaApiConfiguration.BaseUrl;
             configuration.RepositoriesOwner = giteaApiConfiguration.RepositoriesOwner;
             configuration.PersonalAccessToken = giteaApiConfiguration.PersonalAccessToken;
-        });*/
+        });
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
 
