@@ -16,6 +16,9 @@ public sealed class GetSingleCommitResponseDto
 
     [JsonProperty("stats")] 
     public required StatsDto StatsDto { get; init; }
+    
+    [JsonProperty("commit")] 
+    public required SingleCommitDto CommitDto { get; init; }
 }
 
 public sealed class FilesDto
@@ -37,4 +40,13 @@ public sealed class StatsDto
 
     [JsonProperty("deletions")] 
     public required int Deletions { get; init; }
+}
+public sealed class SingleCommitDto
+{
+    [JsonProperty("url")] 
+    public required string Url { get; init; }
+
+    [JsonProperty("message")] 
+    public required string Message { get; init; }
+    
 }
