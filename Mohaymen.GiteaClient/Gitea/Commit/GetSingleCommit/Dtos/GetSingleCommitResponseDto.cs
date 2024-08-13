@@ -41,6 +41,7 @@ public sealed class StatsDto
     [JsonProperty("deletions")] 
     public required int Deletions { get; init; }
 }
+
 public sealed class SingleCommitDto
 {
     [JsonProperty("url")] 
