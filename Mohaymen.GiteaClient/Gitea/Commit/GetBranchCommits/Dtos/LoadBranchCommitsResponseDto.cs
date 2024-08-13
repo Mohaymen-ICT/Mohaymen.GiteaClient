@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mohaymen.GiteaClient.Gitea.Commit.Common.Dtos;
 using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.Commit.GetBranchCommits.Dtos;
@@ -22,10 +23,4 @@ public sealed class CommitDto
 {
     [JsonProperty("message")]
     public required string CommitMessage { get; init; }
-}
-
-public sealed class ParentCommitDto
-{
-    [JsonProperty("sha")]
-    public required string CommitSha { get; init; }
 }
