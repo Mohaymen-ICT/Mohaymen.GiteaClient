@@ -6,13 +6,14 @@ using Mohaymen.GiteaClient.Gitea.Commit.GetBranchCommits.Dtos;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Collections.Gitea;
 using Mohaymen.GiteaClient.IntegrationTests.Common.Initializers.TestData.Abstractions;
 
-namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Commit.GetBranchCommits;
+namespace Mohaymen.GiteaClient.IntegrationTests.Gitea.Commit.GetSingleCommit;
 
 [Collection("GiteaIntegrationTests")]
-public class GetBranchCommitsTests
+public class GetSingleCommitTests
 {
-    private const string RepositoryName = "GetBranchCommitsRepo";
+    private const string RepositoryName = "GetSingleCommitRepo";
     private const string BranchName = "feature/IntegrationTest";
+    private const string FilePath = "test.txt";
     private const string CommitMessage = "fakeCommitMessage";
     private readonly ITestRepositoryCreator _testRepositoryCreator;
     private readonly ITestBranchCreator _testBranchCreator;
@@ -20,7 +21,7 @@ public class GetBranchCommitsTests
     private readonly IGiteaClient _sut;
     private readonly GiteaCollectionFixture _giteaCollectionFixture;
 
-    public GetBranchCommitsTests(GiteaCollectionFixture giteaCollectionFixture)
+    public GetSingleCommitTests(GiteaCollectionFixture giteaCollectionFixture)
     {
         _giteaCollectionFixture =
             giteaCollectionFixture ?? throw new ArgumentNullException(nameof(giteaCollectionFixture));
@@ -30,65 +31,31 @@ public class GetBranchCommitsTests
         _sut = _giteaCollectionFixture.ServiceProvider.GetRequiredService<IGiteaClient>();
     }
 
-    public static TheoryData<string, int, int, List<string>> PageLimitCommitMessages()
-    {
-        return new TheoryData<string, int, int, List<string>>()
-        {
-            {
-                "file1.text",
-                1,
-                1,
-                [$"{CommitMessage}\n"]
-            },
-            {
-                "file2.text",
-                2,
-                2,
-                ["Initial commit\n"]
-            },
-            {
-                "file3.text",
-                1,
-                1,
-                ["test\n"]
-            },
-            {
-                "file4.text",
-                1,
-                4,
-                ["Last commit\n", "test\n", "Initial commit\n", $"{CommitMessage}\n"]
-            }
-        };
-    }
-
-    [Theory]
-    [MemberData(nameof(PageLimitCommitMessages))]
+    [Fact]
     public async Task
-        GetBranchCommitsAsync_ShouldReturnOkAndBranchCommitsBasedOnPageSizeAndLimitSize_WhenPageSizeAndLimitSizeAreSet(
-            string filePath, int page, int limit, List<string> expectedCommitMessages)
+        GetBranchCommitsAsync_ShouldReturnOkAndGetStatusOfFiles_WhenCallCommitByCommitSha()
     {
         // Arrange 
-        var loadBranchCommitsDto = new LoadBranchCommitsQueryDto
-        {
-            RepositoryName = RepositoryName,
-            BranchName = BranchName,
-            Page = page,
-            Limit = limit
-        };
         await _testRepositoryCreator.CreateRepositoryAsync(RepositoryName, _giteaCollectionFixture.CancellationToken);
         await _testBranchCreator.CreateBranchAsync(RepositoryName, BranchName,
             _giteaCollectionFixture.CancellationToken);
-        await _testCommiter.CreateFileAsync(RepositoryName, BranchName, filePath, expectedCommitMessages.First(),
+        var commitSha = await _testCommiter.CreateFileAsync(RepositoryName, BranchName,
+            FilePath, CommitMessage,
             _giteaCollectionFixture.CancellationToken);
 
+        var getSingleCommitQueryDto = new GetSingleCommitQueryDto()
+        {
+            RepositoryName = RepositoryName,
+            CommitSha = commitSha!.Content!.CommitResponseDto.Sha!
+        };
         // Act
         var actual =
-            await _sut.CommitClient.LoadBranchCommitsAsync(loadBranchCommitsDto,
+            await _sut.CommitClient.GetSingleCommitAsync(getSingleCommitQueryDto,
                 _giteaCollectionFixture.CancellationToken);
 
         // Assert
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
-        var commitMessages = actual.Content!.Select(x => x.CommitDto.CommitMessage);
-        commitMessages.Should().BeEquivalentTo(expectedCommitMessages);
+        actual.Content!.FilesDto[0].Status.Should().Be("added");
+        actual.Content.StatsDto.Additions.Should().Be(1);
     }
 }

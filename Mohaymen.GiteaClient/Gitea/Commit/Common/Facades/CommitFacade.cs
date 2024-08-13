@@ -35,4 +35,11 @@ internal class CommitFacade : ICommitFacade
         var command = createCommitCommandDto.MapToCommand();
         return await _mediator.Send(command, cancellationToken);
     }
+
+    public async Task<ApiResponse<GetSingleCommitResponseDto>> GetSingleCommitAsync(
+        GetSingleCommitQueryDto getSingleCommitQueryDto, CancellationToken cancellationToken)
+    {
+        var query = getSingleCommitQueryDto.Map();
+        return await _mediator.Send(query, cancellationToken);
+    }
 }
