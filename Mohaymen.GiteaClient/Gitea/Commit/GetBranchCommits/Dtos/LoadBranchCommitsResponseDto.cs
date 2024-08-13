@@ -18,9 +18,3 @@ public sealed class LoadBranchCommitsResponseDto
     [JsonProperty("parents")]
     public required List<ParentCommitDto> ParentCommitDtos { get; init; }
 }
-
-public sealed class CommitDto
-{
-    [JsonProperty("message")]
-    public required string CommitMessage { get; init; }
-}

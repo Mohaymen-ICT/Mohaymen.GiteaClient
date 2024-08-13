@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mohaymen.GiteaClient.Gitea.Commit.Common.Dtos;
 using Newtonsoft.Json;
 
 namespace Mohaymen.GiteaClient.Gitea.Commit.GetBranchCommits.Dtos;
@@ -18,7 +19,7 @@ public sealed class GetSingleCommitResponseDto
     public required StatsDto StatsDto { get; init; }
     
     [JsonProperty("commit")] 
-    public required SingleCommitDto CommitDto { get; init; }
+    public required CommitDto CommitDto { get; init; }
 }
 
 public sealed class FilesDto
@@ -40,13 +41,4 @@ public sealed class StatsDto
 
     [JsonProperty("deletions")] 
     public required int Deletions { get; init; }
-}
-
-public sealed class SingleCommitDto
-{
-    [JsonProperty("url")] 
-    public required string Url { get; init; }
-
-    [JsonProperty("message")] 
-    public required string Message { get; init; }
 }
