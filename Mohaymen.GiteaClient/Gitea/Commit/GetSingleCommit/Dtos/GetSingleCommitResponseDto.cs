@@ -49,5 +49,4 @@ public sealed class SingleCommitDto
 
     [JsonProperty("message")] 
     public required string Message { get; init; }
-    
 }
