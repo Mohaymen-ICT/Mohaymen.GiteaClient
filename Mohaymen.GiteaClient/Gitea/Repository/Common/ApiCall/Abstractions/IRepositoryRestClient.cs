@@ -11,7 +11,8 @@ namespace Mohaymen.GiteaClient.Gitea.Repository.Common.ApiCall.Abstractions;
 internal interface IRepositoryRestClient : IRefitClientInterface
 {
     [Post("/user/repos")]
-    Task<ApiResponse<CreateRepositoryResponseDto>> CreateRepositoryAsync([Body] CreateRepositoryRequest createRepositoryRequest);
+    Task<ApiResponse<CreateRepositoryResponseDto>> CreateRepositoryAsync(
+        [Body] CreateRepositoryRequest createRepositoryRequest);
 
     [Get("/repos/search?q={query}&page={page}&limit={limit}")]
     Task<ApiResponse<SearchRepositoryResponseDto>> SearchRepositoryAsync(string query, int page, int limit);
