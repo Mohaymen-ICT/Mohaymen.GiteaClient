@@ -8,7 +8,7 @@ runs:
     - name: set up dotnet core sdk
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.303'
          
     - name: restoring dependencies
       run: dotnet restore --no-cache
