@@ -18,12 +18,12 @@ internal interface IFileRestClient : IRefitClientInterface
         [AliasAs("ref")] string branchName,
         CancellationToken cancellationToken);
 
-    [Get("/repos/{owner}/{repo}/contents/{filepath}")]
+    [Get("/repos/{owner}/{repo}/contents/{filepath}?ref={ref}")]
     Task<ApiResponse<GetFileResponseDto>> GetFileAsync(
         [AliasAs("owner")] string owner,
         [AliasAs("repo")] string repositoryName,
         [AliasAs("filepath")] string filePath,
-        [Body] GetFileRequest getFileRequest,
+        [AliasAs("ref")] string refQuery,
         CancellationToken cancellationToken);
     
     [Post("/repos/{owner}/{repo}/contents/{filepath}")]

@@ -15,4 +15,8 @@ public class GetFileResponseDto
     
     [JsonProperty("sha")]
     public required string FileHash { get; init; }
+    
+    [JsonProperty("last_commit_sha")]
+    public required string LastCommitHash { get; init; }
+    
 }
