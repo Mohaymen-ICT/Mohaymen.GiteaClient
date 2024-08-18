@@ -58,14 +58,16 @@ public class GetFilesMetadataTests
                 Content = null,
                 FileName = "README.md",
                 FilePath = "README.md",
-                FileHash = readmeFileMetadata.FileHash
+                FileHash = readmeFileMetadata.FileHash,
+                LastCommitHash = readmeFileMetadata.LastCommitHash
             },
             new()
             {
                 Content = null,
                 FileName = filePath,
                 FilePath = filePath,
-                FileHash = newFileMetadata.Content!.Content.FileHash
+                FileHash = newFileMetadata.Content!.Content.FileHash,
+                LastCommitHash = newFileMetadata.Content!.Content.LastCommitHash
             }
         };
         

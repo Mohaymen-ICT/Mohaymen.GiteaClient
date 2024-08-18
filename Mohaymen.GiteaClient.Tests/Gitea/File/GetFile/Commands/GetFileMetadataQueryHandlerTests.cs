@@ -76,7 +76,7 @@ public class GetFileMetadataQueryHandlerTests
         _fileRestClient.GetFileAsync(owner, 
                 repositoryName, 
                 filePath, 
-                Arg.Any<GetFileRequest>(), 
+                referenceName, 
                 Arg.Any<CancellationToken>())
             .Returns(mockedResponse);
 
@@ -87,8 +87,7 @@ public class GetFileMetadataQueryHandlerTests
         await _fileRestClient.Received(1).GetFileAsync(owner, 
             repositoryName, 
             filePath, 
-            Arg.Is<GetFileRequest>(x => 
-            x.ReferenceName == referenceName),
+            referenceName,
             default);
     }
 }
