@@ -8,6 +8,7 @@ using Mohaymen.GiteaClient.Core.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.HttpHeader;
 using Mohaymen.GiteaClient.Core.Configs;
+using Mohaymen.GiteaClient.Core.Exceptions;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Core.DependencyInjection;
@@ -34,6 +35,10 @@ internal static class RefitDependencyInjection
                         if (httpResponseMessage.IsSuccessStatusCode)
                         {
                             return null;
+                        }
+                        if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Conflict) 
+                        {
+                            throw new RepositoryAlreadyExistsException(await httpResponseMessage.Content.ReadAsStringAsync());
                         }
                         throw new Exception(await httpResponseMessage.Content.ReadAsStringAsync());
                     }
