@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+        <!-- Enable CPM for the project in this directory -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

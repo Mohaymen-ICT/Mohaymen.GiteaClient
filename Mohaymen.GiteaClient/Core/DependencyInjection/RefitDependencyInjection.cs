@@ -8,6 +8,7 @@ using Mohaymen.GiteaClient.Core.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.Abstractions;
 using Mohaymen.GiteaClient.Core.ApiCall.HttpHeader;
 using Mohaymen.GiteaClient.Core.Configs;
+using Mohaymen.GiteaClient.Core.Exceptions;
 using Refit;
 
 namespace Mohaymen.GiteaClient.Core.DependencyInjection;
