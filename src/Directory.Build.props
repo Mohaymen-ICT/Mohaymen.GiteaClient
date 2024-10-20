@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+        <!-- Enable CPM for the project in this directory -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- Import parent Directory.Build.props which respects the ManagePackageVersionsCentrally property already being set  -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

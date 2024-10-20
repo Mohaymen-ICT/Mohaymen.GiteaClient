@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Disable CPM by default unless something already enabled it -->
+    <ManagePackageVersionsCentrally Condition="'$(ManagePackageVersionsCentrally)' != 'true'">false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>
