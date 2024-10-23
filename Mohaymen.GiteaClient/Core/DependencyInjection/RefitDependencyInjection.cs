@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -36,7 +37,7 @@ internal static class RefitDependencyInjection
                         {
                             return null;
                         }
-                        if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Conflict)
+                        if (httpResponseMessage.StatusCode == HttpStatusCode.Conflict)
                         {
                             throw new RepositoryAlreadyExistsException(await httpResponseMessage.Content.ReadAsStringAsync());
                         }
