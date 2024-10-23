@@ -37,10 +37,7 @@ internal static class RefitDependencyInjection
                         {
                             return null;
                         }
-                        if (httpResponseMessage.StatusCode == HttpStatusCode.Conflict)
-                        {
-                            throw new RepositoryAlreadyExistsException(await httpResponseMessage.Content.ReadAsStringAsync());
-                        }
+                      
                         throw new Exception(await httpResponseMessage.Content.ReadAsStringAsync());
                     }
                 })
