@@ -17,7 +17,7 @@ public class GetFileMetadataQuery : IRequest<ApiResponse<GetFileResponseDto>>
 {
     public required string RepositoryName { get; init; }
     public required string FilePath { get; init; }
-    public string? ReferenceName { get; init; }
+    public string ReferenceName { get; init; } = "main";
 }
 
 internal class GetFileMetadataQueryHandler : IRequestHandler<GetFileMetadataQuery, ApiResponse<GetFileResponseDto>>
@@ -41,9 +41,9 @@ internal class GetFileMetadataQueryHandler : IRequestHandler<GetFileMetadataQuer
     public async Task<ApiResponse<GetFileResponseDto>> Handle(GetFileMetadataQuery metadataQuery, CancellationToken cancellationToken)
     {
         _validator.ValidateAndThrow(metadataQuery);
-        var getFileRequest = metadataQuery.ToGetFileRequest();
         var owner = _options.Value.RepositoriesOwner;
-        var apiResponse = await _fileRestClient.GetFileAsync(owner, metadataQuery.RepositoryName, metadataQuery.FilePath, getFileRequest, cancellationToken)
+        var apiResponse = await _fileRestClient.GetFileAsync(owner, metadataQuery.RepositoryName, metadataQuery.FilePath,
+                metadataQuery.ReferenceName, cancellationToken)
             .ConfigureAwait(false);
         await apiResponse.EnsureSuccessStatusCodeAsync();
         if (apiResponse.Content is not null)
@@ -54,4 +54,3 @@ internal class GetFileMetadataQueryHandler : IRequestHandler<GetFileMetadataQuer
         return apiResponse;
     }
 }
-
