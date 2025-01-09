@@ -1,4 +1,6 @@
-﻿using MediatR;
+using System.Diagnostics;
+using MediatR;
+using Mohaymen.GiteaClient.Commons.Observability.Abstraction;
 using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade;
 using Mohaymen.GiteaClient.Gitea.Repository.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Repository.CreateRepository.Commands;
@@ -14,68 +16,70 @@ namespace Mohaymen.GiteaClient.Tests.Gitea.Repository.Common.Facade;
 
 public class RepositoryFacadeTests
 {
-    private readonly IMediator _mediator;
-    private readonly IRepositoryFacade _sut;
+	private readonly IMediator _mediator;
+	private readonly IRepositoryFacade _sut;
 
-    public RepositoryFacadeTests()
-    {
-        _mediator = Substitute.For<IMediator>();
-        _sut = new RepositoryFacade(_mediator);
-    }
+	public RepositoryFacadeTests()
+	{
+		_mediator = Substitute.For<IMediator>();
+		var traceInstrumentation = Substitute.For<ITraceInstrumentation>();
+		_sut = new RepositoryFacade(_mediator, traceInstrumentation);
+		traceInstrumentation.ActivitySource.Returns(new ActivitySource("test"));
+	}
 
-    [Fact]
-    public async Task CreateRepositoryAsync_ShouldCallSend_WhenEver()
-    {
-        // Arrange
-        const string repositoryName = "test_repo";
-        const string branchName = "main";
-        var commandDto = new CreateRepositoryCommandDto
-        {
-            Name = repositoryName,
-            DefaultBranch = branchName,
-            IsPrivateBranch = true
-        };
-        
-        // Act
-        await _sut.CreateRepositoryAsync(commandDto, default);
+	[Fact]
+	public async Task CreateRepositoryAsync_ShouldCallSend_WhenEver()
+	{
+		// Arrange
+		const string repositoryName = "test_repo";
+		const string branchName = "main";
+		var commandDto = new CreateRepositoryCommandDto
+		{
+			Name = repositoryName,
+			DefaultBranch = branchName,
+			IsPrivateBranch = true
+		};
 
-        // Assert
-        await _mediator.Received(1).Send(Arg.Is<CreateRepositoryCommand>(x => x.DefaultBranch == branchName &&
-                                                                              x.Name == repositoryName &&
-                                                                              x.IsPrivateBranch == true), default);
-    }
+		// Act
+		await _sut.CreateRepositoryAsync(commandDto, default);
 
-    [Fact]
-    public async Task SearchRepositoryAsync_ShouldCallSend_WhenEver()
-    {
-        // Arrange
-        const string query = "fakeQuery";
-        var searchRepositoryQueryDto = new SearchRepositoryQueryDto
-        {
-            Query = query
-        };
+		// Assert
+		await _mediator.Received(1).Send(Arg.Is<CreateRepositoryCommand>(x => x.DefaultBranch == branchName &&
+																			  x.Name == repositoryName &&
+																			  x.IsPrivateBranch == true), default);
+	}
 
-        // Act
-        await _sut.SearchRepositoryAsync(searchRepositoryQueryDto, default);
+	[Fact]
+	public async Task SearchRepositoryAsync_ShouldCallSend_WhenEver()
+	{
+		// Arrange
+		const string query = "fakeQuery";
+		var searchRepositoryQueryDto = new SearchRepositoryQueryDto
+		{
+			Query = query
+		};
 
-        // Assert
-        await _mediator.Received(1).Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
-    }
+		// Act
+		await _sut.SearchRepositoryAsync(searchRepositoryQueryDto, default);
 
-    [Fact]
-    public async Task DeleteRepositoryAsync_ShouldCallSend_WhenEver()
-    {
-        // Arrange
-        const string repositoryName = "fakeRepoName";
-        var deleteRepositoryCommandDto = new DeleteRepositoryCommandDto
-        {
-            RepositoryName = repositoryName
-        };
+		// Assert
+		await _mediator.Received(1).Send(Arg.Is<SearchRepositoryQuery>(x => x.Query == query));
+	}
 
-        // Act
-        await _sut.DeleteRepositoryAsync(deleteRepositoryCommandDto, default);
+	[Fact]
+	public async Task DeleteRepositoryAsync_ShouldCallSend_WhenEver()
+	{
+		// Arrange
+		const string repositoryName = "fakeRepoName";
+		var deleteRepositoryCommandDto = new DeleteRepositoryCommandDto
+		{
+			RepositoryName = repositoryName
+		};
 
-        // Assert
-        await _mediator.Received(1).Send(Arg.Is<DeleteRepositoryCommand>(x => x.RepositoryName == repositoryName), default);
-    }
+		// Act
+		await _sut.DeleteRepositoryAsync(deleteRepositoryCommandDto, default);
+
+		// Assert
+		await _mediator.Received(1).Send(Arg.Is<DeleteRepositoryCommand>(x => x.RepositoryName == repositoryName), default);
+	}
 }
