@@ -3,7 +3,7 @@ using OpenTelemetry.Trace;
 
 namespace Mohaymen.GiteaClient.Commons.Extensions;
 
-public static class ObservabilityDependencyInjectionExtensions
+public static class ObservabilityTracerProviderBuilderExtensions
 {
     public static TracerProviderBuilder AddGiteaInstrumentation(this TracerProviderBuilder builder)
     {
