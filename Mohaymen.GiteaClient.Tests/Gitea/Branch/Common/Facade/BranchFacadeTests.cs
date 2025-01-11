@@ -1,4 +1,6 @@
-﻿using MediatR;
+using System.Diagnostics;
+using MediatR;
+using Mohaymen.GiteaClient.Commons.Observability.Abstraction;
 using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade;
 using Mohaymen.GiteaClient.Gitea.Branch.Common.Facade.Abstractions;
 using Mohaymen.GiteaClient.Gitea.Branch.CreateBranch.Commands;
@@ -12,52 +14,54 @@ namespace Mohaymen.GiteaClient.Tests.Gitea.Branch.Common.Facade;
 
 public class BranchFacadeTests
 {
-    private readonly IMediator _mediator;
-    private readonly IBranchFacade _sut;
+	private readonly IMediator _mediator;
+	private readonly IBranchFacade _sut;
 
-    public BranchFacadeTests()
-    {
-        _mediator = Substitute.For<IMediator>();
-        _sut = new BranchFacade(_mediator);
-    }
+	public BranchFacadeTests()
+	{
+		_mediator = Substitute.For<IMediator>();
+		var traceInstrumentation = Substitute.For<ITraceInstrumentation>();
+		_sut = new BranchFacade(_mediator, traceInstrumentation);
+		traceInstrumentation.ActivitySource.Returns(new ActivitySource("test"));
+	}
 
-    [Fact]
-    public async Task CreateBranchAsync_ShouldCallSend_WhenEver()
-    {
-        // Arrange
-        const string repositoryName = "repo";
-        const string newBranchName = "new_branch";
-        const string oldReferenceName = "old_ref";
-        var commandDto = new CreateBranchCommandDto
-        {
-            RepositoryName = repositoryName,
-            NewBranchName = newBranchName,
-            OldReferenceName = oldReferenceName
-        };
+	[Fact]
+	public async Task CreateBranchAsync_ShouldCallSend_WhenEver()
+	{
+		// Arrange
+		const string repositoryName = "repo";
+		const string newBranchName = "new_branch";
+		const string oldReferenceName = "old_ref";
+		var commandDto = new CreateBranchCommandDto
+		{
+			RepositoryName = repositoryName,
+			NewBranchName = newBranchName,
+			OldReferenceName = oldReferenceName
+		};
 
-        // Act
-        await _sut.CreateBranchAsync(commandDto, default);
+		// Act
+		await _sut.CreateBranchAsync(commandDto, default);
 
-        // Assert
-        await _mediator.Received(1).Send(Arg.Is<CreateBranchCommand>(x => x.RepositoryName == repositoryName
-                                                                          && x.NewBranchName == newBranchName
-                                                                          && x.OldReferenceName == oldReferenceName));
-    }
-    
-    [Fact]
-    public async Task GetBranchListAsync_ShouldCallSend_WhenEver()
-    {
-        // Arrange
-        const string repositoryName = "repo";
-        var commandDto = new GetBranchListCommandDto
-        {
-            RepositoryName = repositoryName
-        };
+		// Assert
+		await _mediator.Received(1).Send(Arg.Is<CreateBranchCommand>(x => x.RepositoryName == repositoryName
+																		  && x.NewBranchName == newBranchName
+																		  && x.OldReferenceName == oldReferenceName));
+	}
 
-        // Act
-        await _sut.GetBranchListAsync(commandDto, default);
+	[Fact]
+	public async Task GetBranchListAsync_ShouldCallSend_WhenEver()
+	{
+		// Arrange
+		const string repositoryName = "repo";
+		var commandDto = new GetBranchListCommandDto
+		{
+			RepositoryName = repositoryName
+		};
 
-        // Assert
-        await _mediator.Received(1).Send(Arg.Is<GetBranchListCommand>(x => x.RepositoryName == repositoryName));
-    }
+		// Act
+		await _sut.GetBranchListAsync(commandDto, default);
+
+		// Assert
+		await _mediator.Received(1).Send(Arg.Is<GetBranchListCommand>(x => x.RepositoryName == repositoryName));
+	}
 }
